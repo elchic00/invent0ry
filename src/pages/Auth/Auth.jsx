@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-//import { AuthenticatorComp } from "../../components/Auth";
+import { AuthenticatorComp } from "../../components/Auth";
 import logo from "../../assets/logo.png";
 
 export const AuthPage = () => {
@@ -21,7 +21,7 @@ export const AuthPage = () => {
           >
             Invent0ry
           </Typography>
-          {/*<AuthenticatorComp />*/}
+          <AuthenticatorComp />
         </Box>
       </Box>
       <Box
