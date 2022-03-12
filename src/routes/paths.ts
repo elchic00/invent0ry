@@ -1,3 +1,4 @@
+// paths to different routes
 export const paths = {
     default: "/",
     dashboard: "/dashboard",

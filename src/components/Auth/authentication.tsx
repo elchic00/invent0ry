@@ -6,8 +6,6 @@ import Amplify from "aws-amplify";
 import config from "../../aws-exports";
 import { SideBar } from "../SideBar";
 
-// check if env is localhost or not
-
 export const AuthenticatorComp = () => {
   const isLocalhost = window.location.hostname === "localhost";
   // split redirect signin and signout strings into correct URIs
@@ -30,7 +28,7 @@ export const AuthenticatorComp = () => {
     },
   };
   Amplify.configure(updatedAwsConfig);
-
+// Email, google, and facebook auth loaded in from amplify settings in aws-export
   return (
     <Authenticator>
       {({ signOut, user }) => (
