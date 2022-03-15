@@ -1,6 +1,7 @@
 import { Authenticator } from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
 import { Box } from "@mui/material";
+import { LocalStorage } from "../../services";
 
 // add to existing imports
 
