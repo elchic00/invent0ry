@@ -7,7 +7,6 @@ type AuthenticatedProps = {
 };
 export const AuthenticatedView = ({ children }: AuthenticatedProps) => {
   const { user } = useUser();
-  console.log(user);
 
   return !user ? <Navigate to="/" replace={true} /> : <>{children}</>;
 };

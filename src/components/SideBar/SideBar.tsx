@@ -41,8 +41,8 @@ export const SideBar = ({ window }: Props) => {
 
   const handleSignOut = async () => {
     try {
-      await AmplifyAuth.signOut();
       LocalStorage.deleteUser();
+      await AmplifyAuth.signOut();
     } catch (error) {
       console.log(error);
     }
@@ -53,13 +53,13 @@ export const SideBar = ({ window }: Props) => {
       id: "dasboard",
       name: "Dashboard",
       icon: <DashboardIcon />,
-      path: "/dashboard",
+      path: "/user/dashboard",
     },
     {
       id: "inventory",
       name: "Inventory",
       icon: <InventoryIcon />,
-      path: "/inventory",
+      path: "/user/inventory",
     },
   ];
   const drawer = (
