@@ -32,12 +32,5 @@
         ]
       }
     }
-  },
-  "function": {
-    "invent0ryLam": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    }
   }
 }
