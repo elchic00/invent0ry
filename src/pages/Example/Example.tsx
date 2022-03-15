@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Button, CardContent, Typography } from "@mui/material";
 import React from "react";
 import { LogoComp } from "../../components";
-import { Api } from "../../api";
+import { Api } from "../../services";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import { Info } from "../../interface/models";
@@ -48,7 +48,7 @@ export const ExamplePage = () => {
         alignItems: "center",
       }}
     >
-{/*      <Typography align="center" variant="h2" mb={5}>
+      {/*      <Typography align="center" variant="h2" mb={5}>
         Invent0ry
       </Typography>*/}
 
@@ -62,12 +62,13 @@ export const ExamplePage = () => {
         </Box>
       )}
 
-      <Button variant="contained" onClick={() => {
-        if(open)
-          setOpen(false);
-        else
-          setOpen(true)
-      }}>
+      <Button
+        variant="contained"
+        onClick={() => {
+          if (open) setOpen(false);
+          else setOpen(true);
+        }}
+      >
         Show Team Members
       </Button>
 

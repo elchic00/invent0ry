@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { AmplifyAuth } from "../api";
+import { AmplifyAuth } from "../services";
 import { CognitoUser } from "amazon-cognito-identity-js";
+import { LocalStorage } from "../services";
 
 export const useUser = () => {
-  const [user, setUser] = useState<CognitoUser | null>(null);
+  const [user, setUser] = useState<CognitoUser | null>(LocalStorage.getUser());
 
   useEffect(() => {
     getUser();

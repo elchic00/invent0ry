@@ -18,7 +18,8 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import logo from "../../assets/logo.png";
 import { Outlet, Link } from "react-router-dom";
-import { AmplifyAuth } from "../../api";
+import { AmplifyAuth } from "../../services";
+import { LocalStorage } from "../../services";
 
 const drawerWidth = 260;
 
@@ -36,6 +37,15 @@ export const SideBar = ({ window }: Props) => {
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await AmplifyAuth.signOut();
+      LocalStorage.deleteUser();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const items = [
@@ -76,7 +86,7 @@ export const SideBar = ({ window }: Props) => {
 
       <Button
         variant="outlined"
-        onClick={() => AmplifyAuth.signOut()}
+        onClick={() => handleSignOut()}
         sx={{
           position: "absolute",
           bottom: 20,
