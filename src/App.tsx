@@ -11,6 +11,8 @@ const [productionRedirectSignOut, localRedirectSignOut] =
   config.oauth.redirectSignOut.split(",");
 
 // use correct URI in the right env
+// Email, google, and facebook auth loaded in from amplify settings in aws-export
+
 const updatedAwsConfig = {
   ...config,
   oauth: {
