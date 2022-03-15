@@ -11,7 +11,7 @@ export const AuthenticatorComp = () => {
     <Authenticator>
       {({ signOut, user }) => (
         <Box sx={{ height: "100vh", width: "100vw" }}>
-          <SideBar signOut={signOut} />
+          <SideBar />
         </Box>
       )}
     </Authenticator>

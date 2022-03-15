@@ -18,6 +18,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import logo from "../../assets/logo.png";
 import { Outlet, Link } from "react-router-dom";
+import { AmplifyAuth } from "../../api";
 
 const drawerWidth = 260;
 
@@ -26,11 +27,11 @@ interface Props {
    * Injected by the documentation to work in an iframe.
    * You won't need it on your project.
    */
-  signOut: Function;
+
   window?: () => Window;
 }
 
-export const SideBar = ({ window, signOut }: Props) => {
+export const SideBar = ({ window }: Props) => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
@@ -75,7 +76,7 @@ export const SideBar = ({ window, signOut }: Props) => {
 
       <Button
         variant="outlined"
-        onClick={() => signOut()}
+        onClick={() => AmplifyAuth.signOut()}
         sx={{
           position: "absolute",
           bottom: 20,
