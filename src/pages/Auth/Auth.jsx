@@ -1,9 +1,11 @@
 import { Box, Typography } from "@mui/material";
 import { AuthenticatorComp } from "../../components/Auth";
 import logo from "../../assets/logo.png";
-
+import { useUser } from "../../hooks/useUser";
 
 export const AuthPage = () => {
+  const { user } = useUser();
+
   return (
     <Box variant="div" sx={{ display: "flex", height: "100vh" }}>
       <Box

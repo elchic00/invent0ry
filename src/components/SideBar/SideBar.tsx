@@ -18,6 +18,8 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import logo from "../../assets/logo.png";
 import { Outlet, Link } from "react-router-dom";
+import { AmplifyAuth } from "../../services";
+import { LocalStorage } from "../../services";
 
 const drawerWidth = 260;
 
@@ -26,15 +28,24 @@ interface Props {
    * Injected by the documentation to work in an iframe.
    * You won't need it on your project.
    */
-  signOut: Function;
+
   window?: () => Window;
 }
 
-export const SideBar = ({ window, signOut }: Props) => {
+export const SideBar = ({ window }: Props) => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
+  };
+
+  const handleSignOut = async () => {
+    try {
+      LocalStorage.deleteUser();
+      await AmplifyAuth.signOut();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const items = [
@@ -42,13 +53,13 @@ export const SideBar = ({ window, signOut }: Props) => {
       id: "dasboard",
       name: "Dashboard",
       icon: <DashboardIcon />,
-      path: "/dashboard",
+      path: "/user/dashboard",
     },
     {
       id: "inventory",
       name: "Inventory",
       icon: <InventoryIcon />,
-      path: "/inventory",
+      path: "/user/inventory",
     },
   ];
   const drawer = (
@@ -75,7 +86,7 @@ export const SideBar = ({ window, signOut }: Props) => {
 
       <Button
         variant="outlined"
-        onClick={() => signOut()}
+        onClick={() => handleSignOut()}
         sx={{
           position: "absolute",
           bottom: 20,
