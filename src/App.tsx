@@ -3,6 +3,7 @@ import { AppRoutes } from "./routes";
 import Amplify from "aws-amplify";
 import config from "./aws-exports";
 import { ModalComponent } from "./components/Modal";
+import { LoaderComponent } from "./components";
 
 const isLocalhost = window.location.hostname === "localhost";
 // split redirect signin and signout strings into correct URIs
@@ -33,6 +34,7 @@ function App() {
       <AppRoutes />
       <Outlet />
       <ModalComponent />
+      <LoaderComponent />
     </div>
   );
 }
