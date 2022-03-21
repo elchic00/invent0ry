@@ -2,6 +2,10 @@ import { Outlet } from "react-router-dom";
 import { AppRoutes } from "./routes";
 import Amplify from "aws-amplify";
 import config from "./aws-exports";
+import { ModalComponent } from "./components/Modal";
+import { LoaderComponent } from "./components";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const isLocalhost = window.location.hostname === "localhost";
 // split redirect signin and signout strings into correct URIs
@@ -31,6 +35,9 @@ function App() {
     <div className="App">
       <AppRoutes />
       <Outlet />
+      <ModalComponent />
+      <LoaderComponent />
+      <ToastContainer />
     </div>
   );
 }

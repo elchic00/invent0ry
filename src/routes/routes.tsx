@@ -4,6 +4,7 @@ import { AuthPage } from "../pages/Auth";
 import { Dashboard } from "../pages/Dashboard";
 import { SideBar } from "../components/SideBar";
 import { AuthenticatedView } from "../views";
+import { Inventory } from "../pages";
 
 export const AppRoutes = () => {
   return (
@@ -18,7 +19,7 @@ export const AppRoutes = () => {
         }
       >
         <Route path={paths.dashboard} element={<Dashboard />}></Route>
-        <Route path={paths.inventory} element={<div>Inventory</div>}></Route>
+        <Route path={paths.inventory} element={<Inventory />}></Route>
         <Route path={paths.settings} element={<div>settings</div>}></Route>
         <Route path={paths.profile} element={<div>profile</div>}></Route>
       </Route>

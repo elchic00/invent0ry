@@ -3,14 +3,20 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter as Router } from "react-router-dom";
+import { ModalProvider, LoaderProvider } from "./context";
 import "./index.css";
 
 ReactDOM.render(
   <Router>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
+    <LoaderProvider>
+      <ModalProvider>
+        <React.StrictMode>
+          <App />
+        </React.StrictMode>
+      </ModalProvider>
+    </LoaderProvider>
   </Router>,
+
   document.getElementById("root")
 );
 

@@ -1,1 +1,3 @@
-export * from "./Example";
+export * from "./Auth";
+export * from "./Dashboard";
+export * from "./Inventory";
