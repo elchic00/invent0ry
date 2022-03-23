@@ -1,6 +1,6 @@
 {
   "auth": {
-    "invent0ry": {
+    "invent0rymain": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
