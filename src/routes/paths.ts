@@ -6,4 +6,6 @@ export const paths = {
   inventory: "inventory",
   settings: "settings",
   profile: "profile",
+  businessSpecifics: "businessSpecifics",
+  addItem: "addItem"
 };
