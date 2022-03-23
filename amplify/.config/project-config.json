@@ -2,7 +2,7 @@
   "providers": [
     "awscloudformation"
   ],
-  "projectName": "invent0ry1",
+  "projectName": "invent0ry2",
   "version": "3.1",
   "frontend": "javascript",
   "javascript": {
