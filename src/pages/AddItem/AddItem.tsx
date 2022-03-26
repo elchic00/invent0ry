@@ -4,9 +4,12 @@ import { Button, TextField } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
+const url = 'https://invent0ry-back3nd.herokuapp.com/items/'
+
 interface ItemDetailsInputs {
+    item_name:string;
   location_name: string;
-  business_name: string;
+  idbusiness: string;
   count: number;
   Picture: string;
   SKU: string;
@@ -37,7 +40,22 @@ export const AddItem = () => {
   const formSubmitHandler: SubmitHandler<ItemDetailsInputs> = (
     data: ItemDetailsInputs
   ) => {
-    console.log("form data:", data);
+      // const options = {
+      //     method: "POST",
+      //     headers: {
+      //         Accept: "application/json",
+      //         "Content-Type": "application/json;charset=UTF-8",
+      //     },
+      //     body: JSON.stringify({
+      //         'name': businessName,
+      //         'location_name': locationName,
+      //         'currency': currency
+      //     })}
+      // fetch(url, options)
+      //     .then((response) => {response.json();
+      //         console.log(response);})
+
+      console.log("form data:", data);
   };
 
   return (
@@ -59,16 +77,16 @@ export const AddItem = () => {
       />
       <br/><br/>
       <Controller
-        name="business_name"
+        name="idbusiness"
         control={control}
         render={({ field }) => (
           <TextField
             {...field}
             label="Business Name"
             variant="outlined"
-            error={!!errors.business_name}
+            error={!!errors.idbusiness}
             helperText={
-              errors.business_name ? errors.business_name?.message : ""
+              errors.idbusiness ? errors.idbusiness?.message : ""
             }
           />
         )}

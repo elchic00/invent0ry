@@ -7,5 +7,6 @@ export const paths = {
   settings: "settings",
   profile: "profile",
   businessSpecifics: "businessSpecifics",
-  addItem: "addItem"
+  addItem: "addItem",
+  addLoc: 'addLoc'
 };
