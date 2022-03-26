@@ -4,7 +4,6 @@ import { Button, TextField } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-const url = 'https://invent0ry-back3nd.herokuapp.com/items/'
 
 interface ItemDetailsInputs {
     item_name:string;

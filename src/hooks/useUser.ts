@@ -13,6 +13,7 @@ export const useUser = () => {
   async function getUser() {
     try {
       const data = await AmplifyAuth.getUser();
+      console.log(data.getUsername())
       setUser(data);
     } catch (error) {
       console.log(error);

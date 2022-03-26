@@ -2,29 +2,27 @@ import { FormControl, TextField, Button, MenuItem, Select } from "@mui/material"
 import { useState } from "react"
 import { currencies } from "./currencies"
 import axios from "axios";
+import {DataStore} from "@aws-amplify/datastore";
+import {Business} from "../../models";
 
 
 export const BusinessSpecifics = () => {
-    const url = 'https://invent0ry-back3nd.herokuapp.com/businesses/'
-    const headers = {
-        Accept: "application/json",
-            "Content-Type": "application/json;charset=UTF-8"
-    }
+
     const [businessName, setBusinessName] = useState("")
     const [locationName, setLocationName] = useState("")
     const [currency, setCurrency] = useState(currencies.USD)
 
     const currencyList = Object.keys(currencies).map(key => (<MenuItem value={key}>{key}</MenuItem>))
 
-    function handleSubmit(){
-        const data ={
+    async function handleSubmit(){
+        const form_data ={
                 'name': businessName,
                 'location_name': locationName,
                 'currency': currency
         }
-        axios.post(url,data,{headers}).then(({data}) => { console.log(data); })
-
-
+        await DataStore.save(
+            new Business(form_data)
+        ).then((data)=>console.log(data));
     }
 
     return (
