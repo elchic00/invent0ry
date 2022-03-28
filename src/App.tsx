@@ -7,6 +7,10 @@ import { LoaderComponent } from "./components";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import axios from 'axios';
+axios.defaults.xsrfCookieName = 'csrftoken'
+axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+
 //check if localhost
 const isLocalhost = window.location.hostname === "localhost";
 // split redirect signin and signout strings into correct URIs

@@ -6,7 +6,8 @@ import { SideBar } from "../components/SideBar";
 import { AuthenticatedView } from "../views";
 import { Inventory } from "../pages";
 import { BusinessSpecifics } from "../pages/BusinessSpecifics/BusinessSpecifics";
-import { AddItem } from "../pages/AddItem/AddItem";
+import { AddItem } from "../components/AddItem/AddItem";
+import {AddLocation} from "../pages/AddLocation/AddLocation";
 
 export const AppRoutes = () => {
   return (
@@ -26,6 +27,7 @@ export const AppRoutes = () => {
         <Route path={paths.settings} element={<div>settings</div>}></Route>
         <Route path={paths.profile} element={<div>profile</div>}></Route>
         <Route path={paths.businessSpecifics} element={<BusinessSpecifics/>}></Route>
+        <Route path={paths.addLoc} element={<AddLocation/>}></Route>
       </Route>
     </Routes>
   );
