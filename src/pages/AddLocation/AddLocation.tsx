@@ -1,52 +1,70 @@
 import { FormControl, TextField, Button } from "@mui/material"
-import { useState } from "react"
-import axios from "axios";
-import { DataStore } from '@aws-amplify/datastore';
-import { Locations } from '../../models';
+import React, { useState } from "react"
+import {locationType} from "../../interface/models/locationType";
+import {API} from "../../services/api";
+import {sendNotification} from "../../utils/sendNotification";
 
 export const AddLocation =  () => {
-    const [locName, setLocName] = useState("")
-    const [street, setStreet] = useState("")
-    const [town, setTown] = useState("")
-    const [zip, setZip] = useState(0)
+    const [formData, setFormData] = useState<locationType>({
+        name: "",
+        street: '',
+        town: "",
+        zip: 1111,
+    })
+    const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
-
-    async function handleSubmit() {
-        const form_data = {
-            'name': locName,
-            'street': street,
-            'town': town,
-            'zip': zip
+    async function handleSubmit(e : React.SyntheticEvent) {
+        e.preventDefault();
+        setIsDisabled(true);
+        try{
+            const result = await API.addLocation(formData)
+            setIsDisabled(false);
+        } catch(e ){
+            sendNotification( "Error trying to call the add location api",
+                "error");
+            setIsDisabled(false);
         }
-        await DataStore.save(
-            new Locations(form_data)
-        ).then((data)=>console.log(data));
+    }
 
+    async function handleChange(e: React.ChangeEvent) {
+        const {name, value} = e.target as HTMLInputElement;
+        if(Number(value)){
+            setFormData((prev) => ({...prev, [name]: Number(value)}))
+        }
+        else
+            setFormData((prev) => ({...prev, [name]: value}))
     }
 
     return (
         <FormControl>
             <TextField id="standard-basic" variant="standard" sx={{mb: 2}}
+                       name='name'
                        label="Name"
                        helperText="Add your location nickname, H.Q., main, etc"
-                       onChange={(e) => setLocName(e.target.value)}/>
-            <TextField id="standard-basic" variant="standard" sx={{mb: 2}}
+                       value={formData.name}
+                       onChange={handleChange}
+            />
+            <TextField id="standard-basic"
+                       variant="standard"
+                       sx={{mb: 2}}
+                       name='street'
                        label="Street"
-                       onChange={(e) => setStreet(e.target.value)}/>
+                       value={formData.street}
+                       onChange={handleChange}/>
             <TextField id="standard-basic" variant="standard" sx={{mb: 2}}
+                       name='town'
                        label="Town"
-                       value={town}
-                       onChange={(e) => setTown(e.target.value)}>
+                       value={formData.town}
+                       onChange={handleChange}>
             </TextField>
-            <TextField id="standard-basic" variant="standard" type='number' sx={{mb: 4}}
+            <TextField id="standard-basic" variant="standard" type='number' sx={{mb: 2}}
+                       name='zip'
                        label="Zip"
-                       value={zip}
-                       onChange={(e) => {
-                           Number(e.target.value) < 0 ? setZip(0) : setZip(Number(e.target.value))
-                       }}>
+                       value={formData.zip}
+                       onChange={handleChange}>
             </TextField>
             <Button variant="contained"
-                    disabled={!locName || !street || !zip}
+                    disabled={isDisabled}
                     onClick={handleSubmit}>submit</Button>
         </FormControl>
     )
