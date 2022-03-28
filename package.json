@@ -2,7 +2,6 @@
   "name": "inventory-app",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://invent0ry-back3nd.herokuapp.com/",
   "dependencies": {
     "@aws-amplify/ui-react": "^2.8.0",
     "@emotion/react": "^11.8.1",
