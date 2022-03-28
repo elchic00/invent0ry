@@ -8,5 +8,5 @@ export const paths = {
   profile: "profile",
   businessSpecifics: "businessSpecifics",
   addItem: "addItem",
-  addLoc: 'addLoc'
+  addLoc: "addLoc",
 };

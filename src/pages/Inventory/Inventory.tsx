@@ -1,12 +1,24 @@
-import { Box } from "@mui/material";
+import { Box, Fab } from "@mui/material";
 import { useModal } from "../../context";
-import { useEffect } from "react";
+import { AddItem } from "../../components/AddItem";
+import AddIcon from "@mui/icons-material/Add";
 
 export const Inventory = () => {
   const { setComponent } = useModal();
 
-  useEffect(() => {
-    setComponent(<div style={{ padding: "1rem" }}>Inventory Modal</div>);
-  }, []);
-  return <Box>Inventory Page</Box>;
+  function handleOpen() {
+    setComponent(<AddItem />);
+  }
+  return (
+    <Box>
+      <Fab
+        color="primary"
+        aria-label="add"
+        sx={{ position: "fixed", bottom: 20, right: 30 }}
+        onClick={handleOpen}
+      >
+        <AddIcon />
+      </Fab>
+    </Box>
+  );
 };
