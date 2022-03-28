@@ -5,35 +5,35 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 interface ItemDetailsInputs {
-  item_name: string;
-  location_name: string;
-  idbusiness: string;
+  itemName: string;
+  locationName: string;
+  businessName: string;
   count: number;
-  Picture: string;
-  SKU: string;
-  Expiration_date: string;
+  picture: string;
+  sku: string;
+  expirationDate: string;
   price: number;
 }
 
 const ItemDetailsSchema = yup.object().shape({
-  item_name: yup.string().required("Required field - must be a string"),
-  location_name: yup.string().required("Required field - must be a string"),
-  business_name: yup.string().required("Required field - must be a string"),
+  itemName: yup.string().required("Required field - must be a string"),
+  locationName: yup.string().required("Required field - must be a string"),
+  businessName: yup.string().required("Required field - must be a string"),
   count: yup.number().required("Required field - must be a number"),
-  Picture: yup.string(),
-  SKU: yup.string(),
-  Expiration_date: yup.string(),
+  picture: yup.string(),
+  sku: yup.string(),
+  expirationDate: yup.string(),
   price: yup.number().required("Required field - must be a number"),
 });
 
 const defaultValues = {
-  item_name: "",
-  location_name: "",
-  idbusiness: "",
+  itemName: "",
+  locationName: "",
+  businessName: "",
   count: 0,
-  Picture: "",
-  SKU: "",
-  Expiration_date: "",
+  picture: "",
+  sku: "",
+  expirationDate: "",
   price: 0,
 };
 const resolver = yupResolver(ItemDetailsSchema);
@@ -45,6 +45,7 @@ export const AddItem = () => {
     formState: { errors },
   } = useForm<ItemDetailsInputs>({
     defaultValues,
+    resolver,
   });
 
   const formSubmitHandler: SubmitHandler<ItemDetailsInputs> = (
@@ -58,7 +59,7 @@ export const AddItem = () => {
     //     },
     //     body: JSON.stringify({
     //         'name': businessName,
-    //         'location_name': locationName,
+    //         'locationName': locationName,
     //         'currency': currency
     //     })}
     // fetch(url, options)
@@ -83,7 +84,7 @@ export const AddItem = () => {
         }}
       >
         <Controller
-          name="item_name"
+          name="itemName"
           control={control}
           render={({ field: { onChange, ref, value } }) => (
             <TextField
@@ -98,7 +99,7 @@ export const AddItem = () => {
           )}
         />
         <Controller
-          name="location_name"
+          name="locationName"
           control={control}
           render={({ field: { onChange, ref, value } }) => (
             <TextField
@@ -114,7 +115,7 @@ export const AddItem = () => {
         />
 
         <Controller
-          name="idbusiness"
+          name="businessName"
           control={control}
           render={({ field: { onChange, ref, value } }) => (
             <TextField
@@ -146,7 +147,7 @@ export const AddItem = () => {
         />
 
         <Controller
-          name="Picture"
+          name="picture"
           control={control}
           defaultValue=""
           render={({ field: { onChange, ref, value } }) => (
@@ -163,7 +164,7 @@ export const AddItem = () => {
         />
 
         <Controller
-          name="SKU"
+          name="sku"
           control={control}
           defaultValue=""
           render={({ field: { onChange, ref, value } }) => (
@@ -180,7 +181,7 @@ export const AddItem = () => {
         />
 
         <Controller
-          name="Expiration_date"
+          name="expirationDate"
           control={control}
           render={({ field: { onChange, ref, value } }) => (
             <TextField
