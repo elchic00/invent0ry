@@ -5,7 +5,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { ItemDetailsInputs } from "../../interface/models/itemDetailsInputs";
 import { API } from "../../services/api";
-import { useItems } from "../../hooks";
+import { useModal } from "../../context";
+
 const ItemDetailsSchema = yup.object().shape({
   itemName: yup.string().required("Required field - must be a string"),
   locationName: yup.string().required("Required field - must be a string"),
@@ -28,9 +29,9 @@ const defaultValues = {
   price: 0,
 };
 const resolver = yupResolver(ItemDetailsSchema);
+
 export const AddItem = ({ getItems }: { getItems: Function }) => {
   const {
-    register,
     handleSubmit,
     control,
     formState: { errors },
@@ -38,13 +39,15 @@ export const AddItem = ({ getItems }: { getItems: Function }) => {
     defaultValues,
     resolver,
   });
+  const { setComponent } = useModal();
 
   const formSubmitHandler: SubmitHandler<ItemDetailsInputs> = async (
     data: ItemDetailsInputs
   ) => {
     try {
-      await API.addItem();
+      await API.addItem(data);
       await getItems();
+      setComponent(null);
     } catch (error) {
       console.log(error);
     }
