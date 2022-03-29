@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import {API} from "../../services/api";
 import {DataGrid, GridColumns} from '@mui/x-data-grid'
+import {locationType} from "../../interface/models/locationType";
+import {LoaderComponent} from "../../components";
 
 export const LocationGrid = () => {
-    const [tableData, setTableData] = useState([])
+    const [tableData, setTableData] = useState< { [key: string]: locationType; }[]>([])
     const columns: GridColumns = [
         { field: 'name',  headerName: 'Name', width: 150, },
         { field: 'street', headerName: 'Street', width: 220 },
@@ -14,9 +16,13 @@ export const LocationGrid = () => {
 
     useEffect(() => {
             API.getLocations().then((data)=> JSON.stringify(data)).then((data)=>JSON.parse(data)).then((data)=>setTableData(data))},[])
-    return (
+
+    // API.getLocations().then((data)=>setTableData(data))},[])
+
+
+return (
         <div style={{ height: 600, width: '66%' }}>
-            <DataGrid
+            {tableData != null ? <DataGrid
                 sx={{
                     "& .MuiDataGrid-columnHeaders": {
                         backgroundColor: "rgba(236,236,236,1)",
@@ -31,7 +37,7 @@ export const LocationGrid = () => {
                 rows={tableData}
                 columns={columns}
                 pageSize={10}
-            />
+            /> : <LoaderComponent/>}
         </div>
     )
 }
