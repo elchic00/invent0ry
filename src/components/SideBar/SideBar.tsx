@@ -9,6 +9,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import InventoryIcon from "@mui/icons-material/Inventory";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoomOutlined";
@@ -61,6 +62,12 @@ export const SideBar = ({ window }: Props) => {
       icon: <InventoryIcon />,
       path: "/user/inventory",
     },
+      {
+          id: "locations",
+          name: "Locations",
+          icon: <LocationOnIcon />,
+          path: "/user/locations",
+      },
   ];
   const drawer = (
     <Box>
