@@ -6,6 +6,10 @@ import { Items } from "../models";
 import { ItemDetailsInputs } from "../interface/models/itemDetailsInputs";
 
 export class API {
+  static async getLocations() {
+    return await DataStore.query(Locations);
+  }
+
   static async businessSpecifics(data: businessType) {
     return await DataStore.save(new Business(data));
   }
