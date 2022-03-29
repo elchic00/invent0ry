@@ -18,17 +18,24 @@ export const LocationGrid = () => {
     }
 
     // const [tableData, setTableData] = useState< { [key: string]: locationType; }[]>([])
-    const columns: GridColumns = [
-        { field: 'name',  headerName: 'Name', width: 150, },
-        { field: 'street', headerName: 'Street', width: 220 },
-        { field: 'town', headerName: 'Town', width: 150 },
-        { field: 'zip', headerName: 'Zip' , width: 150},
-        // { field: 'owner', headerName: 'Owner', width: 200}
+ const columns: GridColumns = [
+        { field: 'name',  headerName: 'Name', width: 180, },
+        { field: 'street', headerName: 'Street', width: 240 },
+        { field: 'town', headerName: 'Town', width: 185 },
+        { field: 'zip', headerName: 'Zip' , width: 120},
+        { field: 'owner', headerName: 'Owner', width: 200}
+            // { field: 'owner', headerName: 'Owner', width: 200}
     ]
+    
 
 
 return (
-        <div style={{ height: 600, width: '66%' }}>
+        <div style={{
+            height: 600,
+            width: '60%',
+            position: "fixed",
+            bottom: 20,
+            right: 260}}>
             {locations != null ? <DataGrid
                 sx={{
                     "& .MuiDataGrid-columnHeaders": {
@@ -48,7 +55,7 @@ return (
             <Fab
                 color="primary"
                 aria-label="add"
-                sx={{ position: "fixed", bottom: 20, right: 250 }}
+                sx={{ position: "fixed", bottom: 20, right: 200 }}
                 onClick={handleOpen}
             >
                 <AddIcon />

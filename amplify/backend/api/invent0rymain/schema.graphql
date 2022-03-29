@@ -1,14 +1,14 @@
-type Locations @model @auth(rules: [{allow: public}, {allow: owner}]) {
+type Locations @model @auth(rules: [{allow: owner}, {allow: private, operations: [create, update]}]) {
   id: ID!
   name: String
   street: String
   town: String
   zip: Int
-  Items: [Items] @hasMany(indexName: "byLocations", fields: ["id"])
   Business: Business @hasOne
+  Items: [Items] @hasMany(indexName: "byLocations", fields: ["id"])
 }
 
-type Items @model @auth(rules: [{allow: public}, {allow: owner}]) {
+type Items @model @auth(rules: [{allow: owner}, {allow: private, operations: [create, update]}]) {
   id: ID!
   name: String
   itemCount: Int
@@ -20,10 +20,11 @@ type Items @model @auth(rules: [{allow: public}, {allow: owner}]) {
   businessID: ID! @index(name: "byBusiness")
 }
 
-type Business @model @auth(rules: [{allow: public}, {allow: owner}]) {
+type Business @model @auth(rules: [{allow: owner}, {allow: private, operations: [create, update]}]) {
   id: ID!
   name: String
   location: String
   currency: String
   Items: [Items] @hasMany(indexName: "byBusiness", fields: ["id"])
-} 
+}
+ 
