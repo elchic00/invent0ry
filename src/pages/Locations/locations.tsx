@@ -1,11 +1,23 @@
 import React, { useState, useEffect } from 'react'
-import {API} from "../../services/api";
 import {DataGrid, GridColumns} from '@mui/x-data-grid'
-import {locationType} from "../../interface/models/locationType";
 import {LoaderComponent} from "../../components";
+import {useModal} from "../../context";
+import {useLocations} from "../../hooks/useLocations";
+import {AddLocation} from "../../components/AddLocation/AddLocation";
+import {Fab} from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+
+
 
 export const LocationGrid = () => {
-    const [tableData, setTableData] = useState< { [key: string]: locationType; }[]>([])
+    const { setComponent } = useModal();
+    const { locations, getLocations } = useLocations();
+
+    function handleOpen() {
+        setComponent(<AddLocation getLocations={getLocations} />);
+    }
+
+    // const [tableData, setTableData] = useState< { [key: string]: locationType; }[]>([])
     const columns: GridColumns = [
         { field: 'name',  headerName: 'Name', width: 150, },
         { field: 'street', headerName: 'Street', width: 220 },
@@ -14,15 +26,10 @@ export const LocationGrid = () => {
         // { field: 'owner', headerName: 'Owner', width: 200}
     ]
 
-    useEffect(() => {
-            API.getLocations().then((data)=> JSON.stringify(data)).then((data)=>JSON.parse(data)).then((data)=>setTableData(data))},[])
-
-    // API.getLocations().then((data)=>setTableData(data))},[])
-
 
 return (
         <div style={{ height: 600, width: '66%' }}>
-            {tableData != null ? <DataGrid
+            {locations != null ? <DataGrid
                 sx={{
                     "& .MuiDataGrid-columnHeaders": {
                         backgroundColor: "rgba(236,236,236,1)",
@@ -34,10 +41,18 @@ return (
                     },
                 }}
                 // sx={{ m: 2}}
-                rows={tableData}
+                rows={locations}
                 columns={columns}
                 pageSize={10}
             /> : <LoaderComponent/>}
+            <Fab
+                color="primary"
+                aria-label="add"
+                sx={{ position: "fixed", bottom: 20, right: 250 }}
+                onClick={handleOpen}
+            >
+                <AddIcon />
+            </Fab>
         </div>
     )
 }
