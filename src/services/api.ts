@@ -5,6 +5,7 @@ import { locationType } from "../interface/models/locationType";
 import { Items } from "../models";
 import { ItemDetailsInputs } from "../interface/models/itemDetailsInputs";
 
+
 export class API {
   static async getLocations() {
     return await DataStore.query(Locations);
@@ -34,5 +35,8 @@ export class API {
         businessID: "a3f4095e-39de-43d2-baf4-f8c16f0f6f4d",
       })
     );
+  }
+  static async getLocations(){
+    return await DataStore.query(Locations)
   }
 }

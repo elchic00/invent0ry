@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { AppRoutes } from "./routes";
-import Amplify from "aws-amplify";
+import Amplify, {AuthModeStrategyType} from "aws-amplify";
 import config from "./aws-exports";
 import { ModalComponent } from "./components/Modal";
 import { LoaderComponent } from "./components";
@@ -33,6 +33,9 @@ const updatedAwsConfig = {
       ? localRedirectSignOut
       : productionRedirectSignOut,
   },
+    DataStore: {
+        authModeStrategyType: AuthModeStrategyType.MULTI_AUTH
+    }
 };
 Amplify.configure(updatedAwsConfig);
 function App() {

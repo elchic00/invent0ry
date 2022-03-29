@@ -8,6 +8,7 @@ import { Inventory } from "../pages";
 import { BusinessSpecifics } from "../pages/BusinessSpecifics/BusinessSpecifics";
 import { AddItem } from "../components/AddItem/AddItem";
 import { AddLocation } from "../pages/AddLocation/AddLocation";
+import { LocationGrid } from "../pages/Locations/locations";
 
 export const AppRoutes = () => {
   return (
@@ -30,6 +31,7 @@ export const AppRoutes = () => {
           element={<BusinessSpecifics />}
         ></Route>
         <Route path={paths.addLoc} element={<AddLocation />}></Route>
+        <Route path={paths.locations} element={<LocationGrid />}></Route>
       </Route>
     </Routes>
   );
