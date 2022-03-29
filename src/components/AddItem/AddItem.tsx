@@ -3,17 +3,7 @@ import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { Box, Button, TextField, FormControl } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-
-interface ItemDetailsInputs {
-  itemName: string;
-  locationName: string;
-  businessName: string;
-  count: number;
-  picture: string;
-  sku: string;
-  expirationDate: string;
-  price: number;
-}
+import { ItemDetailsInputs } from "../../interface/models/itemDetailsInputs";
 
 const ItemDetailsSchema = yup.object().shape({
   itemName: yup.string().required("Required field - must be a string"),
