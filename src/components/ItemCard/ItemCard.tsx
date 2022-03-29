@@ -40,7 +40,8 @@ export const ItemCardComponent = ({
       setIsDisabled(false);
     }
   }
-  
+
+  //TODO: have popup modal call this function if agree to delete item
   async function handleDelete(e: React.SyntheticEvent) {
     e.preventDefault();
     try {
@@ -74,13 +75,7 @@ export const ItemCardComponent = ({
         </Box>
       </CardContent>
       <CardActions>
-        {/* TODO:
-          1. Button to update
-          */
             <Button disabled={isDisabled} onClick={handleUpdate}>Update</Button>
-         /* 
-          2. Button to delete
-          */}
             <Button onClick={handleDelete}>Delete</Button>
         <IconButton></IconButton>
       </CardActions>
