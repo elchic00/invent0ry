@@ -4,7 +4,8 @@ import { Box, Button, TextField, FormControl } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { ItemDetailsInputs } from "../../interface/models/itemDetailsInputs";
-
+import { API } from "../../services/api";
+import { useItems } from "../../hooks";
 const ItemDetailsSchema = yup.object().shape({
   itemName: yup.string().required("Required field - must be a string"),
   locationName: yup.string().required("Required field - must be a string"),
@@ -27,7 +28,7 @@ const defaultValues = {
   price: 0,
 };
 const resolver = yupResolver(ItemDetailsSchema);
-export const AddItem = () => {
+export const AddItem = ({ getItems }: { getItems: Function }) => {
   const {
     register,
     handleSubmit,
@@ -38,25 +39,15 @@ export const AddItem = () => {
     resolver,
   });
 
-  const formSubmitHandler: SubmitHandler<ItemDetailsInputs> = (
+  const formSubmitHandler: SubmitHandler<ItemDetailsInputs> = async (
     data: ItemDetailsInputs
   ) => {
-    // const options = {
-    //     method: "POST",
-    //     headers: {
-    //         Accept: "application/json",
-    //         "Content-Type": "application/json;charset=UTF-8",
-    //     },
-    //     body: JSON.stringify({
-    //         'name': businessName,
-    //         'locationName': locationName,
-    //         'currency': currency
-    //     })}
-    // fetch(url, options)
-    //     .then((response) => {response.json();
-    //         console.log(response);})
-
-    console.log("form data:", data);
+    try {
+      await API.addItem();
+      await getItems();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

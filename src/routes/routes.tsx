@@ -7,7 +7,7 @@ import { AuthenticatedView } from "../views";
 import { Inventory } from "../pages";
 import { BusinessSpecifics } from "../pages/BusinessSpecifics/BusinessSpecifics";
 import { AddItem } from "../components/AddItem/AddItem";
-import {AddLocation} from "../pages/AddLocation/AddLocation";
+import { AddLocation } from "../pages/AddLocation/AddLocation";
 
 export const AppRoutes = () => {
   return (
@@ -21,13 +21,15 @@ export const AppRoutes = () => {
           </AuthenticatedView>
         }
       >
-        <Route path={paths.addItem} element={<AddItem/>}></Route>
         <Route path={paths.dashboard} element={<Dashboard />}></Route>
         <Route path={paths.inventory} element={<Inventory />}></Route>
         <Route path={paths.settings} element={<div>settings</div>}></Route>
         <Route path={paths.profile} element={<div>profile</div>}></Route>
-        <Route path={paths.businessSpecifics} element={<BusinessSpecifics/>}></Route>
-        <Route path={paths.addLoc} element={<AddLocation/>}></Route>
+        <Route
+          path={paths.businessSpecifics}
+          element={<BusinessSpecifics />}
+        ></Route>
+        <Route path={paths.addLoc} element={<AddLocation />}></Route>
       </Route>
     </Routes>
   );

@@ -7,17 +7,17 @@ import { Skeleton } from "@mui/material";
 
 export const Inventory = () => {
   const { setComponent } = useModal();
-  const { items } = useItems();
+  const { items, getItems } = useItems();
 
   function handleOpen() {
-    setComponent(<AddItem />);
+    setComponent(<AddItem getItems={getItems} />);
   }
   return (
     <Box>
       {items ? (
-        <div>Display items</div>
+        items.map((item) => <div>{item.name}</div>)
       ) : (
-        <Skeleton variant="rectangular" width={210} height={118} />
+        <Skeleton variant="rectangular" width={500} height={118} />
       )}
       <Fab
         color="primary"
