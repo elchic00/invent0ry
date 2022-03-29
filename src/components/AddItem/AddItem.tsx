@@ -69,9 +69,6 @@ export const AddItem = () => {
     console.log("form data:", data);
   };
 
-  function onSubmit(data: any) {
-    console.log(data);
-  }
   return (
     <form onSubmit={handleSubmit(formSubmitHandler)}>
       <FormControl
