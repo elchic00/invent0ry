@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { Box, Button, TextField, FormControl } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -39,6 +39,9 @@ export const AddItem = ({ getItems }: { getItems: Function }) => {
     defaultValues,
     resolver,
   });
+
+  const [data, setData] = useState<ItemDetailsInputs>();
+
   const { setComponent } = useModal();
 
   const formSubmitHandler: SubmitHandler<ItemDetailsInputs> = async (
@@ -52,6 +55,16 @@ export const AddItem = ({ getItems }: { getItems: Function }) => {
       console.log(error);
     }
   };
+
+  async function createImage(e: any) {
+    // TODO:
+    // 1. Get the actual form data
+    // 2. Update the actual form data
+    // OR
+    // Add an extra key
+    // const result = await API.createImage(e.img)
+    // update form data
+  }
 
   return (
     <form onSubmit={handleSubmit(formSubmitHandler)}>
@@ -115,7 +128,9 @@ export const AddItem = ({ getItems }: { getItems: Function }) => {
           name="count"
           control={control}
           render={({ field: { onChange, ref, value } }) => (
+            // TODO - Specify a minimum of items
             <TextField
+              type="number"
               value={value}
               onChange={onChange}
               inputRef={ref}
@@ -132,6 +147,8 @@ export const AddItem = ({ getItems }: { getItems: Function }) => {
           control={control}
           defaultValue=""
           render={({ field: { onChange, ref, value } }) => (
+            // TODO: Update this form field for one that allows upload an image
+
             <TextField
               value={value}
               onChange={onChange}
@@ -165,7 +182,8 @@ export const AddItem = ({ getItems }: { getItems: Function }) => {
           name="expirationDate"
           control={control}
           render={({ field: { onChange, ref, value } }) => (
-            <TextField
+            // Add a toggle to show this field and the avility for the end-user to select a date
+            /* {isOpen ? <ExpirationDateComponent/> : <ToggleComponent/>} */ <TextField
               value={value}
               onChange={onChange}
               inputRef={ref}
@@ -193,6 +211,7 @@ export const AddItem = ({ getItems }: { getItems: Function }) => {
           )}
         />
 
+        {/* // TODO: Style this Button */}
         <Button type="submit">Submit</Button>
       </FormControl>
     </form>
