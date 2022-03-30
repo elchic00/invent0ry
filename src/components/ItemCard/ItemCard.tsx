@@ -55,6 +55,7 @@ export const ItemCardComponent = ({
         id={id}
         name={name}
         count={itemCount}
+        price={price}
         picture={picture}
         expirationDate={expire}
         getItems={getItems}
