@@ -12,6 +12,7 @@ import { API } from "../../services/api";
 import { sendNotification } from "../../utils/sendNotification";
 import { UpdateItem } from "../UpdateItem";
 import { useModal } from "../../context/ModalContext";
+import { Items } from "../../models"
 
 type ItemCardProps = {
   name?: string;
@@ -39,7 +40,9 @@ export const ItemCardComponent = ({
   async function handleDelete(e: React.SyntheticEvent) {
     e.preventDefault();
     try {
-      //const result = await API.deleteItem();
+      const item = (await API.getItemById(id)) as Items;
+      const result = await API.deleteItem(item);
+      await getItems()
       sendNotification("Item was successfully deleted", "success");
     } catch (e) {
       sendNotification("Error trying to call the delete item api", "error");

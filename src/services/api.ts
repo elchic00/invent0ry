@@ -20,6 +20,11 @@ export class API {
   static async getItems() {
     return await DataStore.query(Items);
   }
+  
+
+  static async deleteItem(item:Items) {
+    return await DataStore.delete(item);
+  }
 
   static async addItem(item: ItemDetailsInputs) {
     await DataStore.save(
