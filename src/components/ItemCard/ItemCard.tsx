@@ -9,7 +9,9 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { API } from "../../services/api";
-import {sendNotification} from "../../utils/sendNotification";
+import { sendNotification } from "../../utils/sendNotification";
+import { UpdateItem } from "../UpdateItem";
+import { useModal } from "../../context/ModalContext";
 
 type ItemCardProps = {
   name?: string;
@@ -17,6 +19,7 @@ type ItemCardProps = {
   picture?: string;
   expire?: string;
   price?: number;
+  id: string;
 };
 
 export const ItemCardComponent = ({
@@ -25,39 +28,44 @@ export const ItemCardComponent = ({
   picture,
   expire,
   price,
+  id,
 }: ItemCardProps) => {
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
-
-  async function handleUpdate(e: React.SyntheticEvent) {
-    e.preventDefault();
-    setIsDisabled(true);
-    try {
-      //const result = await API.updateItem();
-      setIsDisabled(false);
-    } catch(e) {
-      sendNotification( "Error trying to call the update item api",
-      "error");
-      setIsDisabled(false);
-    }
-  }
+  const { setComponent } = useModal();
 
   //TODO: have popup modal call this function if agree to delete item
   async function handleDelete(e: React.SyntheticEvent) {
     e.preventDefault();
     try {
       //const result = await API.deleteItem();
-      sendNotification( "Item was successfully deleted",
-      "success");
-    } catch(e) {
-      sendNotification( "Error trying to call the delete item api",
-      "error");
+      sendNotification("Item was successfully deleted", "success");
+    } catch (e) {
+      sendNotification("Error trying to call the delete item api", "error");
     }
+  }
+
+  function openUpdate(id: string) {
+    setComponent(
+      <UpdateItem
+        id={id}
+        name={name}
+        count={itemCount}
+        picture={picture}
+        expirationDate={expire}
+      />
+    );
   }
 
   return (
     <Card sx={{ width: { xs: "auto", sm: "300px" }, borderRadius: 2 }}>
       <CardContent>
-        <Box sx={{ display: "flex", justifyContent: "space-between", flexDirection: "column" }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            flexDirection: "column",
+          }}
+        >
           {/* 
             // display: box 
             // display: inline - <span> 
@@ -75,8 +83,10 @@ export const ItemCardComponent = ({
         </Box>
       </CardContent>
       <CardActions>
-            <Button disabled={isDisabled} onClick={handleUpdate}>Update</Button>
-            <Button onClick={handleDelete}>Delete</Button>
+        <Button disabled={isDisabled} onClick={() => openUpdate(id)}>
+          Update
+        </Button>
+        <Button onClick={handleDelete}>Delete</Button>
         <IconButton></IconButton>
       </CardActions>
     </Card>
