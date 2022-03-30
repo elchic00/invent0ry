@@ -27,6 +27,8 @@ export const Inventory = () => {
               picture={item.picture}
               expire={item.expire}
               price={item.price}
+              id={item.id}
+              getItems={getItems}
             />
           ))
         ) : (

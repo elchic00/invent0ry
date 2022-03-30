@@ -14,6 +14,7 @@ export const useItems = () => {
     try {
       const result = await API.getItems();
       setItems(result);
+      console.log(result);
     } catch (error) {
       console.log(error);
       sendNotification("Error trying to get items", "error");
