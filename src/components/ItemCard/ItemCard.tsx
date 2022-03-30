@@ -20,6 +20,7 @@ type ItemCardProps = {
   expire?: string;
   price?: number;
   id: string;
+  getItems: Function;
 };
 
 export const ItemCardComponent = ({
@@ -29,6 +30,7 @@ export const ItemCardComponent = ({
   expire,
   price,
   id,
+  getItems,
 }: ItemCardProps) => {
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
   const { setComponent } = useModal();
@@ -52,6 +54,7 @@ export const ItemCardComponent = ({
         count={itemCount}
         picture={picture}
         expirationDate={expire}
+        getItems={getItems}
       />
     );
   }

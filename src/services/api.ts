@@ -35,4 +35,28 @@ export class API {
       })
     );
   }
+
+  static async updateItem({
+    original,
+
+    data,
+  }: {
+    original: Items;
+
+    data: ItemDetailsInputs;
+  }) {
+    return await DataStore.save(
+      Items.copyOf(original, (updated) => {
+        updated.name = data.itemName;
+        updated.picture = data.picture;
+        updated.itemCount = data.count;
+        updated.expire = data.expirationDate;
+        updated.price = data.price;
+      })
+    );
+  }
+
+  static async getItemById(id: string) {
+    return await DataStore.query(Items, id);
+  }
 }

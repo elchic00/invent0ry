@@ -19,7 +19,7 @@ export const AddLocation = ({ getLocations }: { getLocations: Function }) => {
     e.preventDefault();
     setIsDisabled(true);
     try {
-      const result = await API.addLocation(formData);
+      // const result = await API.addLocation(formData);
       await getLocations();
       setComponent(null);
       setIsDisabled(false);
