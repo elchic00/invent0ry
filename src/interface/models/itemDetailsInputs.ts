@@ -5,6 +5,6 @@ export interface ItemDetailsInputs {
   count?: number;
   picture?: string;
   sku?: string;
-  expirationDate?: string;
+  expirationDate?: string | undefined;
   price?: number;
 }
