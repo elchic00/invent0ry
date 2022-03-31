@@ -166,10 +166,7 @@ export const LocationGrid = () => {
     <div
       style={{
         height: 600,
-        width: "60%",
-        position: "fixed",
-        bottom: 20,
-        right: 260,
+        width: "auto",
       }}
     >
       {renderConfirmDialog()}
