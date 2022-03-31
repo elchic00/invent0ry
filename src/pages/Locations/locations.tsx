@@ -1,5 +1,5 @@
-import {useState, useEffect, useCallback, useRef} from 'react'
-import {DataGrid, GridColumns, GridRowModel} from '@mui/x-data-grid'
+import {useState, useEffect, useCallback, useRef, SetStateAction} from 'react'
+import {DataGrid, GridColumns, GridRowId, GridRowModel, GridSelectionModel, useGridApiRef} from '@mui/x-data-grid'
 import {LoaderComponent} from "../../components";
 import {useModal} from "../../context";
 import {useLocations} from "../../hooks/useLocations";
@@ -13,18 +13,18 @@ import {
     DialogContent,
     DialogTitle,
     Fab,
-    Snackbar
 } from "@mui/material";
 import RemoveIcon from "@mui/icons-material/Remove";
 import {locationType} from "../../interface/models/locationType";
 import {API} from "../../services/api";
 import AddIcon from "@mui/icons-material/Add";
+import {sendNotification} from "../../utils/sendNotification";
 
 const columns: GridColumns = [
-    { field: 'name',  headerName: 'Name', width: 180, editable: true},
-    { field: 'street', headerName: 'Street', width: 240, editable: true },
-    { field: 'town', headerName: 'Town', width: 185 , editable: true},
-    { field: 'zip', headerName: 'Zip' , width: 120, editable: true},
+    {field: 'name', headerName: 'Name', width: 180, editable: true},
+    {field: 'street', headerName: 'Street', width: 240, editable: true},
+    {field: 'town', headerName: 'Town', width: 185, editable: true},
+    {field: 'zip', headerName: 'Zip', width: 120, editable: true},
     // { field: 'owner', headerName: 'Owner', width: 200}
 ]
 
@@ -61,37 +61,25 @@ function computeMutation(newRow: GridRowModel, oldRow: GridRowModel) {
 }
 
 export const LocationGrid = () => {
-    const { setComponent } = useModal();
-    const { locations, getLocations } = useLocations();
-    // const [rows, setRows] = useState(data);
-    const [deletedRows, setDeletedRows] = useState([]);
+    const {setComponent} = useModal();
+    const {locations, getLocations} = useLocations();
+    const [deleted, setDeleted] = useState<GridSelectionModel|GridSelectionModel[]>([])
 
-    // const handleRowSelection = (e) => {
-    //     setDeletedRows([...deletedRows, ...locations.filter((r) => r.id === e.data.id)]);
-    // };
-
-    // const handlePurge = () => {
-    //     setRows(
-    //         rows.filter((r) => deletedRows.filter((sr) => sr.id === r.id).length < 1)
-    //     );
-    // };
+    const handlePurge = async () => {
+        let arrLen = deleted.length
+            // for(let i = 0;i<=arrLen;)
+            //     await API.deleteLocation(deleted[i] as string)
+            // setDeleted([])
+        console.log(arrLen, deleted)
+    }
 
     function handleOpen() {
-        setComponent(<AddLocation getLocations={getLocations} />);
+        setComponent(<AddLocation getLocations={getLocations}/>);
     }
-    function handleDelete(){
 
-    }
     const mutateRow = useFakeMutation();
     const noButtonRef = useRef<HTMLButtonElement>(null);
     const [promiseArguments, setPromiseArguments] = useState<any>(null);
-
-    const [snackbar, setSnackbar] = useState<Pick<
-        AlertProps,
-        'children' | 'severity'
-        > | null>(null);
-
-    const handleCloseSnackbar = () => setSnackbar(null);
 
     const processRowUpdate = useCallback(
         (newRow: GridRowModel, oldRow: GridRowModel) =>
@@ -99,7 +87,7 @@ export const LocationGrid = () => {
                 const mutation = computeMutation(newRow, oldRow);
                 if (mutation) {
                     // Save the arguments to resolve or reject the promise later
-                    setPromiseArguments({ resolve, reject, newRow, oldRow });
+                    setPromiseArguments({resolve, reject, newRow, oldRow});
                 } else {
                     resolve(oldRow); // Nothing was changed
                 }
@@ -108,25 +96,22 @@ export const LocationGrid = () => {
     );
 
     const handleNo = () => {
-        const { oldRow, resolve } = promiseArguments;
+        const {oldRow, resolve} = promiseArguments;
         resolve(oldRow); // Resolve with the old row to not update the internal state
         setPromiseArguments(null);
     };
 
     const handleYes = async () => {
-        const { newRow, oldRow, reject, resolve } = promiseArguments;
-
+        const {newRow, oldRow, reject, resolve} = promiseArguments;
         try {
             // Make the HTTP request to save in the backend
             const response = await mutateRow(newRow);
             await API.updateLocation(oldRow, newRow)
-            console.log(response)
-            setSnackbar({ children: 'Location successfully saved', severity: 'success' });
+            sendNotification("Location was successfully updated", "success");
             resolve(response);
             setPromiseArguments(null);
         } catch (error) {
-            console.log(error)
-            setSnackbar({ children: "Name can't be empty", severity: 'error' });
+            sendNotification("Error trying to update the location", "error");
             reject(oldRow);
             setPromiseArguments(null);
         }
@@ -144,14 +129,14 @@ export const LocationGrid = () => {
             return null;
         }
 
-        const { newRow, oldRow } = promiseArguments;
+        const {newRow, oldRow} = promiseArguments;
         const mutation = computeMutation(newRow, oldRow);
 
         return (
             // eslint-disable-next-line react/jsx-no-undef
             <Dialog
                 maxWidth="xs"
-                TransitionProps={{ onEntered: handleEntered }}
+                TransitionProps={{onEntered: handleEntered}}
                 open={!!promiseArguments}
             >
                 <DialogTitle>Are you sure?</DialogTitle>
@@ -169,13 +154,15 @@ export const LocationGrid = () => {
     };
 
 
-return (
+// @ts-ignore
+    return (
         <div style={{
             height: 600,
             width: '60%',
             position: "fixed",
             bottom: 20,
-            right: 260}}>
+            right: 260
+        }}>
             {renderConfirmDialog()}
             {locations != null ? <DataGrid
                 sx={{
@@ -192,16 +179,11 @@ return (
                 rows={locations}
                 columns={columns}
                 processRowUpdate={processRowUpdate}
-                experimentalFeatures={{ newEditingApi: true }}
+                experimentalFeatures={{newEditingApi: true}}
                 checkboxSelection
-                // onRowSelected={handleRowSelection}
+                onSelectionModelChange={loc =>  setDeleted(loc)}
                 pageSize={10}
             /> : <LoaderComponent/>}
-            {!!snackbar && (
-                <Snackbar open onClose={handleCloseSnackbar} autoHideDuration={6000}>
-                    <Alert {...snackbar} onClose={handleCloseSnackbar} />
-                </Snackbar>
-            )}
             <Fab
                 color="primary"
                 aria-label="add"
@@ -214,10 +196,11 @@ return (
                 color="primary"
                 aria-label="add"
                 sx={{ position: "fixed", bottom: 20, right: 120 }}
-                onClick={handleDelete}
+                onClick={handlePurge}
             >
                 <RemoveIcon />
             </Fab>
+
         </div>
     )
 }

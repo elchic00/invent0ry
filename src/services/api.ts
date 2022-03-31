@@ -18,6 +18,16 @@ export class API {
   static async addLocation(data: locationType) {
     return await DataStore.save(new Locations(data));
   }
+    // static async deleteLocation(locationId:string) {
+    //     const to_delete = await DataStore.query(Locations, locationId);
+    //     console.log(to_delete)
+    //     try {
+    //         if(to_delete) return await DataStore.delete(to_delete);
+    //     }catch(e){
+    //         console.log(e)
+    //     }
+    // }
+
 
     static async updateLocation(original: Locations, data: locationUpdateType){
         return await DataStore.save(
