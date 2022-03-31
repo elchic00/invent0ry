@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { Box, Button, TextField, FormControl, Typography } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -10,6 +10,7 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
 import Switch from "@mui/material/Switch";
+import { useLocations } from "../../hooks/useLocations";
 
 const label = { inputProps: { "aria-label": "Switch demo" } };
 
@@ -48,6 +49,9 @@ export const AddItem = ({ getItems }: { getItems: Function }) => {
 
   const [isOpen, setIsOpen] = useState<boolean>();
   const { setComponent } = useModal();
+  const { locations } = useLocations();
+
+  console.log(locations);
 
   const formSubmitHandler: SubmitHandler<ItemDetailsInputs> = async (
     data: ItemDetailsInputs
