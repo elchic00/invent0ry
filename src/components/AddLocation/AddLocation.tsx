@@ -19,7 +19,7 @@ export const AddLocation = ({ getLocations }: { getLocations: Function }) => {
     e.preventDefault();
     setIsDisabled(true);
     try {
-      // const result = await API.addLocation(formData);
+      await API.addLocation(formData);
       await getLocations();
       setComponent(null);
       setIsDisabled(false);
@@ -31,7 +31,7 @@ export const AddLocation = ({ getLocations }: { getLocations: Function }) => {
 
   async function handleChange(e: React.ChangeEvent) {
     const { name, value } = e.target as HTMLInputElement;
-    if (Number(value)) {
+    if (name === 'zip') {
       setFormData((prev: locationType) => ({ ...prev, [name]: Number(value) }));
     } else setFormData((prev: locationType) => ({ ...prev, [name]: value }));
   }
