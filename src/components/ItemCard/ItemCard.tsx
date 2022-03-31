@@ -6,6 +6,8 @@ import {
   IconButton,
   Typography,
   Button,
+  CardMedia,
+  CardActionArea,
 } from "@mui/material";
 import React, { useState } from "react";
 import { API } from "../../services/api";
@@ -13,6 +15,9 @@ import { sendNotification } from "../../utils/sendNotification";
 import { UpdateItem } from "../UpdateItem";
 import { useModal } from "../../context/ModalContext";
 import { Items } from "../../models";
+import potatoes from "../../assets/potatoe.png";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 
 type ItemCardProps = {
   name?: string;
@@ -49,7 +54,7 @@ export const ItemCardComponent = ({
     }
   }
 
-  function openUpdate(id: string) {
+  function openUpdate() {
     setTheme({ height: "auto", width: "auto" });
     setComponent(
       <UpdateItem
@@ -66,36 +71,90 @@ export const ItemCardComponent = ({
 
   return (
     <Card sx={{ width: { xs: "auto", sm: "300px" }, borderRadius: 2 }}>
-      <CardContent>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            flexDirection: "column",
-          }}
-        >
-          {/* 
-            // display: box 
-            // display: inline - <span> 
-            */}
+      <CardActionArea>
+        <CardMedia component="img" height="140" image={potatoes} alt={name} />
+        <CardContent>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              flexDirection: "column",
+            }}
+          >
+            <Typography variant="h4" sx={{ mb: 1 }}>
+              {name}
+            </Typography>
+            <Typography
+              variant="h5"
+              sx={{
+                fontWeight: 100,
+                display: "flex",
+                gap: 1,
+                alignItems: "center",
+              }}
+            >
+              {" "}
+              Quantity:
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                sx={{ fontSize: "1.2rem", fontWeight: 100 }}
+              >
+                {itemCount}
+              </Typography>
+            </Typography>
 
-          <Typography variant="h5" sx={{ fontWeight: 100 }}>
-            Name: {name}
-          </Typography>
-          <Typography variant="h5" sx={{ fontWeight: 100 }}>
-            Quantity: {itemCount}
-          </Typography>
-          <Typography variant="h5" sx={{ fontWeight: 100 }}>
-            Price: {price}
-          </Typography>
-        </Box>
-      </CardContent>
+            <Typography
+              variant="h5"
+              sx={{
+                fontWeight: 100,
+                display: "flex",
+                gap: 1,
+                alignItems: "center",
+              }}
+            >
+              {" "}
+              Price:
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                sx={{ fontSize: "1.2rem", fontWeight: 100 }}
+              >
+                $ {price}
+              </Typography>
+            </Typography>
+            {expire && (
+              <Typography
+                variant="h5"
+                sx={{
+                  fontWeight: 100,
+                  display: "flex",
+                  gap: 1,
+                  alignItems: "center",
+                }}
+              >
+                {" "}
+                Expire:
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ fontSize: "1.2rem", fontWeight: 100 }}
+                >
+                  {expire}
+                </Typography>
+              </Typography>
+            )}
+          </Box>
+        </CardContent>
+      </CardActionArea>
       <CardActions>
-        <Button disabled={isDisabled} onClick={() => openUpdate(id)}>
-          Update
-        </Button>
-        <Button onClick={handleDelete}>Delete</Button>
-        <IconButton></IconButton>
+        <IconButton onClick={openUpdate}>
+          {" "}
+          <EditIcon />
+        </IconButton>
+        <IconButton onClick={handleDelete}>
+          <DeleteIcon />{" "}
+        </IconButton>
       </CardActions>
     </Card>
   );
