@@ -4,18 +4,41 @@ import { Business, Locations } from "../models";
 import { locationType } from "../interface/models/locationType";
 import { Items } from "../models";
 import { ItemDetailsInputs } from "../interface/models/itemDetailsInputs";
+import {locationUpdateType} from "../interface/models/locationUpdateType";
 
 export class API {
-  static async getLocations() {
+    static async businessSpecifics(data: businessType) {
+        return await DataStore.save(new Business(data));
+    }
+
+    static async getLocations() {
     return await DataStore.query(Locations);
   }
 
-  static async businessSpecifics(data: businessType) {
-    return await DataStore.save(new Business(data));
-  }
   static async addLocation(data: locationType) {
     return await DataStore.save(new Locations(data));
   }
+
+    static async getLocationById(id: string) {
+        return await DataStore.query(Locations, id);
+    }
+
+    static async deleteLocation(location:Locations) {
+        return await DataStore.delete(location);
+    }
+
+
+    static async updateLocation(original: Locations, data: locationUpdateType){
+        return await DataStore.save(
+            Locations.copyOf(original, (updated) => {
+                updated.name = data.name;
+                updated.street = data.street;
+                updated.town = data.town;
+                updated.zip = data.zip;
+            })
+        );
+    }
+
 
   static async getItems() {
     return await DataStore.query(Items);
@@ -33,7 +56,7 @@ export class API {
         itemCount: item.count,
         picture: item.picture,
         sku: item.sku,
-        expire: "1970-01-01Z",
+        expire: '1970-01-01Z',
         price: item.price,
         locationsID: "a3f4095e-39de-43d2-baf4-f8c16f0f6f4d",
         businessID: "a3f4095e-39de-43d2-baf4-f8c16f0f6f4d",
