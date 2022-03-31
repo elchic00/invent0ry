@@ -18,15 +18,14 @@ export class API {
   static async addLocation(data: locationType) {
     return await DataStore.save(new Locations(data));
   }
-    // static async deleteLocation(locationId:string) {
-    //     const to_delete = await DataStore.query(Locations, locationId);
-    //     console.log(to_delete)
-    //     try {
-    //         if(to_delete) return await DataStore.delete(to_delete);
-    //     }catch(e){
-    //         console.log(e)
-    //     }
-    // }
+
+    static async getLocationById(id: string) {
+        return await DataStore.query(Locations, id);
+    }
+
+    static async deleteLocation(location:Locations) {
+        return await DataStore.delete(location);
+    }
 
 
     static async updateLocation(original: Locations, data: locationUpdateType){
@@ -57,7 +56,7 @@ export class API {
         itemCount: item.count,
         picture: item.picture,
         sku: item.sku,
-        expire: item.expirationDate,
+        expire: '1970-01-01Z',
         price: item.price,
         locationsID: "a3f4095e-39de-43d2-baf4-f8c16f0f6f4d",
         businessID: "a3f4095e-39de-43d2-baf4-f8c16f0f6f4d",

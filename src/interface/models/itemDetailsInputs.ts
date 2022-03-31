@@ -7,6 +7,4 @@ export interface ItemDetailsInputs {
   sku?: string;
   expirationDate?: string;
   price?: number;
-  locationsID?: string| undefined;
-  businessID?: string | undefined;
 }

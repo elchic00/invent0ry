@@ -19,6 +19,7 @@ import {locationType} from "../../interface/models/locationType";
 import {API} from "../../services/api";
 import AddIcon from "@mui/icons-material/Add";
 import {sendNotification} from "../../utils/sendNotification";
+import {Locations} from "../../models";
 
 const columns: GridColumns = [
     {field: 'name', headerName: 'Name', width: 180, editable: true},
@@ -49,12 +50,21 @@ export const LocationGrid = () => {
     const {locations, getLocations} = useLocations();
     const [deleted, setDeleted] = useState<GridSelectionModel|GridSelectionModel[]>([])
 
-    const handlePurge = async () => {
+    const handleDelete = async () => {
         let arrLen = deleted.length
-        // for(let i = 0;i<=arrLen;)
-        //     await API.deleteLocation(deleted[i] as string)
-        // setDeleted([])
-        console.log(arrLen, deleted)
+        try {
+            // for (let i = 0; i <= arrLen; i++) {
+                const loc = (await API.getLocationById(deleted[0] as string)) as Locations
+                const res = await API.deleteLocation(loc)
+                sendNotification("Location was successfully deleted", "success");
+                console.log(res)
+            // }
+            await getLocations()
+        }catch(e){
+            console.log(e)
+            sendNotification("Error trying to call the delete location api", "error");
+        }
+
     }
 
     function handleOpen() {
@@ -178,7 +188,7 @@ export const LocationGrid = () => {
                 color="primary"
                 aria-label="add"
                 sx={{ position: "fixed", bottom: 20, right: 120 }}
-                onClick={handlePurge}
+                onClick={handleDelete}
             >
                 <RemoveIcon />
             </Fab>
