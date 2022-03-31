@@ -12,7 +12,7 @@ import { API } from "../../services/api";
 import { sendNotification } from "../../utils/sendNotification";
 import { UpdateItem } from "../UpdateItem";
 import { useModal } from "../../context/ModalContext";
-import { Items } from "../../models"
+import { Items } from "../../models";
 
 type ItemCardProps = {
   name?: string;
@@ -34,7 +34,7 @@ export const ItemCardComponent = ({
   getItems,
 }: ItemCardProps) => {
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
-  const { setComponent } = useModal();
+  const { setComponent, setTheme } = useModal();
 
   //TODO: have popup modal call this function if agree to delete item
   async function handleDelete(e: React.SyntheticEvent) {
@@ -42,7 +42,7 @@ export const ItemCardComponent = ({
     try {
       const item = (await API.getItemById(id)) as Items;
       const result = await API.deleteItem(item);
-      await getItems()
+      await getItems();
       sendNotification("Item was successfully deleted", "success");
     } catch (e) {
       sendNotification("Error trying to call the delete item api", "error");
@@ -50,6 +50,7 @@ export const ItemCardComponent = ({
   }
 
   function openUpdate(id: string) {
+    setTheme({ height: "auto", width: "auto" });
     setComponent(
       <UpdateItem
         id={id}
