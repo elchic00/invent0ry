@@ -3,5 +3,4 @@ export type locationType = {
   street: string;
   town: string;
   zip: number | undefined;
-  accountId?: string;
 };
