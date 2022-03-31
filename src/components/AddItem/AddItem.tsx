@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import { Box, Button, TextField, FormControl, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  TextField,
+  FormControl,
+  Typography,
+  Skeleton,
+  MenuItem,
+  InputLabel,
+} from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { ItemDetailsInputs } from "../../interface/models/itemDetailsInputs";
@@ -11,6 +20,8 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
 import Switch from "@mui/material/Switch";
 import { useLocations } from "../../hooks/useLocations";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { Locations } from "../../models";
 
 const label = { inputProps: { "aria-label": "Switch demo" } };
 
@@ -50,8 +61,6 @@ export const AddItem = ({ getItems }: { getItems: Function }) => {
   const [isOpen, setIsOpen] = useState<boolean>();
   const { setComponent } = useModal();
   const { locations } = useLocations();
-
-  console.log(locations);
 
   const formSubmitHandler: SubmitHandler<ItemDetailsInputs> = async (
     data: ItemDetailsInputs
@@ -103,21 +112,33 @@ export const AddItem = ({ getItems }: { getItems: Function }) => {
               />
             )}
           />
-          <Controller
-            name="locationName"
-            control={control}
-            render={({ field: { onChange, ref, value } }) => (
-              <TextField
-                value={value}
-                onChange={onChange}
-                inputRef={ref}
-                label="Location Name"
-                variant="outlined"
-                error={!!errors.price}
-                helperText={errors.price ? errors.price?.message : ""}
-              />
-            )}
-          />
+
+          {locations ? (
+            <Controller
+              name="locationName"
+              control={control}
+              render={({ field: { onChange, ref, value } }) => (
+                <FormControl>
+                  <InputLabel id="location">Location</InputLabel>
+                  <Select
+                    id="location"
+                    value={value}
+                    label="Location Name"
+                    onChange={onChange}
+                    inputRef={ref}
+                  >
+                    {locations.map((location: Locations) => (
+                      <MenuItem value={location.id}>
+                        {`${location.name} - ${location.street}, ${location.town}`}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              )}
+            />
+          ) : (
+            <Skeleton width="500px" height="200px" />
+          )}
 
           <Controller
             name="businessName"
