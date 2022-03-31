@@ -3,8 +3,4 @@ export type locationUpdateType = {
     street: string;
     town: string;
     zip: number | undefined;
-    createdAt: string;
-    locationsBusinessId: string;
-    id: string
-    updatedAt: string;
 }

@@ -28,22 +28,6 @@ const columns: GridColumns = [
     // { field: 'owner', headerName: 'Owner', width: 200}
 ]
 
-const useFakeMutation = () => {
-    return useCallback(
-        (location: Partial<locationType>) =>
-            new Promise<Partial<locationType>>((resolve, reject) =>
-                setTimeout(() => {
-                    if (location.name?.trim() === '') {
-                        reject();
-                    } else {
-                        resolve(location);
-                    }
-                }, 200),
-            ),
-        [],
-    );
-};
-
 function computeMutation(newRow: GridRowModel, oldRow: GridRowModel) {
     if (newRow.name !== oldRow.name) {
         return `Name from '${oldRow.name}' to '${newRow.name}'`;
@@ -67,9 +51,9 @@ export const LocationGrid = () => {
 
     const handlePurge = async () => {
         let arrLen = deleted.length
-            // for(let i = 0;i<=arrLen;)
-            //     await API.deleteLocation(deleted[i] as string)
-            // setDeleted([])
+        // for(let i = 0;i<=arrLen;)
+        //     await API.deleteLocation(deleted[i] as string)
+        // setDeleted([])
         console.log(arrLen, deleted)
     }
 
@@ -77,7 +61,6 @@ export const LocationGrid = () => {
         setComponent(<AddLocation getLocations={getLocations}/>);
     }
 
-    const mutateRow = useFakeMutation();
     const noButtonRef = useRef<HTMLButtonElement>(null);
     const [promiseArguments, setPromiseArguments] = useState<any>(null);
 
@@ -105,10 +88,9 @@ export const LocationGrid = () => {
         const {newRow, oldRow, reject, resolve} = promiseArguments;
         try {
             // Make the HTTP request to save in the backend
-            const response = await mutateRow(newRow);
-            await API.updateLocation(oldRow, newRow)
+            const res = await API.updateLocation(oldRow, newRow)
             sendNotification("Location was successfully updated", "success");
-            resolve(response);
+            resolve(res);
             setPromiseArguments(null);
         } catch (error) {
             sendNotification("Error trying to update the location", "error");
@@ -121,7 +103,7 @@ export const LocationGrid = () => {
         // The `autoFocus` is not used because, if used, the same Enter that saves
         // the cell triggers "No". Instead, we manually focus the "No" button once
         // the dialog is fully open.
-        // noButtonRef.current?.focus();
+        // noButtonRef.current?.focus();`
     };
 
     const renderConfirmDialog = () => {
