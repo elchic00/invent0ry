@@ -1,25 +1,15 @@
-import {
-  useState,
-  useEffect,
-  useCallback,
-  useRef,
-  SetStateAction,
-} from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import {
   DataGrid,
   GridColumns,
-  GridRowId,
   GridRowModel,
   GridSelectionModel,
-  useGridApiRef,
 } from "@mui/x-data-grid";
 import { LoaderComponent } from "../../components";
 import { useModal } from "../../context";
 import { useLocations } from "../../hooks/useLocations";
 import { AddLocation } from "../../components/AddLocation/AddLocation";
 import {
-  Alert,
-  AlertProps,
   Button,
   Dialog,
   DialogActions,
@@ -28,18 +18,18 @@ import {
   Fab,
 } from "@mui/material";
 import RemoveIcon from "@mui/icons-material/Remove";
-import { locationType } from "../../interface/models/locationType";
 import { API } from "../../services/api";
 import AddIcon from "@mui/icons-material/Add";
 import { sendNotification } from "../../utils/sendNotification";
 import { Locations } from "../../models";
 
 const columns: GridColumns = [
+  { field: "owner", headerName: "owner", width: 200 },
   { field: "name", headerName: "Name", width: 180, editable: true },
   { field: "street", headerName: "Street", width: 240, editable: true },
   { field: "town", headerName: "Town", width: 185, editable: true },
   { field: "zip", headerName: "Zip", width: 120, editable: true },
-  // { field: 'owner', headerName: 'Owner', width: 200}
+  { field: "id", headerName: "Location ID", width: 200 },
 ];
 
 function computeMutation(newRow: GridRowModel, oldRow: GridRowModel) {
@@ -68,14 +58,14 @@ export const LocationGrid = () => {
   const handleDelete = async () => {
     let arrLen = deleted.length;
     try {
-      // for (let i = 0; i <= arrLen; i++) {
-      const loc = (await API.getLocationById(
-        deleted[0] as string
-      )) as Locations;
-      const res = await API.deleteLocation(loc);
+      for (let i = 0; i <= arrLen - 1; i++) {
+        const loc = (await API.getLocationById(
+          deleted[i] as string
+        )) as Locations;
+        await API.deleteLocation(loc);
+      }
       sendNotification("Location was successfully deleted", "success");
-      console.log(res);
-      // }
+      // console.log(res);
       await getLocations();
     } catch (e) {
       console.log(e);
@@ -118,7 +108,9 @@ export const LocationGrid = () => {
       sendNotification("Location was successfully updated", "success");
       resolve(res);
       setPromiseArguments(null);
+      await getLocations();
     } catch (error) {
+      console.log(error);
       sendNotification("Error trying to update the location", "error");
       reject(oldRow);
       setPromiseArguments(null);
@@ -197,7 +189,7 @@ export const LocationGrid = () => {
       <Fab
         color="primary"
         aria-label="add"
-        sx={{ position: "fixed", bottom: 20, right: 180 }}
+        sx={{ position: "fixed", bottom: 20, right: 185 }}
         onClick={handleOpen}
       >
         <AddIcon />
@@ -205,7 +197,7 @@ export const LocationGrid = () => {
       <Fab
         color="primary"
         aria-label="add"
-        sx={{ position: "fixed", bottom: 20, right: 120 }}
+        sx={{ position: "fixed", bottom: 20, right: 124 }}
         onClick={handleDelete}
       >
         <RemoveIcon />

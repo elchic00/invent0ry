@@ -21,6 +21,7 @@ import logo from "../../assets/logo.png";
 import { Outlet, Link } from "react-router-dom";
 import { AmplifyAuth } from "../../services";
 import { LocalStorage } from "../../services";
+import BusinessIcon from "@mui/icons-material/Business";
 
 const drawerWidth = 260;
 
@@ -67,6 +68,12 @@ export const SideBar = ({ window }: Props) => {
       name: "Locations",
       icon: <LocationOnIcon />,
       path: "/user/locations",
+    },
+    {
+      id: "business",
+      name: "Business Profile",
+      icon: <BusinessIcon />,
+      path: "/user/BusinessSpecifics",
     },
   ];
   const drawer = (
