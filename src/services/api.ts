@@ -4,10 +4,9 @@ import { Business, Locations } from "../models";
 import { locationType } from "../interface/models/locationType";
 import { Items } from "../models";
 import { ItemDetailsInputs } from "../interface/models/itemDetailsInputs";
-import { locationUpdateType } from "../interface/models/locationUpdateType";
 
 export class API {
-  static async businessSpecifics(data: businessType) {
+  static async addBusinessSpecifics(data: businessType) {
     return await DataStore.save(new Business(data));
   }
 
@@ -27,7 +26,7 @@ export class API {
     return await DataStore.delete(location);
   }
 
-  static async updateLocation(original: Locations, data: locationUpdateType) {
+  static async updateLocation(original: Locations, data: locationType) {
     return await DataStore.save(
       Locations.copyOf(original, (updated) => {
         updated.name = data.name;
@@ -63,11 +62,9 @@ export class API {
 
   static async updateItem({
     original,
-
     data,
   }: {
     original: Items;
-
     data: ItemDetailsInputs;
   }) {
     return await DataStore.save(
