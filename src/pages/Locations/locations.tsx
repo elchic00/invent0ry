@@ -104,6 +104,7 @@ export const LocationGrid = () => {
     const { newRow, oldRow, reject, resolve } = promiseArguments;
     try {
       // Make the HTTP request to save in the backend
+      // oldRow.zip = oldRow.zip as number;
       const res = await API.updateLocation(oldRow, newRow);
       sendNotification("Location was successfully updated", "success");
       resolve(res);

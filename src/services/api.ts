@@ -32,7 +32,7 @@ export class API {
         updated.name = data.name;
         updated.street = data.street;
         updated.town = data.town;
-        updated.zip = data.zip;
+        updated.zip = Number(data.zip);
       })
     );
   }
