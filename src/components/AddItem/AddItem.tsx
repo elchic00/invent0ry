@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import {
-  Box,
   Button,
   TextField,
   FormControl,
@@ -11,7 +10,6 @@ import {
   InputLabel,
   TextFieldProps,
 } from "@mui/material";
-import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { ItemDetailsInputs } from "../../interface/models/itemDetailsInputs";
@@ -22,9 +20,8 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
 import Switch from "@mui/material/Switch";
 import { useLocations } from "../../hooks/useLocations";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Select from "@mui/material/Select";
 import { Locations } from "../../models";
-import { format } from "date-fns";
 
 const label = { inputProps: { "aria-label": "Switch demo" } };
 
@@ -46,7 +43,7 @@ const defaultValues = {
   count: 0,
   picture: "",
   sku: "",
-  expirationDate: new Date().toString(),
+  expirationDate: undefined,
   price: 0,
 };
 const resolver = yupResolver(ItemDetailsSchema);
@@ -87,7 +84,7 @@ export const AddItem = ({ getItems }: { getItems: Function }) => {
     // const result = await API.createImage(e.img)
     // update form data
   }
-  function formatDate() {}
+
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <form onSubmit={handleSubmit(formSubmitHandler)}>
@@ -217,7 +214,7 @@ export const AddItem = ({ getItems }: { getItems: Function }) => {
               control={control}
               render={({ field: { onChange, ref, value } }) => (
                 <DatePicker
-                  inputFormat="yyyy-MM-dd"
+                  // inputFormat="yyyy-MM-dd"
                   label="Expiration Date"
                   value={value}
                   onChange={onChange}
