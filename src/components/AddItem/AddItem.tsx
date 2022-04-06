@@ -220,9 +220,10 @@ export const AddItem = ({ getItems }: { getItems: Function }) => {
               control={control}
               render={({ field: { onChange, ref, value } }) => (
                 <DatePicker
+                  inputFormat="yyyy-MM-dd"
                   label="Expiration Date"
                   value={value}
-                  onChange={onChange}
+                  onChange={(date) => onChange(date)}
                   renderInput={(params) => <TextField {...params} />}
                   inputRef={ref}
                 />
