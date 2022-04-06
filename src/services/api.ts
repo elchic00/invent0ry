@@ -52,7 +52,7 @@ export class API {
         itemCount: item.count,
         picture: item.picture,
         sku: item.sku,
-        expire: item.expirationDate,
+        expire: item.expirationDate?.slice(0, 16),
         price: item.price,
         locationsID: item.locationName || "",
         businessID: "a3f4095e-39de-43d2-baf4-f8c16f0f6f4d",

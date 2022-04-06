@@ -9,7 +9,9 @@ import {
   Skeleton,
   MenuItem,
   InputLabel,
+  TextFieldProps,
 } from "@mui/material";
+import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { ItemDetailsInputs } from "../../interface/models/itemDetailsInputs";
@@ -22,6 +24,7 @@ import Switch from "@mui/material/Switch";
 import { useLocations } from "../../hooks/useLocations";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { Locations } from "../../models";
+import { format } from "date-fns";
 
 const label = { inputProps: { "aria-label": "Switch demo" } };
 
@@ -43,7 +46,7 @@ const defaultValues = {
   count: 0,
   picture: "",
   sku: "",
-  expirationDate: undefined,
+  expirationDate: new Date().toString(),
   price: 0,
 };
 const resolver = yupResolver(ItemDetailsSchema);
@@ -84,7 +87,7 @@ export const AddItem = ({ getItems }: { getItems: Function }) => {
     // const result = await API.createImage(e.img)
     // update form data
   }
-
+  function formatDate() {}
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <form onSubmit={handleSubmit(formSubmitHandler)}>
@@ -112,7 +115,6 @@ export const AddItem = ({ getItems }: { getItems: Function }) => {
               />
             )}
           />
-
           {locations ? (
             <Controller
               name="locationName"
@@ -139,7 +141,6 @@ export const AddItem = ({ getItems }: { getItems: Function }) => {
           ) : (
             <Skeleton width="500px" height="200px" />
           )}
-
           <Controller
             name="businessName"
             control={control}
@@ -155,7 +156,6 @@ export const AddItem = ({ getItems }: { getItems: Function }) => {
               />
             )}
           />
-
           <Controller
             name="count"
             control={control}
@@ -173,14 +173,12 @@ export const AddItem = ({ getItems }: { getItems: Function }) => {
               />
             )}
           />
-
           <Controller
             name="picture"
             control={control}
             defaultValue=""
             render={({ field: { onChange, ref, value } }) => (
               // TODO: Update this form field for one that allows upload an image
-
               <TextField
                 value={value}
                 onChange={onChange}
@@ -192,7 +190,6 @@ export const AddItem = ({ getItems }: { getItems: Function }) => {
               />
             )}
           />
-
           <Controller
             name="sku"
             control={control}
@@ -223,14 +220,15 @@ export const AddItem = ({ getItems }: { getItems: Function }) => {
                   inputFormat="yyyy-MM-dd"
                   label="Expiration Date"
                   value={value}
-                  onChange={(date) => onChange(date)}
-                  renderInput={(params) => <TextField {...params} />}
+                  onChange={onChange}
+                  renderInput={(
+                    params: JSX.IntrinsicAttributes & TextFieldProps
+                  ) => <TextField {...params} />}
                   inputRef={ref}
                 />
               )}
             />
           )}
-
           <Controller
             name="price"
             control={control}
@@ -246,7 +244,6 @@ export const AddItem = ({ getItems }: { getItems: Function }) => {
               />
             )}
           />
-
           {/* // TODO: Style this Button */}
           <Button type="submit">Submit</Button>
         </FormControl>

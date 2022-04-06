@@ -147,7 +147,7 @@ export const schema = {
                 "expire": {
                     "name": "expire",
                     "isArray": false,
-                    "type": "AWSDate",
+                    "type": "String",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -367,5 +367,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "6274424b68fc11151529cf89a186463c"
+    "version": "6fdc37e7528c724b18263006260c2344"
 };

@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@aws-amplify/ui-react": "^2.8.0",
+    "@date-io/date-fns": "^2.13.1",
     "@emotion/react": "^11.8.1",
     "@emotion/styled": "^11.8.1",
     "@hookform/resolvers": "^2.8.8",

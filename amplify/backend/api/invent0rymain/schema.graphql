@@ -13,7 +13,7 @@ type Items @model @auth(rules: [{allow: private}, {allow: owner}]) {
   itemCount: Int
   picture: String
   sku: String
-  expire: AWSDate
+  expire: String
   price: Int
   locationsID: ID! @index(name: "byLocations")
   businessID: ID! @index(name: "byBusiness")
