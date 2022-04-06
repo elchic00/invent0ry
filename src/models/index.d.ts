@@ -50,8 +50,8 @@ export declare class Business {
   readonly name?: string;
   readonly location?: string;
   readonly currency?: string;
-  readonly Items?: (Items | null)[];
   readonly Locations?: Locations;
+  readonly Items?: (Items | null)[];
   readonly createdAt?: string;
   readonly updatedAt?: string;
   readonly businessLocationsId?: string;

@@ -1,4 +1,4 @@
-type Locations @model @auth(rules: [{allow: private}, {allow: owner}]) {
+type Locations @model @auth(rules: [{allow: owner}]) {
   id: ID!
   name: String
   street: String
@@ -24,7 +24,7 @@ type Business @model @auth(rules: [{allow: private}, {allow: owner}]) {
   name: String
   location: String
   currency: String
-  Items: [Items] @hasMany(indexName: "byBusiness", fields: ["id"])
   Locations: Locations @hasOne
+  Items: [Items] @hasMany(indexName: "byBusiness", fields: ["id"])
 }
  

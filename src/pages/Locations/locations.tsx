@@ -24,6 +24,7 @@ import { sendNotification } from "../../utils/sendNotification";
 import { Locations } from "../../models";
 
 const columns: GridColumns = [
+  { field: "owner", headerName: "owner", width: 200 },
   { field: "name", headerName: "Name", width: 180, editable: true },
   { field: "street", headerName: "Street", width: 240, editable: true },
   { field: "town", headerName: "Town", width: 185, editable: true },
@@ -57,14 +58,14 @@ export const LocationGrid = () => {
   const handleDelete = async () => {
     let arrLen = deleted.length;
     try {
-      // for (let i = 0; i <= arrLen; i++) {
-      const loc = (await API.getLocationById(
-        deleted[0] as string
-      )) as Locations;
-      const res = await API.deleteLocation(loc);
+      for (let i = 0; i <= arrLen - 1; i++) {
+        const loc = (await API.getLocationById(
+          deleted[i] as string
+        )) as Locations;
+        await API.deleteLocation(loc);
+      }
       sendNotification("Location was successfully deleted", "success");
-      console.log(res);
-      // }
+      // console.log(res);
       await getLocations();
     } catch (e) {
       console.log(e);
@@ -107,6 +108,7 @@ export const LocationGrid = () => {
       sendNotification("Location was successfully updated", "success");
       resolve(res);
       setPromiseArguments(null);
+      await getLocations();
     } catch (error) {
       console.log(error);
       sendNotification("Error trying to update the location", "error");
