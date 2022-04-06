@@ -3,22 +3,39 @@ import {
   TextField,
   Button,
   MenuItem,
+  Skeleton,
   Select,
+  InputLabel,
 } from "@mui/material";
 import { useState } from "react";
 import { currencies } from "../../constants/currencies";
 import React from "react";
 import { businessType } from "../../interface/models/businessType";
-import {API} from "../../services/api";
+import { API } from "../../services/api";
 import { sendNotification } from "../../utils/sendNotification";
+import { Controller } from "react-hook-form";
+import { Locations } from "../../models";
+import { useLocations } from "../../hooks/useLocations";
 
 export const BusinessSpecifics = () => {
   const [formData, setFormData] = useState<businessType>({
     name: "",
-    location_name: "",
+    businessLocationsId: "",
     currency: "USD",
   });
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
+
+  const { locations } = useLocations();
+
+  const locSelect = locations ? (
+    locations.map((location) => (
+      <MenuItem value={location.id}>
+        {`${location.name} - ${location.street}, ${location.town}`}
+      </MenuItem>
+    ))
+  ) : (
+    <Skeleton width="500px" height="200px" />
+  );
 
   const currencyList = Object.keys(currencies).map((key) => (
     <MenuItem value={key}>{key}</MenuItem>
@@ -29,9 +46,9 @@ export const BusinessSpecifics = () => {
     setIsDisabled(true);
 
     try {
-      const result = await API.businessSpecifics(formData);
-
+      const result = await API.addBusinessSpecifics(formData);
       setIsDisabled(false);
+      sendNotification("Business was successfully added", "success");
     } catch (error) {
       sendNotification(
         "Error trying to call the business specifics api",
@@ -43,7 +60,6 @@ export const BusinessSpecifics = () => {
 
   function handleChange(e: React.ChangeEvent) {
     const { name, value } = e.target as HTMLInputElement;
-
     setFormData((prev) => ({ ...prev, [name]: value }));
   }
 
@@ -52,23 +68,24 @@ export const BusinessSpecifics = () => {
       <TextField
         id="standard-basic"
         variant="standard"
-        sx={{ mb: 2 }}
+        sx={{ mb: 3 }}
         name="name"
         label="Business Name"
         helperText="Name of your business"
         onChange={handleChange}
         value={formData.name}
       />
+
       <TextField
-        name="location_name"
-        id="standard-basic"
-        variant="standard"
-        sx={{ mb: 2 }}
-        label="Location Name"
-        helperText="add your business address nickname, H.Q., main, etc"
+        sx={{ mb: 4 }}
+        select
+        label="Location"
+        name="businessLocationsId"
+        value={formData.businessLocationsId}
         onChange={handleChange}
-        value={formData.location_name}
-      />
+      >
+        {locSelect}
+      </TextField>
       <TextField
         sx={{ mb: 4 }}
         select
