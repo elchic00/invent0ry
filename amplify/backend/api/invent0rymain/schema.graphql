@@ -1,13 +1,34 @@
-type Locations @model @auth(rules: [{allow: owner}]) {
+type Locations
+  @model
+  @auth(
+    rules: [
+      {
+        allow: owner
+        ownerField: "owner"
+        operations: [create, update, delete, read]
+      }
+    ]
+  ) {
   id: ID!
   name: String
   street: String
   town: String
   zip: Int
+  owner: String
   Items: [Items] @hasMany(indexName: "byLocations", fields: ["id"])
 }
 
-type Items @model @auth(rules: [{allow: private}, {allow: owner}]) {
+type Items
+  @model
+  @auth(
+    rules: [
+      {
+        allow: owner
+        ownerField: "owner"
+        operations: [create, update, delete, read]
+      }
+    ]
+  ) {
   id: ID!
   name: String
   itemCount: Int
@@ -15,16 +36,27 @@ type Items @model @auth(rules: [{allow: private}, {allow: owner}]) {
   sku: String
   expire: String
   price: Int
+  owner: String
   locationsID: ID! @index(name: "byLocations")
   businessID: ID! @index(name: "byBusiness")
 }
 
-type Business @model @auth(rules: [{allow: private}, {allow: owner}]) {
+type Business
+  @model
+  @auth(
+    rules: [
+      {
+        allow: owner
+        ownerField: "owner"
+        operations: [create, update, delete, read]
+      }
+    ]
+  ) {
   id: ID!
   name: String
   location: String
   currency: String
+  owner: String
   Locations: Locations @hasOne
   Items: [Items] @hasMany(indexName: "byBusiness", fields: ["id"])
 }
- 
