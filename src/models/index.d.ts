@@ -22,6 +22,7 @@ export declare class Locations {
   readonly street?: string;
   readonly town?: string;
   readonly zip?: number;
+  readonly owner?: string;
   readonly Items?: (Items | null)[];
   readonly createdAt?: string;
   readonly updatedAt?: string;

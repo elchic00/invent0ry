@@ -87,7 +87,7 @@ export const BusinessSpecifics = () => {
         {locSelect}
       </TextField>
       <TextField
-        sx={{ mb: 4 }}
+        sx={{ mb: 4, width: 110 }}
         select
         label="Currency"
         name="currency"
