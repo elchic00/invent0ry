@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import {
   Button,
@@ -22,6 +22,8 @@ import Switch from "@mui/material/Switch";
 import { useLocations } from "../../hooks/useLocations";
 import Select from "@mui/material/Select";
 import { Locations } from "../../models";
+import { LocalStorage } from "../../services";
+import { Auth } from "aws-amplify";
 
 const label = { inputProps: { "aria-label": "Switch demo" } };
 
@@ -57,10 +59,20 @@ export const AddItem = ({ getItems }: { getItems: Function }) => {
     defaultValues,
     resolver,
   });
-
   const [isOpen, setIsOpen] = useState<boolean>();
   const { setComponent } = useModal();
   const { locations } = useLocations();
+  const [business, setBusiness] = useState<string>();
+
+  const currUserBusiness = async () => {
+    const user = await Auth.currentUserInfo();
+    const buis = await API.getBusinessByUserId(user.username);
+    setBusiness(buis[0].name);
+  };
+
+  useEffect(() => {
+    currUserBusiness();
+  }, []);
 
   const formSubmitHandler: SubmitHandler<ItemDetailsInputs> = async (
     data: ItemDetailsInputs
@@ -143,7 +155,7 @@ export const AddItem = ({ getItems }: { getItems: Function }) => {
             control={control}
             render={({ field: { onChange, ref, value } }) => (
               <TextField
-                value={value}
+                value={business || ""}
                 onChange={onChange}
                 inputRef={ref}
                 label="Business Name"
