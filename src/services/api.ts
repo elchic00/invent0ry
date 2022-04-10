@@ -9,8 +9,10 @@ export class API {
   static async addBusinessSpecifics(data: businessType) {
     return await DataStore.save(new Business(data));
   }
-
-  static async getLocations() {
+  static async getBusinessByUserId(id: string) {
+    return await DataStore.query(Business, (b) => b.owner("eq", id));
+  }
+  static async listLocations() {
     return await DataStore.query(Locations);
   }
 
@@ -37,7 +39,7 @@ export class API {
     );
   }
 
-  static async getItems() {
+  static async listItems() {
     return await DataStore.query(Items);
   }
 

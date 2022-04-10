@@ -12,7 +12,7 @@ export const useItems = () => {
 
   async function getItems() {
     try {
-      const result = await API.getItems();
+      const result = await API.listItems();
       setItems(result);
       console.log(result);
     } catch (error) {
