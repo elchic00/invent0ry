@@ -103,7 +103,7 @@ export const UpdateItem = ({
               <Select
                 name="locationName"
                 id="location"
-                value={formData.businessName}
+                value={formData.businessId}
                 label="Location Name"
                 onChange={handleChange}
               >
