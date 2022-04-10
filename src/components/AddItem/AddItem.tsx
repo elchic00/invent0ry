@@ -29,11 +29,11 @@ const ItemDetailsSchema = yup.object().shape({
   itemName: yup.string().required("Required field - must be a string"),
   locationName: yup.string().required("Required field - must be a string"),
   // businessName: yup.string().required("Required field - must be a string"),
-  count: yup.number().required("Required field - must be a number"),
+  count: yup.number().required("Required field - must be a number").min(0, "Item Quantity cannot be negative"),
   picture: yup.string(),
   sku: yup.string(),
   expirationDate: yup.string(),
-  price: yup.number().required("Required field - must be a number"),
+  price: yup.number().required("Required field - must be a number").min(0, "Item Price cannot be negative"),
 });
 
 const defaultValues = {
@@ -157,7 +157,6 @@ export const AddItem = ({ getItems }: { getItems: Function }) => {
             name="count"
             control={control}
             render={({ field: { onChange, ref, value } }) => (
-              // TODO - Specify a minimum of items
               <TextField
                 type="number"
                 value={value}
@@ -166,7 +165,7 @@ export const AddItem = ({ getItems }: { getItems: Function }) => {
                 label="Count"
                 variant="outlined"
                 error={!!errors.price}
-                helperText={errors.price ? errors.price?.message : ""}
+                helperText={errors.price ? errors.price?.message : "Minimum Item Quantity is 0"}
               />
             )}
           />
@@ -237,7 +236,7 @@ export const AddItem = ({ getItems }: { getItems: Function }) => {
                 label="Item Price"
                 variant="outlined"
                 error={!!errors.price}
-                helperText={errors.price ? errors.price?.message : ""}
+                helperText={errors.price ? errors.price?.message : "Minimum Item Price is 0"}
               />
             )}
           />
