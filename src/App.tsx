@@ -1,15 +1,16 @@
 import { Outlet } from "react-router-dom";
 import { AppRoutes } from "./routes";
-import Amplify, {AuthModeStrategyType} from "aws-amplify";
+import Amplify, { AuthModeStrategyType } from "aws-amplify";
 import config from "./aws-exports";
 import { ModalComponent } from "./components/Modal";
 import { LoaderComponent } from "./components";
 import { ToastContainer, toast } from "react-toastify";
+
 import "react-toastify/dist/ReactToastify.css";
 
-import axios from 'axios';
-axios.defaults.xsrfCookieName = 'csrftoken'
-axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+import axios from "axios";
+axios.defaults.xsrfCookieName = "csrftoken";
+axios.defaults.xsrfHeaderName = "X-CSRFToken";
 
 //check if localhost
 const isLocalhost = window.location.hostname === "localhost";
@@ -33,9 +34,9 @@ const updatedAwsConfig = {
       ? localRedirectSignOut
       : productionRedirectSignOut,
   },
-    DataStore: {
-        authModeStrategyType: AuthModeStrategyType.MULTI_AUTH
-    }
+  DataStore: {
+    authModeStrategyType: AuthModeStrategyType.MULTI_AUTH,
+  },
 };
 Amplify.configure(updatedAwsConfig);
 function App() {

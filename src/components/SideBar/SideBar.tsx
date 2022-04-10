@@ -9,7 +9,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import LocationOnIcon from '@mui/icons-material/LocationOn';
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import InventoryIcon from "@mui/icons-material/Inventory";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoomOutlined";
@@ -21,6 +21,7 @@ import logo from "../../assets/logo.png";
 import { Outlet, Link } from "react-router-dom";
 import { AmplifyAuth } from "../../services";
 import { LocalStorage } from "../../services";
+import BusinessIcon from "@mui/icons-material/Business";
 
 const drawerWidth = 260;
 
@@ -62,12 +63,18 @@ export const SideBar = ({ window }: Props) => {
       icon: <InventoryIcon />,
       path: "/user/inventory",
     },
-      {
-          id: "locations",
-          name: "Locations",
-          icon: <LocationOnIcon />,
-          path: "/user/locations",
-      },
+    {
+      id: "locations",
+      name: "Locations",
+      icon: <LocationOnIcon />,
+      path: "/user/locations",
+    },
+    {
+      id: "business",
+      name: "Business Profile",
+      icon: <BusinessIcon />,
+      path: "/user/BusinessSpecifics",
+    },
   ];
   const drawer = (
     <Box>
@@ -132,7 +139,7 @@ export const SideBar = ({ window }: Props) => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Dyfrans
+            Invent0ry
           </Typography>
         </Toolbar>
       </AppBar>

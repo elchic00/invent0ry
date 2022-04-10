@@ -1,4 +1,12 @@
-import { Box, Button, FormControl, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Skeleton,
+  TextField,
+} from "@mui/material";
 import { StringifyOptions } from "querystring";
 import React, { useState } from "react";
 import { sendNotification } from "../../utils/sendNotification";
@@ -6,6 +14,14 @@ import { ItemDetailsInputs } from "../../interface/models/itemDetailsInputs";
 import { useModal } from "../../context";
 import { API } from "../../services/api";
 import { Items } from "../../models";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import DatePicker from "@mui/lab/DatePicker";
+import Switch from "@mui/material/Switch";
+import { useLocations } from "../../hooks/useLocations";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { Locations } from "../../models";
+
 export const UpdateItem = ({
   id,
   name,
@@ -34,8 +50,8 @@ export const UpdateItem = ({
     sku,
   });
   const { setComponent } = useModal();
-
-  function handleChange(e: React.ChangeEvent) {
+  const { locations } = useLocations();
+  function handleChange(e: React.ChangeEvent | SelectChangeEvent) {
     const { name, value } = e.target as HTMLInputElement;
     if (name === "count" || name === "price") {
       setFormData((prev) => ({ ...prev, [name]: parseFloat(value) }));
@@ -63,13 +79,7 @@ export const UpdateItem = ({
   return (
     <Box sx={{ p: 2 }}>
       <form onSubmit={handleUpdate}>
-        <FormControl
-          //onSubmit={handleUpdate}
-          sx={{ display: "flex", flexDirection: "column", gap: 2 }}
-        >
-          {/* {[key in keyof formData]: <TextField>
-          }
-        })} */}
+        <FormControl sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
           <TextField
             label="Item Name"
             name="itemName"
@@ -86,6 +96,27 @@ export const UpdateItem = ({
             onChange={handleChange}
             defaultValue={formData.count}
           />
+
+          {locations ? (
+            <FormControl>
+              <InputLabel id="location">Location</InputLabel>
+              <Select
+                name="locationName"
+                id="location"
+                value={formData.businessName}
+                label="Location Name"
+                onChange={handleChange}
+              >
+                {locations.map((location: Locations) => (
+                  <MenuItem value={location.id}>
+                    {`${location.name} - ${location.street}, ${location.town}`}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          ) : (
+            <Skeleton width="auto" height="40px" />
+          )}
           <TextField
             label="Picture"
             name="picture"

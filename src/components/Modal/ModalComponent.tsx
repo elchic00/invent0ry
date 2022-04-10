@@ -4,7 +4,7 @@ import { CenteredComponent } from "../CenteredComponent";
 import { useModal } from "../../context";
 
 export const ModalComponent = () => {
-  const { component, open, setComponent } = useModal();
+  const { component, open, setComponent, theme } = useModal();
 
   const handleClose = () => setComponent(null);
 
@@ -15,7 +15,7 @@ export const ModalComponent = () => {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <CenteredComponent width="auto">
+      <CenteredComponent width={theme.width} height={theme.height}>
         {component != null ? component : <></>}
       </CenteredComponent>
     </Modal>

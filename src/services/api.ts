@@ -4,14 +4,13 @@ import { Business, Locations } from "../models";
 import { locationType } from "../interface/models/locationType";
 import { Items } from "../models";
 import { ItemDetailsInputs } from "../interface/models/itemDetailsInputs";
-import {locationUpdateType} from "../interface/models/locationUpdateType";
 
 export class API {
-    static async businessSpecifics(data: businessType) {
-        return await DataStore.save(new Business(data));
-    }
+  static async addBusinessSpecifics(data: businessType) {
+    return await DataStore.save(new Business(data));
+  }
 
-    static async getLocations() {
+  static async getLocations() {
     return await DataStore.query(Locations);
   }
 
@@ -19,33 +18,30 @@ export class API {
     return await DataStore.save(new Locations(data));
   }
 
-    static async getLocationById(id: string) {
-        return await DataStore.query(Locations, id);
-    }
+  static async getLocationById(id: string) {
+    return await DataStore.query(Locations, id);
+  }
 
-    static async deleteLocation(location:Locations) {
-        return await DataStore.delete(location);
-    }
+  static async deleteLocation(location: Locations) {
+    return await DataStore.delete(location);
+  }
 
-
-    static async updateLocation(original: Locations, data: locationUpdateType){
-        return await DataStore.save(
-            Locations.copyOf(original, (updated) => {
-                updated.name = data.name;
-                updated.street = data.street;
-                updated.town = data.town;
-                updated.zip = data.zip;
-            })
-        );
-    }
-
+  static async updateLocation(original: Locations, data: locationType) {
+    return await DataStore.save(
+      Locations.copyOf(original, (updated) => {
+        updated.name = data.name;
+        updated.street = data.street;
+        updated.town = data.town;
+        updated.zip = Number(data.zip);
+      })
+    );
+  }
 
   static async getItems() {
     return await DataStore.query(Items);
   }
-  
 
-  static async deleteItem(item:Items) {
+  static async deleteItem(item: Items) {
     return await DataStore.delete(item);
   }
 
@@ -56,9 +52,9 @@ export class API {
         itemCount: item.count,
         picture: item.picture,
         sku: item.sku,
-        expire: '1970-01-01Z',
+        expire: item.expirationDate?.slice(0, 16),
         price: item.price,
-        locationsID: "a3f4095e-39de-43d2-baf4-f8c16f0f6f4d",
+        locationsID: item.locationName || "",
         businessID: "a3f4095e-39de-43d2-baf4-f8c16f0f6f4d",
       })
     );
@@ -66,11 +62,9 @@ export class API {
 
   static async updateItem({
     original,
-
     data,
   }: {
     original: Items;
-
     data: ItemDetailsInputs;
   }) {
     return await DataStore.save(

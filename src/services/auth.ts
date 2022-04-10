@@ -1,4 +1,4 @@
-import { Auth } from "aws-amplify";
+import { Auth, DataStore } from "aws-amplify";
 import { CognitoUser } from "amazon-cognito-identity-js";
 
 export class AmplifyAuth {
@@ -7,6 +7,7 @@ export class AmplifyAuth {
   }
 
   static async signOut(): Promise<any> {
+    await DataStore.clear();
     return Auth.signOut();
   }
 }

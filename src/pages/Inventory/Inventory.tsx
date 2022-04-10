@@ -7,10 +7,11 @@ import { Skeleton } from "@mui/material";
 import { ItemCardComponent } from "../../components/ItemCard";
 
 export const Inventory = () => {
-  const { setComponent } = useModal();
+  const { setComponent, setTheme } = useModal();
   const { items, getItems } = useItems();
 
   function handleOpen() {
+    setTheme({ height: "400px", width: "auto" });
     setComponent(<AddItem getItems={getItems} />);
   }
   return (
