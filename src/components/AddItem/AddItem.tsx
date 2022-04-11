@@ -60,7 +60,6 @@ export const AddItem = ({ getItems }: { getItems: Function }) => {
   const [isOpen, setIsOpen] = useState<boolean>();
   const { setComponent } = useModal();
   const { locations } = useLocations();
-  const [business, setBusiness] = useState<string>();
 
   const formSubmitHandler: SubmitHandler<ItemDetailsInputs> = async (
     data: ItemDetailsInputs

@@ -66,7 +66,7 @@ export const BusinessSpecifics = () => {
       <TextField
         id="standard-basic"
         variant="standard"
-        sx={{ mb: 3, width: 300 }}
+        sx={{ mb: 3, width: 250 }}
         name="name"
         label="Business Name"
         helperText="Name of your business"
