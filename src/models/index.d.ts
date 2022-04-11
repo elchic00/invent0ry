@@ -38,6 +38,7 @@ export declare class Items {
   readonly sku?: string;
   readonly expire?: string;
   readonly price?: number;
+  readonly owner?: string;
   readonly locationsID: string;
   readonly businessID: string;
   readonly createdAt?: string;
@@ -51,6 +52,7 @@ export declare class Business {
   readonly name?: string;
   readonly location?: string;
   readonly currency?: string;
+  readonly owner?: string;
   readonly Locations?: Locations;
   readonly Items?: (Items | null)[];
   readonly createdAt?: string;
