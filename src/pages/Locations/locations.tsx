@@ -50,7 +50,7 @@ function computeMutation(newRow: GridRowModel, oldRow: GridRowModel) {
 
 export const LocationGrid = () => {
   const { setComponent } = useModal();
-  const { locations, getLocations } = useLocations();
+  const { locations, listLocations } = useLocations();
   const [deleted, setDeleted] = useState<
     GridSelectionModel | GridSelectionModel[]
   >([]);
@@ -66,7 +66,7 @@ export const LocationGrid = () => {
       }
       sendNotification("Location was successfully deleted", "success");
       // console.log(res);
-      await getLocations();
+      await listLocations();
     } catch (e) {
       // console.log(e);
       sendNotification("Error trying to call the delete location api", "error");
@@ -74,7 +74,7 @@ export const LocationGrid = () => {
   };
 
   function handleOpen() {
-    setComponent(<AddLocation getLocations={getLocations} />);
+    setComponent(<AddLocation getLocations={listLocations} />);
   }
 
   const noButtonRef = useRef<HTMLButtonElement>(null);
@@ -109,7 +109,7 @@ export const LocationGrid = () => {
       sendNotification("Location was successfully updated", "success");
       resolve(res);
       setPromiseArguments(null);
-      await getLocations();
+      await listLocations();
     } catch (error) {
       console.log(error);
       sendNotification("Error trying to update the location", "error");
