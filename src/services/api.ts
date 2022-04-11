@@ -1,4 +1,4 @@
-import { DataStore } from "aws-amplify";
+import { Auth, DataStore } from "aws-amplify";
 import { businessType } from "../interface/models/businessType";
 import { Business, Locations } from "../models";
 import { locationType } from "../interface/models/locationType";
@@ -9,8 +9,15 @@ export class API {
   static async addBusinessSpecifics(data: businessType) {
     return await DataStore.save(new Business(data));
   }
+  static async getBusinessByUsername() {
+    const user = await Auth.currentUserInfo();
+    const business = await DataStore.query(Business, (b) =>
+      b.owner("eq", user.username)
+    );
+    return business[0].id;
+  }
 
-  static async getLocations() {
+  static async listLocations() {
     return await DataStore.query(Locations);
   }
 
@@ -37,7 +44,7 @@ export class API {
     );
   }
 
-  static async getItems() {
+  static async listItems() {
     return await DataStore.query(Items);
   }
 
@@ -46,6 +53,7 @@ export class API {
   }
 
   static async addItem(item: ItemDetailsInputs) {
+    const business = await API.getBusinessByUsername();
     await DataStore.save(
       new Items({
         name: item.itemName,
@@ -55,7 +63,7 @@ export class API {
         expire: item.expirationDate?.slice(0, 16),
         price: item.price,
         locationsID: item.locationName || "",
-        businessID: "a3f4095e-39de-43d2-baf4-f8c16f0f6f4d",
+        businessID: business,
       })
     );
   }

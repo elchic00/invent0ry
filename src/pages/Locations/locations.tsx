@@ -29,7 +29,7 @@ const columns: GridColumns = [
   { field: "street", headerName: "Street", width: 240, editable: true },
   { field: "town", headerName: "Town", width: 185, editable: true },
   { field: "zip", headerName: "Zip", width: 120, editable: true },
-  { field: "id", headerName: "Location ID", width: 200 },
+  // { field: "id", headerName: "Location ID", width: 200 },
 ];
 
 function computeMutation(newRow: GridRowModel, oldRow: GridRowModel) {
@@ -68,7 +68,7 @@ export const LocationGrid = () => {
       // console.log(res);
       await getLocations();
     } catch (e) {
-      console.log(e);
+      // console.log(e);
       sendNotification("Error trying to call the delete location api", "error");
     }
   };
@@ -154,7 +154,6 @@ export const LocationGrid = () => {
     );
   };
 
-  // @ts-ignore
   return (
     <div
       style={{
@@ -164,26 +163,29 @@ export const LocationGrid = () => {
     >
       {renderConfirmDialog()}
       {locations != null ? (
-        <DataGrid
-          sx={{
-            "& .MuiDataGrid-columnHeaders": {
-              backgroundColor: "rgba(236,236,236,1)",
-              color: "rgba(0,0,0,100)",
-              fontSize: 16,
-            },
-            "& .MuiDataGrid-cell:hover": {
-              color: "primary.main",
-            },
-          }}
-          // sx={{ m: 2}}
-          rows={locations}
-          columns={columns}
-          processRowUpdate={processRowUpdate}
-          experimentalFeatures={{ newEditingApi: true }}
-          checkboxSelection
-          onSelectionModelChange={(loc) => setDeleted(loc)}
-          pageSize={10}
-        />
+        <>
+          <DataGrid
+            sx={{
+              "& .MuiDataGrid-columnHeaders": {
+                backgroundColor: "rgba(236,236,236,1)",
+                color: "rgba(0,0,0,100)",
+                fontSize: 16,
+              },
+              "& .MuiDataGrid-cell:hover": {
+                color: "primary.main",
+              },
+            }}
+            // sx={{ m: 2}}
+            rows={locations}
+            columns={columns}
+            processRowUpdate={processRowUpdate}
+            experimentalFeatures={{ newEditingApi: true }}
+            checkboxSelection
+            onSelectionModelChange={(loc) => setDeleted(loc)}
+            pageSize={10}
+          />
+          <LoaderComponent />
+        </>
       ) : (
         <LoaderComponent />
       )}
@@ -197,7 +199,7 @@ export const LocationGrid = () => {
       </Fab>
       <Fab
         color="primary"
-        aria-label="add"
+        aria-label="remove"
         sx={{ position: "fixed", bottom: 20, right: 124 }}
         onClick={handleDelete}
       >

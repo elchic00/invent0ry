@@ -13,8 +13,6 @@ import React from "react";
 import { businessType } from "../../interface/models/businessType";
 import { API } from "../../services/api";
 import { sendNotification } from "../../utils/sendNotification";
-import { Controller } from "react-hook-form";
-import { Locations } from "../../models";
 import { useLocations } from "../../hooks/useLocations";
 
 export const BusinessSpecifics = () => {

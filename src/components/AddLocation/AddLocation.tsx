@@ -31,7 +31,7 @@ export const AddLocation = ({ getLocations }: { getLocations: Function }) => {
 
   async function handleChange(e: React.ChangeEvent) {
     const { name, value } = e.target as HTMLInputElement;
-    if (name === 'zip') {
+    if (name === "zip") {
       setFormData((prev: locationType) => ({ ...prev, [name]: Number(value) }));
     } else setFormData((prev: locationType) => ({ ...prev, [name]: value }));
   }
@@ -76,7 +76,7 @@ export const AddLocation = ({ getLocations }: { getLocations: Function }) => {
         label="Town"
         value={formData.town}
         onChange={handleChange}
-      ></TextField>
+      />
       <TextField
         type="number"
         sx={{
@@ -90,7 +90,7 @@ export const AddLocation = ({ getLocations }: { getLocations: Function }) => {
         label="Zip"
         value={formData.zip}
         onChange={handleChange}
-      ></TextField>
+      />
       <Button disabled={isDisabled} onClick={handleSubmit}>
         submit
       </Button>

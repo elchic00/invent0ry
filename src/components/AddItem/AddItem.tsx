@@ -28,7 +28,7 @@ const label = { inputProps: { "aria-label": "Switch demo" } };
 const ItemDetailsSchema = yup.object().shape({
   itemName: yup.string().required("Required field - must be a string"),
   locationName: yup.string().required("Required field - must be a string"),
-  businessName: yup.string().required("Required field - must be a string"),
+  // businessName: yup.string().required("Required field - must be a string"),
   count: yup.number().required("Required field - must be a number"),
   picture: yup.string(),
   sku: yup.string(),
@@ -39,7 +39,7 @@ const ItemDetailsSchema = yup.object().shape({
 const defaultValues = {
   itemName: "",
   locationName: "",
-  businessName: "",
+  // businessName: "",
   count: 0,
   picture: "",
   sku: "",
@@ -57,10 +57,10 @@ export const AddItem = ({ getItems }: { getItems: Function }) => {
     defaultValues,
     resolver,
   });
-
   const [isOpen, setIsOpen] = useState<boolean>();
   const { setComponent } = useModal();
   const { locations } = useLocations();
+  const [business, setBusiness] = useState<string>();
 
   const formSubmitHandler: SubmitHandler<ItemDetailsInputs> = async (
     data: ItemDetailsInputs
@@ -138,12 +138,12 @@ export const AddItem = ({ getItems }: { getItems: Function }) => {
           ) : (
             <Skeleton width="500px" height="200px" />
           )}
-          <Controller
+          {/* <Controller
             name="businessName"
             control={control}
             render={({ field: { onChange, ref, value } }) => (
               <TextField
-                value={value}
+                value={business || ""}
                 onChange={onChange}
                 inputRef={ref}
                 label="Business Name"
@@ -152,7 +152,7 @@ export const AddItem = ({ getItems }: { getItems: Function }) => {
                 helperText={errors.price ? errors.price?.message : ""}
               />
             )}
-          />
+          /> */}
           <Controller
             name="count"
             control={control}
