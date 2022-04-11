@@ -19,6 +19,7 @@ import potatoes from "../../assets/potatoe.png";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import Swal from "sweetalert2";
+import '../../index.css';
 
 type ItemCardProps = {
   name?: string;
@@ -50,7 +51,9 @@ export const ItemCardComponent = ({
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete this item'
+      confirmButtonText: 'Yes, delete this item',
+      backdrop: 'confirmationPopupStyle',
+      focusCancel: true
     }).then((result) => {
       if (result.isConfirmed) {
         handleDelete(e);
