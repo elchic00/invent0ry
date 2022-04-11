@@ -1,3 +1,10 @@
 [data-amplify-autheticator] {
   --amplify-components-button-primary-background-color: "#8C6239";
 }
+
+.confirmationPopupStyle {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  z-index: 1000;
+}

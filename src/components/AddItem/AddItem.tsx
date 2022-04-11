@@ -28,18 +28,18 @@ const label = { inputProps: { "aria-label": "Switch demo" } };
 const ItemDetailsSchema = yup.object().shape({
   itemName: yup.string().required("Required field - must be a string"),
   locationName: yup.string().required("Required field - must be a string"),
-  businessName: yup.string().required("Required field - must be a string"),
-  count: yup.number().required("Required field - must be a number"),
+  // businessName: yup.string().required("Required field - must be a string"),
+  count: yup.number().required("Required field - must be a number").min(0, "Item Quantity cannot be negative"),
   picture: yup.string(),
   sku: yup.string(),
   expirationDate: yup.string(),
-  price: yup.number().required("Required field - must be a number"),
+  price: yup.number().required("Required field - must be a number").min(0, "Item Price cannot be negative"),
 });
 
 const defaultValues = {
   itemName: "",
   locationName: "",
-  businessName: "",
+  // businessName: "",
   count: 0,
   picture: "",
   sku: "",
@@ -57,10 +57,10 @@ export const AddItem = ({ getItems }: { getItems: Function }) => {
     defaultValues,
     resolver,
   });
-
   const [isOpen, setIsOpen] = useState<boolean>();
   const { setComponent } = useModal();
   const { locations } = useLocations();
+  const [business, setBusiness] = useState<string>();
 
   const formSubmitHandler: SubmitHandler<ItemDetailsInputs> = async (
     data: ItemDetailsInputs
@@ -138,12 +138,12 @@ export const AddItem = ({ getItems }: { getItems: Function }) => {
           ) : (
             <Skeleton width="500px" height="200px" />
           )}
-          <Controller
+          {/* <Controller
             name="businessName"
             control={control}
             render={({ field: { onChange, ref, value } }) => (
               <TextField
-                value={value}
+                value={business || ""}
                 onChange={onChange}
                 inputRef={ref}
                 label="Business Name"
@@ -152,12 +152,11 @@ export const AddItem = ({ getItems }: { getItems: Function }) => {
                 helperText={errors.price ? errors.price?.message : ""}
               />
             )}
-          />
+          /> */}
           <Controller
             name="count"
             control={control}
             render={({ field: { onChange, ref, value } }) => (
-              // TODO - Specify a minimum of items
               <TextField
                 type="number"
                 value={value}
@@ -166,7 +165,7 @@ export const AddItem = ({ getItems }: { getItems: Function }) => {
                 label="Count"
                 variant="outlined"
                 error={!!errors.price}
-                helperText={errors.price ? errors.price?.message : ""}
+                helperText={errors.price ? errors.price?.message : "Minimum Item Quantity is 0"}
               />
             )}
           />
@@ -237,7 +236,7 @@ export const AddItem = ({ getItems }: { getItems: Function }) => {
                 label="Item Price"
                 variant="outlined"
                 error={!!errors.price}
-                helperText={errors.price ? errors.price?.message : ""}
+                helperText={errors.price ? errors.price?.message : "Minimum Item Price is 0"}
               />
             )}
           />

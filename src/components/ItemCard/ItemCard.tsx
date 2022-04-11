@@ -18,6 +18,8 @@ import { Items } from "../../models";
 import potatoes from "../../assets/potatoe.png";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import Swal from "sweetalert2";
+import '../../index.css';
 
 type ItemCardProps = {
   name?: string;
@@ -41,7 +43,27 @@ export const ItemCardComponent = ({
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
   const { setComponent, setTheme } = useModal();
 
-  //TODO: have popup modal call this function if agree to delete item
+  function handleDeleteConfirmation(e: React.SyntheticEvent) {
+    Swal.fire({
+      title: `Delete ${name} from your inventory?`,
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete this item',
+      backdrop: 'confirmationPopupStyle',
+      focusCancel: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        handleDelete(e);
+      }
+      else {
+        Swal.fire('Cancelled!', `${name} remains in the inventory`, 'info');
+      }
+    })
+  }
+
   async function handleDelete(e: React.SyntheticEvent) {
     e.preventDefault();
     try {
@@ -152,7 +174,7 @@ export const ItemCardComponent = ({
           {" "}
           <EditIcon />
         </IconButton>
-        <IconButton onClick={handleDelete}>
+        <IconButton onClick={handleDeleteConfirmation}>
           <DeleteIcon />{" "}
         </IconButton>
       </CardActions>
