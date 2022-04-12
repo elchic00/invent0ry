@@ -8,6 +8,7 @@ export const paths = {
   profile: "profile",
   businessSpecifics: "businessSpecifics",
   addItem: "addItem",
-  addLoc: 'addLoc',
-  locations: 'locations',
+  addLoc: "addLoc",
+  locations: "locations",
+  walkthrough: "walkthrough",
 };

@@ -9,6 +9,7 @@ import { BusinessSpecifics } from "../pages/BusinessSpecifics/BusinessSpecifics"
 import { AddItem } from "../components/AddItem/AddItem";
 import { AddLocation } from "../components/AddLocation/AddLocation";
 import { LocationGrid } from "../pages/Locations/locations";
+import { WalkThrough } from "../pages/WalkThrough";
 
 export const AppRoutes = () => {
   return (
@@ -26,11 +27,9 @@ export const AppRoutes = () => {
         <Route path={paths.inventory} element={<Inventory />}></Route>
         <Route path={paths.settings} element={<div>settings</div>}></Route>
         <Route path={paths.profile} element={<div>profile</div>}></Route>
-        <Route
-          path={paths.businessSpecifics}
-          element={<BusinessSpecifics />}
-        ></Route>
-        <Route path={paths.locations} element={<LocationGrid />}></Route>
+        <Route path={paths.businessSpecifics} element={<BusinessSpecifics />} />
+        <Route path={paths.locations} element={<LocationGrid />} />
+        <Route path={paths.walkthrough} element={<WalkThrough />} />
       </Route>
     </Routes>
   );
