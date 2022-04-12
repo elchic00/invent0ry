@@ -7,7 +7,7 @@ export const useUser = () => {
   const [user, setUser] = useState<CognitoUser | null>(LocalStorage.getUser());
 
   useEffect(() => {
-    getUser();
+    user! && getUser();
   }, []);
 
   async function getUser() {
@@ -16,7 +16,6 @@ export const useUser = () => {
       setUser(data);
     } catch (error) {
       console.log(error);
-      setUser(null);
     }
   }
 
