@@ -66,7 +66,7 @@ export const BusinessSpecifics = () => {
       <TextField
         id="standard-basic"
         variant="standard"
-        sx={{ mb: 3 }}
+        sx={{ mb: 3, width: 250 }}
         name="name"
         label="Business Name"
         helperText="Name of your business"
@@ -94,7 +94,12 @@ export const BusinessSpecifics = () => {
       >
         {currencyList}
       </TextField>
-      <Button variant="contained" onClick={handleSubmit} disabled={isDisabled}>
+      <Button
+        sx={{ width: 200 }}
+        variant="contained"
+        onClick={handleSubmit}
+        disabled={isDisabled}
+      >
         submit
       </Button>
     </FormControl>
