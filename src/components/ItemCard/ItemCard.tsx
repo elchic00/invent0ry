@@ -19,7 +19,7 @@ import potatoes from "../../assets/potatoe.png";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import Swal from "sweetalert2";
-import '../../index.css';
+import "../../index.css";
 
 type ItemCardProps = {
   name?: string;
@@ -47,21 +47,20 @@ export const ItemCardComponent = ({
     Swal.fire({
       title: `Delete ${name} from your inventory?`,
       text: "You won't be able to revert this!",
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete this item',
-      backdrop: 'confirmationPopupStyle',
-      focusCancel: true
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete this item",
+      backdrop: "confirmationPopupStyle",
+      focusCancel: true,
     }).then((result) => {
       if (result.isConfirmed) {
         handleDelete(e);
+      } else {
+        Swal.fire("Cancelled!", `${name} remains in the inventory`, "info");
       }
-      else {
-        Swal.fire('Cancelled!', `${name} remains in the inventory`, 'info');
-      }
-    })
+    });
   }
 
   async function handleDelete(e: React.SyntheticEvent) {

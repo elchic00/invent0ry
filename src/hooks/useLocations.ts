@@ -19,5 +19,5 @@ export const useLocations = () => {
       sendNotification("Error trying to get items", "error");
     }
   }
-  return { locations, getLocations: listLocations };
+  return { locations, listLocations };
 };

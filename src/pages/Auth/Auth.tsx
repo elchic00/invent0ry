@@ -4,12 +4,9 @@ import logo from "../../assets/logo.png";
 import { useUser } from "../../hooks/useUser";
 
 export const AuthPage = () => {
-  const { user } = useUser();
-
   return (
-    <Box variant="div" sx={{ display: "flex", height: "100vh" }}>
+    <Box sx={{ display: "flex", height: "100vh" }}>
       <Box
-        variant="div"
         sx={{
           flexGrow: 2,
           display: "flex",

@@ -14,7 +14,7 @@ export class API {
     const business = await DataStore.query(Business, (b) =>
       b.owner("eq", user.username)
     );
-    return business[0].id;
+    return business[0];
   }
 
   static async listLocations() {
@@ -63,7 +63,7 @@ export class API {
         expire: item.expirationDate?.slice(0, 16),
         price: item.price,
         locationsID: item.locationName || "",
-        businessID: business,
+        businessID: business.id,
       })
     );
   }
