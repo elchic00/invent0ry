@@ -29,6 +29,7 @@ type ItemCardProps = {
   price?: number;
   id: string;
   getItems: Function;
+  flip: Function;
 };
 
 export const ItemCardComponent = ({
@@ -39,6 +40,7 @@ export const ItemCardComponent = ({
   price,
   id,
   getItems,
+  flip,
 }: ItemCardProps) => {
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
   const { setComponent, setTheme } = useModal();
@@ -76,22 +78,23 @@ export const ItemCardComponent = ({
   }
 
   function openUpdate() {
-    setTheme({ height: "auto", width: "auto" });
-    setComponent(
-      <UpdateItem
-        id={id}
-        name={name}
-        count={itemCount}
-        price={price}
-        picture={picture}
-        expirationDate={expire}
-        getItems={getItems}
-      />
-    );
+    flip()
+    // setTheme({ height: "auto", width: "auto" });
+    // setComponent(
+    //   <UpdateItem
+    //     id={id}
+    //     name={name}
+    //     count={itemCount}
+    //     price={price}
+    //     picture={picture}
+    //     expirationDate={expire}
+    //     getItems={getItems}
+    //   />
+    // );
   }
 
   return (
-    <Card sx={{ width: { xs: "auto", sm: "300px" }, borderRadius: 2 }}>
+    <Card sx={{width: { xs: "auto", sm: "300px" }, borderRadius: 2 }}>
       <CardActionArea>
         <CardMedia component="img" height="140" image={potatoes} alt={name} />
         <CardContent>
