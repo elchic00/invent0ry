@@ -7,13 +7,14 @@ import {
   Select,
   InputLabel,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { currencies } from "../../constants/currencies";
 import React from "react";
 import { businessType } from "../../interface/models/businessType";
 import { API } from "../../services/api";
 import { sendNotification } from "../../utils/sendNotification";
 import { useLocations } from "../../hooks/useLocations";
+import { useBusiness } from "../../hooks/useBusiness";
 
 export const BusinessSpecifics = () => {
   const [formData, setFormData] = useState<businessType>({
@@ -21,6 +22,23 @@ export const BusinessSpecifics = () => {
     businessLocationsId: "",
     currency: "USD",
   });
+
+  const getLocation = async () => {
+    const business = await API.getBusinessByUsername();
+    setFormData((prev) =>
+    ({
+      ...prev,
+      name: business!.name!,
+      businessLocationsId: business!.businessLocationsId!,
+      currency: business!.currency!
+    }));
+  }
+    
+  useEffect(() => {
+   getLocation();
+ }, []);
+  
+
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
   const { locations } = useLocations();
@@ -44,7 +62,7 @@ export const BusinessSpecifics = () => {
     setIsDisabled(true);
 
     try {
-      const result = await API.addBusinessSpecifics(formData);
+      const result = await API.updateBusiness(formData);
       setIsDisabled(false);
       sendNotification("Business was successfully added", "success");
     } catch (error) {
