@@ -4,8 +4,6 @@ import {
   Button,
   MenuItem,
   Skeleton,
-  Select,
-  InputLabel,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { currencies } from "../../constants/currencies";
@@ -16,18 +14,22 @@ import { sendNotification } from "../../utils/sendNotification";
 import { useLocations } from "../../hooks/useLocations";
 import { useBusiness } from "../../hooks/useBusiness";
 
-export const BusinessSpecifics = () => {
+export const BusinessProfile = () => {
   const [formData, setFormData] = useState<businessType>({
     name: "",
     businessLocationsId: "",
     currency: "USD",
   });
 
+  
+  const [isDisabled, setIsDisabled] = useState<boolean>(false);
+
+  const { locations } = useLocations();
+  // const { business } = useBusiness();
+
   const getLocation = async () => {
     const business = await API.getBusinessByUsername();
-    setFormData((prev) =>
-    ({
-      ...prev,
+    setFormData(({
       name: business!.name!,
       businessLocationsId: business!.businessLocationsId!,
       currency: business!.currency!
@@ -38,10 +40,6 @@ export const BusinessSpecifics = () => {
    getLocation();
  }, []);
   
-
-  const [isDisabled, setIsDisabled] = useState<boolean>(false);
-
-  const { locations } = useLocations();
 
   const locSelect = locations ? (
     locations.map((location) => (
@@ -64,12 +62,10 @@ export const BusinessSpecifics = () => {
     try {
       const result = await API.updateBusiness(formData);
       setIsDisabled(false);
-      sendNotification("Business was successfully added", "success");
+      sendNotification("Business was successfully updated", "success");
     } catch (error) {
       sendNotification(
-        "Error trying to call the business specifics api",
-        "error"
-      );
+        "Error trying to call the business profile api","error");
       setIsDisabled(false);
     }
   }
@@ -80,6 +76,7 @@ export const BusinessSpecifics = () => {
   }
 
   return (
+
     <FormControl>
       <TextField
         id="standard-basic"
