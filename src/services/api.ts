@@ -17,6 +17,17 @@ export class API {
     return business[0];
   }
 
+  static async updateBusiness(data: businessType) {
+    const original = await this.getBusinessByUsername();
+      return await DataStore.save(
+        Business.copyOf(original, (updated) => {
+          updated.name = data.name;
+          updated.businessLocationsId = data.businessLocationsId;
+          updated.currency = data.currency;
+        })
+      );
+  }
+
   static async listLocations() {
     return await DataStore.query(Locations);
   }
@@ -26,6 +37,7 @@ export class API {
   }
 
   static async getLocationById(id: string) {
+    console.log(id)
     return await DataStore.query(Locations, id);
   }
 
@@ -68,13 +80,7 @@ export class API {
     );
   }
 
-  static async updateItem({
-    original,
-    data,
-  }: {
-    original: Items;
-    data: ItemDetailsInputs;
-  }) {
+  static async updateItem({ original, data }: { original: Items; data: ItemDetailsInputs; }){
     return await DataStore.save(
       Items.copyOf(original, (updated) => {
         updated.name = data.itemName;
