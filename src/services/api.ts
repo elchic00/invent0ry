@@ -65,6 +65,7 @@ export class API {
 
   static async addItem(item: ItemDetailsInputs) {
     const business = await API.getBusinessByUsername();
+
     await DataStore.save(
       new Items({
         name: item.itemName,
@@ -74,7 +75,7 @@ export class API {
         expire: item.expirationDate?.slice(0, 16),
         price: item.price,
         locationsID: item.locationName || "",
-        businessID: business.id,
+        businessID: business.id || "",
       })
     );
   }

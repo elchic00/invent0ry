@@ -2,17 +2,17 @@ import { Box, Fab, Typography } from "@mui/material";
 import { useModal } from "../../context";
 import { AddItem } from "../../components/AddItem";
 import AddIcon from "@mui/icons-material/Add";
-import { useItems } from "../../hooks";
+import { useItems } from "../../context";
 import { Skeleton } from "@mui/material";
 import { ItemCardComponent } from "../../components/ItemCard";
 
 export const Inventory = () => {
   const { setComponent, setTheme } = useModal();
-  const { items, getItems } = useItems();
+  const { items } = useItems();
 
   function handleOpen() {
     setTheme({ height: "400px", width: "auto" });
-    setComponent(<AddItem getItems={getItems} />);
+    setComponent(<AddItem />);
   }
   return (
     <Box>
@@ -29,7 +29,6 @@ export const Inventory = () => {
               expire={item.expire}
               price={item.price}
               id={item.id}
-              getItems={getItems}
             />
           ))
         ) : (

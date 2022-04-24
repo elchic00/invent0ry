@@ -19,6 +19,7 @@ import potatoes from "../../assets/potatoe.png";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import Swal from "sweetalert2";
+import { useItems } from "../../context";
 import "../../index.css";
 
 type ItemCardProps = {
@@ -28,7 +29,6 @@ type ItemCardProps = {
   expire?: string;
   price?: number;
   id: string;
-  getItems: Function;
 };
 
 export const ItemCardComponent = ({
@@ -38,11 +38,10 @@ export const ItemCardComponent = ({
   expire,
   price,
   id,
-  getItems,
 }: ItemCardProps) => {
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
   const { setComponent, setTheme } = useModal();
-
+  const { listItems } = useItems();
   function handleDeleteConfirmation(e: React.SyntheticEvent) {
     Swal.fire({
       title: `Delete ${name} from your inventory?`,
@@ -68,7 +67,7 @@ export const ItemCardComponent = ({
     try {
       const item = (await API.getItemById(id)) as Items;
       const result = await API.deleteItem(item);
-      await getItems();
+      await listItems();
       sendNotification("Item was successfully deleted", "success");
     } catch (e) {
       sendNotification("Error trying to call the delete item api", "error");
@@ -85,7 +84,6 @@ export const ItemCardComponent = ({
         price={price}
         picture={picture}
         expirationDate={expire}
-        getItems={getItems}
       />
     );
   }

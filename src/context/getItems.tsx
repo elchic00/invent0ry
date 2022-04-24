@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Items } from "../models";
 import { API } from "../services/api";
 import { sendNotification } from "../utils/sendNotification";
@@ -34,3 +34,5 @@ export const ItemsProvider = ({ children }: { children: JSX.Element }) => {
     </ItemsContext.Provider>
   );
 };
+
+export const useItems = () => useContext(ItemsContext);

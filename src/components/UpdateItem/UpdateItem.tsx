@@ -14,13 +14,10 @@ import { ItemDetailsInputs } from "../../interface/models/itemDetailsInputs";
 import { useModal } from "../../context";
 import { API } from "../../services/api";
 import { Items } from "../../models";
-import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import DatePicker from "@mui/lab/DatePicker";
-import Switch from "@mui/material/Switch";
 import { useLocations } from "../../hooks/useLocations";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { Locations } from "../../models";
+import { useItems } from "../../context";
 
 export const UpdateItem = ({
   id,
@@ -30,7 +27,6 @@ export const UpdateItem = ({
   sku,
   price,
   expirationDate,
-  getItems,
 }: {
   id: string;
   name?: string;
@@ -39,7 +35,6 @@ export const UpdateItem = ({
   price?: number;
   expirationDate?: string;
   sku?: string;
-  getItems: Function;
 }) => {
   const [formData, setFormData] = useState<ItemDetailsInputs>({
     itemName: name,
@@ -51,6 +46,8 @@ export const UpdateItem = ({
   });
   const { setComponent } = useModal();
   const { locations } = useLocations();
+  const { listItems } = useItems();
+
   function handleChange(e: React.ChangeEvent | SelectChangeEvent) {
     const { name, value } = e.target as HTMLInputElement;
     if (name === "count" || name === "price") {
@@ -67,9 +64,8 @@ export const UpdateItem = ({
     try {
       const item = (await API.getItemById(id)) as Items;
       const update = await API.updateItem({ original: item, data: formData });
-      await getItems();
+      await listItems();
       setComponent(null);
-      console.log(update);
     } catch (e) {
       sendNotification("Error trying to call the update item api", "error");
       setComponent(null);

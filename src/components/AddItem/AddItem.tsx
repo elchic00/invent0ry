@@ -22,7 +22,7 @@ import Switch from "@mui/material/Switch";
 import { useLocations } from "../../hooks/useLocations";
 import Select from "@mui/material/Select";
 import { Locations } from "../../models";
-
+import { useItems } from "../../context";
 const label = { inputProps: { "aria-label": "Switch demo" } };
 
 const ItemDetailsSchema = yup.object().shape({
@@ -54,13 +54,7 @@ const defaultValues = {
 };
 const resolver = yupResolver(ItemDetailsSchema);
 
-export const AddItem = ({
-  getItems,
-  setValue,
-}: {
-  getItems?: Function;
-  setValue?: Function;
-}) => {
+export const AddItem = ({ setValue }: { setValue?: Function }) => {
   const {
     handleSubmit,
     control,
@@ -72,13 +66,16 @@ export const AddItem = ({
   const [isOpen, setIsOpen] = useState<boolean>();
   const { setComponent } = useModal();
   const { locations } = useLocations();
+  const { listItems } = useItems();
 
   const formSubmitHandler: SubmitHandler<ItemDetailsInputs> = async (
     data: ItemDetailsInputs
   ) => {
     try {
       await API.addItem(data);
-      getItems && (await getItems());
+      listItems();
+
+      // change the tab number on the Walkthrough component
       setValue && setValue(3);
       setComponent(null);
     } catch (error) {
