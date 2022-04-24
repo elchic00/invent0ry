@@ -257,13 +257,6 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "location": {
-                    "name": "location",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
                 "currency": {
                     "name": "currency",
                     "isArray": false,
@@ -361,5 +354,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "98818ba8faefb06a120506dbbdf09df6"
+    "version": "5c89f3278190dfc56a935e77708c13d8"
 };
