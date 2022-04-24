@@ -24,7 +24,7 @@ import { sendNotification } from "../../utils/sendNotification";
 import { Locations } from "../../models";
 
 const columns: GridColumns = [
-  { field: "owner", headerName: "owner", width: 200 },
+  // { field: "owner", headerName: "owner", width: 200 },
   { field: "name", headerName: "Name", width: 180, editable: true },
   { field: "street", headerName: "Street", width: 240, editable: true },
   { field: "town", headerName: "Town", width: 185, editable: true },

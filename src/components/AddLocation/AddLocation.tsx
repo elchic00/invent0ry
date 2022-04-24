@@ -5,7 +5,13 @@ import { API } from "../../services/api";
 import { sendNotification } from "../../utils/sendNotification";
 import { useModal } from "../../context";
 
-export const AddLocation = ({ getLocations }: { getLocations: Function }) => {
+export const AddLocation = ({
+  getLocations,
+  setValue,
+}: {
+  getLocations?: Function;
+  setValue?: Function;
+}) => {
   const [formData, setFormData] = useState<locationType>({
     name: "",
     street: "",
@@ -20,7 +26,8 @@ export const AddLocation = ({ getLocations }: { getLocations: Function }) => {
     setIsDisabled(true);
     try {
       await API.addLocation(formData);
-      await getLocations();
+      getLocations && (await getLocations());
+      setValue && setValue(1);
       setComponent(null);
       setIsDisabled(false);
     } catch (e) {

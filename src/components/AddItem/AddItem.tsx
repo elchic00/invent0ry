@@ -29,11 +29,17 @@ const ItemDetailsSchema = yup.object().shape({
   itemName: yup.string().required("Required field - must be a string"),
   locationName: yup.string().required("Required field - must be a string"),
   // businessName: yup.string().required("Required field - must be a string"),
-  count: yup.number().required("Required field - must be a number").min(0, "Item Quantity cannot be negative"),
+  count: yup
+    .number()
+    .required("Required field - must be a number")
+    .min(0, "Item Quantity cannot be negative"),
   picture: yup.string(),
   sku: yup.string(),
   expirationDate: yup.string(),
-  price: yup.number().required("Required field - must be a number").min(0, "Item Price cannot be negative"),
+  price: yup
+    .number()
+    .required("Required field - must be a number")
+    .min(0, "Item Price cannot be negative"),
 });
 
 const defaultValues = {
@@ -48,7 +54,13 @@ const defaultValues = {
 };
 const resolver = yupResolver(ItemDetailsSchema);
 
-export const AddItem = ({ getItems }: { getItems: Function }) => {
+export const AddItem = ({
+  getItems,
+  setValue,
+}: {
+  getItems?: Function;
+  setValue?: Function;
+}) => {
   const {
     handleSubmit,
     control,
@@ -66,7 +78,8 @@ export const AddItem = ({ getItems }: { getItems: Function }) => {
   ) => {
     try {
       await API.addItem(data);
-      await getItems();
+      getItems && (await getItems());
+      setValue && setValue(3);
       setComponent(null);
     } catch (error) {
       console.log(error);
@@ -164,7 +177,11 @@ export const AddItem = ({ getItems }: { getItems: Function }) => {
                 label="Count"
                 variant="outlined"
                 error={!!errors.price}
-                helperText={errors.price ? errors.price?.message : "Minimum Item Quantity is 0"}
+                helperText={
+                  errors.price
+                    ? errors.price?.message
+                    : "Minimum Item Quantity is 0"
+                }
               />
             )}
           />
@@ -235,7 +252,11 @@ export const AddItem = ({ getItems }: { getItems: Function }) => {
                 label="Item Price"
                 variant="outlined"
                 error={!!errors.price}
-                helperText={errors.price ? errors.price?.message : "Minimum Item Price is 0"}
+                helperText={
+                  errors.price
+                    ? errors.price?.message
+                    : "Minimum Item Price is 0"
+                }
               />
             )}
           />
