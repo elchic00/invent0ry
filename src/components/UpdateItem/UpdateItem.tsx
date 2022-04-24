@@ -7,7 +7,6 @@ import {
   Skeleton,
   TextField,
 } from "@mui/material";
-import { StringifyOptions } from "querystring";
 import React, { useState } from "react";
 import { sendNotification } from "../../utils/sendNotification";
 import { ItemDetailsInputs } from "../../interface/models/itemDetailsInputs";
@@ -58,9 +57,8 @@ export const UpdateItem = ({
   }
 
   async function handleUpdate(e: any) {
-    console.log("update");
     e.preventDefault();
-    console.log(typeof formData.count);
+
     try {
       const item = (await API.getItemById(id)) as Items;
       const update = await API.updateItem({ original: item, data: formData });

@@ -1,3 +1,3 @@
 export * from "./ModalContext";
 export * from "./Loader";
-export * from "./GetItems";
+export * from "./getItems";
