@@ -5,15 +5,20 @@ import AddIcon from "@mui/icons-material/Add";
 import { useItems } from "../../context";
 import { Skeleton } from "@mui/material";
 import { ItemCardComponent } from "../../components/ItemCard";
+import { useEffect } from "react";
 
 export const Inventory = () => {
   const { setComponent, setTheme } = useModal();
-  const { items } = useItems();
+  const { items, listItems } = useItems();
 
   function handleOpen() {
     setTheme({ height: "400px", width: "auto" });
     setComponent(<AddItem />);
   }
+
+  useEffect(() => {
+    listItems();
+  }, []);
   return (
     <Box>
       <Typography mb={2} variant="h3">
