@@ -37,7 +37,6 @@ export class API {
   }
 
   static async getLocationById(id: string) {
-    console.log(id)
     return await DataStore.query(Locations, id);
   }
 

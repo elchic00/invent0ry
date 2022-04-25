@@ -4,6 +4,7 @@ import {
   Button,
   MenuItem,
   Skeleton,
+  LinearProgress,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { currencies } from "../../constants/currencies";
@@ -25,10 +26,9 @@ export const BusinessProfile = () => {
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
   const { locations } = useLocations();
-  // const { business } = useBusiness();
+  const { business } = useBusiness();
 
-  const getLocation = async () => {
-    const business = await API.getBusinessByUsername();
+  const getBusiness = async () => {
     setFormData(({
       name: business!.name!,
       businessLocationsId: business!.businessLocationsId!,
@@ -37,8 +37,8 @@ export const BusinessProfile = () => {
   }
     
   useEffect(() => {
-   getLocation();
- }, []);
+    business && getBusiness();
+  }, [business]);
   
 
   const locSelect = locations ? (
@@ -76,7 +76,7 @@ export const BusinessProfile = () => {
   }
 
   return (
-
+    business == null ? <LinearProgress/> : 
     <FormControl>
       <TextField
         id="standard-basic"
