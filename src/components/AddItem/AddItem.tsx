@@ -9,6 +9,7 @@ import {
   MenuItem,
   InputLabel,
   TextFieldProps,
+  Box,
 } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -23,6 +24,7 @@ import { useLocations } from "../../hooks/useLocations";
 import Select from "@mui/material/Select";
 import { Locations } from "../../models";
 import { useItems } from "../../context";
+import box from "../../assets/box.png";
 const label = { inputProps: { "aria-label": "Switch demo" } };
 
 const ItemDetailsSchema = yup.object().shape({
@@ -67,6 +69,7 @@ export const AddItem = ({ setValue }: { setValue?: Function }) => {
   const { setComponent } = useModal();
   const { locations } = useLocations();
   const { listItems } = useItems();
+  const [image, setImage] = useState<any>(box);
 
   const formSubmitHandler: SubmitHandler<ItemDetailsInputs> = async (
     data: ItemDetailsInputs
@@ -84,15 +87,15 @@ export const AddItem = ({ setValue }: { setValue?: Function }) => {
     }
   };
 
-  async function createImage(e: any) {
-    // TODO:
-    // 1. Get the actual form data
-    // 2. Update the actual form data
-    // OR
-    // Add an extra key
-    // const result = await API.createImage(e.img)
-    // update form data
-  }
+  const imageHandler = (e: any) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (reader.readyState === 2) {
+        setImage(reader.result);
+      }
+    };
+    reader.readAsDataURL(e.target.files[0]);
+  };
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -106,6 +109,35 @@ export const AddItem = ({ setValue }: { setValue?: Function }) => {
             gap: 2,
           }}
         >
+          <Box>
+            <Box
+              sx={{
+                p: 1,
+                height: "150px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Box
+                component="img"
+                src={image}
+                sx={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "contain",
+                }}
+              />
+            </Box>
+
+            <input
+              type="file"
+              accept="image/*"
+              name="image-upload"
+              id="input"
+              onChange={imageHandler}
+            />
+          </Box>
           <Controller
             name="itemName"
             control={control}
@@ -182,23 +214,7 @@ export const AddItem = ({ setValue }: { setValue?: Function }) => {
               />
             )}
           />
-          <Controller
-            name="picture"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, ref, value } }) => (
-              // TODO: Update this form field for one that allows upload an image
-              <TextField
-                value={value}
-                onChange={onChange}
-                inputRef={ref}
-                label="Picture"
-                variant="outlined"
-                error={!!errors.price}
-                helperText={errors.price ? errors.price?.message : ""}
-              />
-            )}
-          />
+
           <Controller
             name="sku"
             control={control}
