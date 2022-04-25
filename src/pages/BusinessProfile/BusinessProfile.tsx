@@ -4,26 +4,42 @@ import {
   Button,
   MenuItem,
   Skeleton,
-  Select,
-  InputLabel,
+  LinearProgress,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { currencies } from "../../constants/currencies";
 import React from "react";
 import { businessType } from "../../interface/models/businessType";
 import { API } from "../../services/api";
 import { sendNotification } from "../../utils/sendNotification";
 import { useLocations } from "../../hooks/useLocations";
+import { useBusiness } from "../../hooks/useBusiness";
 
-export const BusinessSpecifics = () => {
+export const BusinessProfile = () => {
   const [formData, setFormData] = useState<businessType>({
     name: "",
     businessLocationsId: "",
     currency: "USD",
   });
+
+  
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
   const { locations } = useLocations();
+  const { business } = useBusiness();
+
+  const getBusiness = async () => {
+    setFormData(({
+      name: business!.name!,
+      businessLocationsId: business!.businessLocationsId!,
+      currency: business!.currency!
+    }));
+  }
+    
+  useEffect(() => {
+    business && getBusiness();
+  }, [business]);
+  
 
   const locSelect = locations ? (
     locations.map((location) => (
@@ -44,14 +60,12 @@ export const BusinessSpecifics = () => {
     setIsDisabled(true);
 
     try {
-      const result = await API.addBusinessSpecifics(formData);
+      const result = await API.updateBusiness(formData);
       setIsDisabled(false);
-      sendNotification("Business was successfully added", "success");
+      sendNotification("Business was successfully updated", "success");
     } catch (error) {
       sendNotification(
-        "Error trying to call the business specifics api",
-        "error"
-      );
+        "Error trying to call the business profile api","error");
       setIsDisabled(false);
     }
   }
@@ -62,6 +76,7 @@ export const BusinessSpecifics = () => {
   }
 
   return (
+    business == null ? <LinearProgress/> : 
     <FormControl>
       <TextField
         id="standard-basic"
