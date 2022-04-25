@@ -1,38 +1,33 @@
-import {
-  ModelInit,
-  MutableModel,
-  PersistentModelConstructor,
-} from "@aws-amplify/datastore";
+import { ModelInit, MutableModel, PersistentModelConstructor } from "@aws-amplify/datastore";
+
+
+
+
 
 type LocationsMetaData = {
-  readOnlyFields: "createdAt" | "updatedAt";
-};
+  readOnlyFields: 'createdAt' | 'updatedAt';
+}
 
 type ItemsMetaData = {
-  readOnlyFields: "createdAt" | "updatedAt";
-};
+  readOnlyFields: 'createdAt' | 'updatedAt';
+}
 
 type BusinessMetaData = {
-  readOnlyFields: "createdAt" | "updatedAt";
-};
+  readOnlyFields: 'createdAt' | 'updatedAt';
+}
 
 export declare class Locations {
   readonly id: string;
-  readonly name?: string | null;
-  readonly street?: string | null;
-  readonly town?: string | null;
-  readonly zip?: number | null;
-  readonly owner?: string | null;
-  readonly Items?: (Items | null)[] | null;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
+  readonly name?: string;
+  readonly street?: string;
+  readonly town?: string;
+  readonly zip?: number;
+  readonly owner?: string;
+  readonly Items?: (Items | null)[];
+  readonly createdAt?: string;
+  readonly updatedAt?: string;
   constructor(init: ModelInit<Locations, LocationsMetaData>);
-  static copyOf(
-    source: Locations,
-    mutator: (
-      draft: MutableModel<Locations, LocationsMetaData>
-    ) => MutableModel<Locations, LocationsMetaData> | void
-  ): Locations;
+  static copyOf(source: Locations, mutator: (draft: MutableModel<Locations, LocationsMetaData>) => MutableModel<Locations, LocationsMetaData> | void): Locations;
 }
 
 export declare class Items {
@@ -46,15 +41,10 @@ export declare class Items {
   readonly owner?: string;
   readonly locationsID: string;
   readonly businessID: string;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
+  readonly createdAt?: string;
+  readonly updatedAt?: string;
   constructor(init: ModelInit<Items, ItemsMetaData>);
-  static copyOf(
-    source: Items,
-    mutator: (
-      draft: MutableModel<Items, ItemsMetaData>
-    ) => MutableModel<Items, ItemsMetaData> | void
-  ): Items;
+  static copyOf(source: Items, mutator: (draft: MutableModel<Items, ItemsMetaData>) => MutableModel<Items, ItemsMetaData> | void): Items;
 }
 
 export declare class Business {
@@ -64,14 +54,9 @@ export declare class Business {
   readonly owner?: string;
   readonly Locations?: Locations;
   readonly Items?: (Items | null)[];
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-  readonly businessLocationsId?: string | null;
+  readonly createdAt?: string;
+  readonly updatedAt?: string;
+  readonly businessLocationsId?: string;
   constructor(init: ModelInit<Business, BusinessMetaData>);
-  static copyOf(
-    source: Business,
-    mutator: (
-      draft: MutableModel<Business, BusinessMetaData>
-    ) => MutableModel<Business, BusinessMetaData> | void
-  ): Business;
+  static copyOf(source: Business, mutator: (draft: MutableModel<Business, BusinessMetaData>) => MutableModel<Business, BusinessMetaData> | void): Business;
 }
