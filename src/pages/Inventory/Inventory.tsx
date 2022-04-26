@@ -28,9 +28,10 @@ export const Inventory = () => {
         {items ? (
           items.map((item) => (
             <ItemCardComponent
+              key={item.id}
               name={item.name}
               itemCount={item.itemCount}
-              picture={item.picture}
+              picture={item.picture || ""}
               expire={item.expire}
               price={item.price}
               id={item.id}

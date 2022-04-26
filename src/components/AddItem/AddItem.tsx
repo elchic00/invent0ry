@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import {
   Button,
@@ -70,12 +70,15 @@ export const AddItem = ({ setValue }: { setValue?: Function }) => {
   const { locations } = useLocations();
   const { listItems } = useItems();
   const [image, setImage] = useState<any>(box);
+  const imageKey = useRef<string>();
 
   const formSubmitHandler: SubmitHandler<ItemDetailsInputs> = async (
     data: ItemDetailsInputs
   ) => {
+    let formData = { ...data, picture: imageKey.current };
+    console.log(formData);
     try {
-      await API.addItem(data);
+      await API.addItem(formData);
       listItems();
 
       // change the tab number on the Walkthrough component
@@ -87,14 +90,26 @@ export const AddItem = ({ setValue }: { setValue?: Function }) => {
     }
   };
 
-  const imageHandler = (e: any) => {
+  const imageHandler = async (e: any) => {
     const reader = new FileReader();
+    const file = e.target.files[0];
     reader.onload = () => {
       if (reader.readyState === 2) {
         setImage(reader.result);
       }
     };
-    reader.readAsDataURL(e.target.files[0]);
+    try {
+      const result = await API.uploadItemImage({
+        file: file,
+        fileName: file.name,
+      });
+
+      imageKey.current = result.key;
+
+      reader.readAsDataURL(file);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

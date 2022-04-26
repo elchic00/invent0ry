@@ -6,13 +6,19 @@ import { API } from "../../services/api";
 import { Hub, DataStore } from "aws-amplify";
 import { LinearProgress } from "@mui/material";
 
-export const RedirectComponent = ({ user }: { user: CognitoUser }) => {
+export const RedirectComponent = ({
+  user,
+}: {
+  user: CognitoUser | undefined;
+}) => {
   const navigate = useNavigate();
 
   function syncModels() {
     // Create listener that will stop observing the model once the sync process is done
     const removeListener = Hub.listen("datastore", async (capsule) => {
-      const { payload: { event } } = capsule;
+      const {
+        payload: { event },
+      } = capsule;
       // console.log("DataStore event", event, data); //show events as data store syncs with models
       if (event === "ready") {
         await getData();
@@ -25,10 +31,9 @@ export const RedirectComponent = ({ user }: { user: CognitoUser }) => {
   }
 
   useEffect(() => {
-      LocalStorage.setUser(user);
-      syncModels();
-  },[]);
-
+    user && LocalStorage.setUser(user);
+    syncModels();
+  }, []);
 
   async function getData() {
     const locations = await API.listLocations();
@@ -41,5 +46,5 @@ export const RedirectComponent = ({ user }: { user: CognitoUser }) => {
     return navigate("/user/dashboard");
   }
 
-  return <LinearProgress/>//<div>Loading...</div>;
+  return <LinearProgress />; //<div>Loading...</div>;
 };
