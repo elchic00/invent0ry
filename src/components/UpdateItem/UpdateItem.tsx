@@ -105,9 +105,9 @@ export const UpdateItem = ({
   };
 
   return (
-    <Box>
+    <Box sx={{height: "100%"}}>
       <form onSubmit={handleUpdate}>
-        <FormControl sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+        <FormControl sx={{ display: "flex", flexDirection: "column", gap: 2, height: "100%"}}>
           <Box>
             <Box
               sx={{

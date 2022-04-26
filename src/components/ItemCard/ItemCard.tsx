@@ -91,6 +91,9 @@ export const ItemCardComponent = ({
       sx={{
         width: { xs: "auto", sm: "300px" },
         borderRadius: 2,
+        height: "100%",
+        display: "flex",
+        flexDirection: "column"
       }}
     >
       {imgUrl === null ? (
