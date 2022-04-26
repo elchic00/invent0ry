@@ -146,6 +146,7 @@ export const UpdateItem = ({
           )}
 
           <Button type="submit">Update</Button>
+          <Button onClick={() => flip()}>Cancel</Button>
         </FormControl>
       </form>
     </Box>
