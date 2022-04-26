@@ -10,6 +10,7 @@ import { AddItem } from "../components/AddItem/AddItem";
 import { AddLocation } from "../components/AddLocation/AddLocation";
 import { LocationGrid } from "../pages/Locations/locations";
 import { WalkThrough } from "../pages/WalkThrough";
+import FlipCard from "../components/FlipCard/FlipCard"
 
 export const AppRoutes = () => {
   return (
@@ -30,6 +31,7 @@ export const AppRoutes = () => {
         <Route path={paths.businessSpecifics} element={<BusinessProfile />} />
         <Route path={paths.locations} element={<LocationGrid />} />
         <Route path={paths.walkthrough} element={<WalkThrough />} />
+        <Route path={paths.flipcardtest} element={<FlipCard/>}></Route>
       </Route>
     </Routes>
   );

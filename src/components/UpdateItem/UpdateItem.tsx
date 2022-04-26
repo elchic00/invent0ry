@@ -26,6 +26,8 @@ export const UpdateItem = ({
   sku,
   price,
   expirationDate,
+  getItems,
+  flip
 }: {
   id: string;
   name?: string;
@@ -34,6 +36,8 @@ export const UpdateItem = ({
   price?: number;
   expirationDate?: string;
   sku?: string;
+  getItems: Function;
+  flip: Function;
 }) => {
   const [formData, setFormData] = useState<ItemDetailsInputs>({
     itemName: name,
@@ -64,6 +68,8 @@ export const UpdateItem = ({
       const update = await API.updateItem({ original: item, data: formData });
       await listItems();
       setComponent(null);
+      console.log(update);
+      flip()
     } catch (e) {
       sendNotification("Error trying to call the update item api", "error");
       setComponent(null);
@@ -71,7 +77,9 @@ export const UpdateItem = ({
     }
   }
   return (
-    <Box sx={{ p: 2 }}>
+    <Box 
+    //sx={{ p: 2 }}
+    >
       <form onSubmit={handleUpdate}>
         <FormControl sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
           <TextField

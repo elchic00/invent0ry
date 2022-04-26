@@ -119,7 +119,7 @@ export const SideBar = ({ window }: Props) => {
     window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", alignItems: "center", justifyContent: "stretch"}}>
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -187,6 +187,7 @@ export const SideBar = ({ window }: Props) => {
           flexGrow: 1,
           p: 3,
           width: { sm: `calc(100% - ${drawerWidth}px)` },
+          height: "100%",
         }}
       >
         <Toolbar sx={{ display: { sm: "none" } }} />

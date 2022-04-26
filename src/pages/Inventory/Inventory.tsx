@@ -5,6 +5,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { useItems } from "../../context";
 import { Skeleton } from "@mui/material";
 import { ItemCardComponent } from "../../components/ItemCard";
+import FlipCard from "../../components/FlipCard/FlipCard";
 import { useEffect } from "react";
 
 export const Inventory = () => {
@@ -24,11 +25,10 @@ export const Inventory = () => {
       <Typography mb={2} variant="h3">
         Items
       </Typography>
-      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
+      <Box sx={{display: "flex", flexWrap: "wrap", gap: 2 }}>
         {items ? (
           items.map((item) => (
-            <ItemCardComponent
-              key={item.id}
+            < FlipCard
               name={item.name}
               itemCount={item.itemCount}
               picture={item.picture || ""}
