@@ -4,8 +4,11 @@ import { Business, Locations } from "../models";
 import { locationType } from "../interface/models/locationType";
 import { Items } from "../models";
 import { ItemDetailsInputs } from "../interface/models/itemDetailsInputs";
+import { Storage } from "@aws-amplify/storage";
 
 export class API {
+  //------------------- Data Store ------------------------
+
   static async addBusinessSpecifics(data: businessType) {
     return await DataStore.save(new Business(data));
   }
@@ -15,6 +18,17 @@ export class API {
       b.owner("eq", user.username)
     );
     return business[0];
+  }
+
+  static async updateBusiness(data: businessType) {
+    const original = await this.getBusinessByUsername();
+      return await DataStore.save(
+        Business.copyOf(original, (updated) => {
+          updated.name = data.name;
+          updated.businessLocationsId = data.businessLocationsId;
+          updated.currency = data.currency;
+        })
+      );
   }
 
   static async listLocations() {
@@ -54,6 +68,7 @@ export class API {
 
   static async addItem(item: ItemDetailsInputs) {
     const business = await API.getBusinessByUsername();
+
     await DataStore.save(
       new Items({
         name: item.itemName,
@@ -63,18 +78,12 @@ export class API {
         expire: item.expirationDate?.slice(0, 16),
         price: item.price,
         locationsID: item.locationName || "",
-        businessID: business.id,
+        businessID: business.id || "",
       })
     );
   }
 
-  static async updateItem({
-    original,
-    data,
-  }: {
-    original: Items;
-    data: ItemDetailsInputs;
-  }) {
+  static async updateItem({ original, data }: { original: Items; data: ItemDetailsInputs; }){
     return await DataStore.save(
       Items.copyOf(original, (updated) => {
         updated.name = data.itemName;
@@ -88,5 +97,24 @@ export class API {
 
   static async getItemById(id: string) {
     return await DataStore.query(Items, id);
+  }
+
+  // ----------------------- S3 Buckets ------------------------------
+  static async uploadItemImage({
+    file,
+    fileName,
+  }: {
+    file: any;
+    fileName: string;
+  }) {
+    return await Storage.put(fileName, file, { level: "public" });
+  }
+
+  static async getItemImage(key: string) {
+    return await Storage.get(key, { level: "public" });
+  }
+
+  static async removeItemImage(key: string) {
+    return await Storage.remove(key);
   }
 }

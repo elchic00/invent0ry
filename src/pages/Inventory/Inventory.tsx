@@ -2,20 +2,24 @@ import { Box, Fab, Typography } from "@mui/material";
 import { useModal } from "../../context";
 import { AddItem } from "../../components/AddItem";
 import AddIcon from "@mui/icons-material/Add";
-import { useItems } from "../../hooks";
+import { useItems } from "../../context";
 import { Skeleton } from "@mui/material";
 import { ItemCardComponent } from "../../components/ItemCard";
 import FlipCard from "../../components/FlipCard/FlipCard";
-
+import { useEffect } from "react";
 
 export const Inventory = () => {
   const { setComponent, setTheme } = useModal();
-  const { items, getItems } = useItems();
+  const { items, listItems } = useItems();
 
   function handleOpen() {
     setTheme({ height: "400px", width: "auto" });
-    setComponent(<AddItem getItems={getItems} />);
+    setComponent(<AddItem />);
   }
+
+  useEffect(() => {
+    listItems();
+  }, []);
   return (
     <Box>
       <Typography mb={2} variant="h3">
@@ -27,11 +31,10 @@ export const Inventory = () => {
             < FlipCard
               name={item.name}
               itemCount={item.itemCount}
-              picture={item.picture}
+              picture={item.picture || ""}
               expire={item.expire}
               price={item.price}
               id={item.id}
-              getItems={getItems}
             />
           ))
         ) : (

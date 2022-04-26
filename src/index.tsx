@@ -3,18 +3,20 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter as Router } from "react-router-dom";
-import { ModalProvider, LoaderProvider } from "./context";
+import { ModalProvider, LoaderProvider, ItemsProvider } from "./context";
 import "./index.css";
 
 ReactDOM.render(
   <Router>
-    <LoaderProvider>
-      <ModalProvider>
-        <React.StrictMode>
-          <App />
-        </React.StrictMode>
-      </ModalProvider>
-    </LoaderProvider>
+    <ItemsProvider>
+      <LoaderProvider>
+        <ModalProvider>
+          <React.StrictMode>
+            <App />
+          </React.StrictMode>
+        </ModalProvider>
+      </LoaderProvider>
+    </ItemsProvider>
   </Router>,
 
   document.getElementById("root")

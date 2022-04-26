@@ -3,39 +3,42 @@ import { LocalStorage } from "../../services";
 import { CognitoUser } from "amazon-cognito-identity-js";
 import { useNavigate } from "react-router-dom";
 import { API } from "../../services/api";
-import { Hub, DataStore, Predicates } from "aws-amplify";
+import { Hub, DataStore } from "aws-amplify";
+import { LinearProgress } from "@mui/material";
 
-export const RedirectComponent = ({ user }: { user: CognitoUser }) => {
+export const RedirectComponent = ({
+  user,
+}: {
+  user: CognitoUser | undefined;
+}) => {
   const navigate = useNavigate();
 
-  useEffect(() => {
-      LocalStorage.setUser(user);
+  function syncModels() {
     // Create listener that will stop observing the model once the sync process is done
     const removeListener = Hub.listen("datastore", async (capsule) => {
       const {
         payload: { event },
       } = capsule;
- 
-      // console.log("DataStore event", event, data);
- 
+      // console.log("DataStore event", event, data); //show events as data store syncs with models
       if (event === "ready") {
-        getData();
+        await getData();
       }
     });
-    // Start the DataStore, this kicks-off the sync process.
-      DataStore.start();
+    DataStore.start();
     return () => {
       removeListener();
     };
-  },
-    []);
+  }
 
+  useEffect(() => {
+    user && LocalStorage.setUser(user);
+    syncModels();
+  }, []);
 
   async function getData() {
     const locations = await API.listLocations();
     const business = await API.getBusinessByUsername();
     const promise = (await Promise.all([locations, business])) as any[];
-    console.log(promise)
     const isRedirected = promise.includes(null || undefined);
 
     if (isRedirected) return navigate("/user/walkthrough");
@@ -43,5 +46,5 @@ export const RedirectComponent = ({ user }: { user: CognitoUser }) => {
     return navigate("/user/dashboard");
   }
 
-  return <div>Loading</div>;
+  return <LinearProgress />; //<div>Loading...</div>;
 };
