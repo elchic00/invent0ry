@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import {
   Button,
@@ -9,6 +9,7 @@ import {
   MenuItem,
   InputLabel,
   TextFieldProps,
+  Box,
 } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -22,7 +23,8 @@ import Switch from "@mui/material/Switch";
 import { useLocations } from "../../hooks/useLocations";
 import Select from "@mui/material/Select";
 import { Locations } from "../../models";
-
+import { useItems } from "../../context";
+import box from "../../assets/box.png";
 const label = { inputProps: { "aria-label": "Switch demo" } };
 
 const ItemDetailsSchema = yup.object().shape({
@@ -54,13 +56,7 @@ const defaultValues = {
 };
 const resolver = yupResolver(ItemDetailsSchema);
 
-export const AddItem = ({
-  getItems,
-  setValue,
-}: {
-  getItems?: Function;
-  setValue?: Function;
-}) => {
+export const AddItem = ({ setValue }: { setValue?: Function }) => {
   const {
     handleSubmit,
     control,
@@ -72,13 +68,20 @@ export const AddItem = ({
   const [isOpen, setIsOpen] = useState<boolean>();
   const { setComponent } = useModal();
   const { locations } = useLocations();
+  const { listItems } = useItems();
+  const [image, setImage] = useState<any>(box);
+  const imageKey = useRef<string>();
 
   const formSubmitHandler: SubmitHandler<ItemDetailsInputs> = async (
     data: ItemDetailsInputs
   ) => {
+    let formData = { ...data, picture: imageKey.current };
+    console.log(formData);
     try {
-      await API.addItem(data);
-      getItems && (await getItems());
+      await API.addItem(formData);
+      listItems();
+
+      // change the tab number on the Walkthrough component
       setValue && setValue(3);
       setComponent(null);
     } catch (error) {
@@ -87,15 +90,27 @@ export const AddItem = ({
     }
   };
 
-  async function createImage(e: any) {
-    // TODO:
-    // 1. Get the actual form data
-    // 2. Update the actual form data
-    // OR
-    // Add an extra key
-    // const result = await API.createImage(e.img)
-    // update form data
-  }
+  const imageHandler = async (e: any) => {
+    const reader = new FileReader();
+    const file = e.target.files[0];
+    reader.onload = () => {
+      if (reader.readyState === 2) {
+        setImage(reader.result);
+      }
+    };
+    try {
+      const result = await API.uploadItemImage({
+        file: file,
+        fileName: file.name,
+      });
+
+      imageKey.current = result.key;
+
+      reader.readAsDataURL(file);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -109,6 +124,35 @@ export const AddItem = ({
             gap: 2,
           }}
         >
+          <Box>
+            <Box
+              sx={{
+                p: 1,
+                height: "150px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Box
+                component="img"
+                src={image}
+                sx={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "contain",
+                }}
+              />
+            </Box>
+
+            <input
+              type="file"
+              accept="image/*"
+              name="image-upload"
+              id="input"
+              onChange={imageHandler}
+            />
+          </Box>
           <Controller
             name="itemName"
             control={control}
@@ -185,23 +229,7 @@ export const AddItem = ({
               />
             )}
           />
-          <Controller
-            name="picture"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, ref, value } }) => (
-              // TODO: Update this form field for one that allows upload an image
-              <TextField
-                value={value}
-                onChange={onChange}
-                inputRef={ref}
-                label="Picture"
-                variant="outlined"
-                error={!!errors.price}
-                helperText={errors.price ? errors.price?.message : ""}
-              />
-            )}
-          />
+
           <Controller
             name="sku"
             control={control}

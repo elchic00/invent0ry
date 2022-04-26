@@ -8,8 +8,9 @@ import {
   Button,
   CardMedia,
   CardActionArea,
+  Skeleton,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { API } from "../../services/api";
 import { sendNotification } from "../../utils/sendNotification";
 import { UpdateItem } from "../UpdateItem";
@@ -19,16 +20,16 @@ import potatoes from "../../assets/potatoe.png";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import Swal from "sweetalert2";
+import { useItems } from "../../context";
 import "../../index.css";
 
 type ItemCardProps = {
   name?: string;
   itemCount?: number;
-  picture?: string;
+  picture: string;
   expire?: string;
   price?: number;
   id: string;
-  getItems: Function;
 };
 
 export const ItemCardComponent = ({
@@ -38,11 +39,10 @@ export const ItemCardComponent = ({
   expire,
   price,
   id,
-  getItems,
 }: ItemCardProps) => {
-  const [isDisabled, setIsDisabled] = useState<boolean>(false);
   const { setComponent, setTheme } = useModal();
-
+  const { listItems } = useItems();
+  const [imgUrl, setImgUrl] = useState<string | null>(null);
   function handleDeleteConfirmation(e: React.SyntheticEvent) {
     Swal.fire({
       title: `Delete ${name} from your inventory?`,
@@ -67,10 +67,14 @@ export const ItemCardComponent = ({
     e.preventDefault();
     try {
       const item = (await API.getItemById(id)) as Items;
-      const result = await API.deleteItem(item);
-      await getItems();
+      await Promise.all([
+        API.removeItemImage(item.picture!),
+        API.deleteItem(item),
+      ]);
+      await listItems();
       sendNotification("Item was successfully deleted", "success");
     } catch (e) {
+      console.log(e);
       sendNotification("Error trying to call the delete item api", "error");
     }
   }
@@ -85,15 +89,32 @@ export const ItemCardComponent = ({
         price={price}
         picture={picture}
         expirationDate={expire}
-        getItems={getItems}
       />
     );
   }
 
+  async function getImageLink() {
+    try {
+      const result = await API.getItemImage(picture);
+      setImgUrl(result);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    getImageLink();
+  }, []);
+
   return (
     <Card sx={{ width: { xs: "auto", sm: "300px" }, borderRadius: 2 }}>
       <CardActionArea>
-        <CardMedia component="img" height="140" image={potatoes} alt={name} />
+        {imgUrl === null ? (
+          <Skeleton width="100%" height="160px" />
+        ) : (
+          <CardMedia component="img" height="160" src={imgUrl!} alt={name} />
+        )}
+
         <CardContent>
           <Box
             sx={{

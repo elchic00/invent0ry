@@ -4,8 +4,11 @@ import { Business, Locations } from "../models";
 import { locationType } from "../interface/models/locationType";
 import { Items } from "../models";
 import { ItemDetailsInputs } from "../interface/models/itemDetailsInputs";
+import { Storage } from "@aws-amplify/storage";
 
 export class API {
+  //------------------- Data Store ------------------------
+
   static async addBusinessSpecifics(data: businessType) {
     return await DataStore.save(new Business(data));
   }
@@ -65,6 +68,7 @@ export class API {
 
   static async addItem(item: ItemDetailsInputs) {
     const business = await API.getBusinessByUsername();
+
     await DataStore.save(
       new Items({
         name: item.itemName,
@@ -74,7 +78,7 @@ export class API {
         expire: item.expirationDate?.slice(0, 16),
         price: item.price,
         locationsID: item.locationName || "",
-        businessID: business.id,
+        businessID: business.id || "",
       })
     );
   }
@@ -93,5 +97,24 @@ export class API {
 
   static async getItemById(id: string) {
     return await DataStore.query(Items, id);
+  }
+
+  // ----------------------- S3 Buckets ------------------------------
+  static async uploadItemImage({
+    file,
+    fileName,
+  }: {
+    file: any;
+    fileName: string;
+  }) {
+    return await Storage.put(fileName, file, { level: "public" });
+  }
+
+  static async getItemImage(key: string) {
+    return await Storage.get(key, { level: "public" });
+  }
+
+  static async removeItemImage(key: string) {
+    return await Storage.remove(key);
   }
 }

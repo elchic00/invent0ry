@@ -69,5 +69,18 @@
         }
       ]
     }
+  },
+  "storage": {
+    "invent0rymain0558dd8c": {
+      "service": "S3",
+      "serviceType": "imported",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": []
+    },
+    "items": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": []
+    }
   }
 }
