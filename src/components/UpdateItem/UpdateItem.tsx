@@ -53,7 +53,7 @@ export const UpdateItem = ({
   const { locations } = useLocations();
   const { listItems } = useItems();
   const { imgUrl, setImgUrl } = useImageUrl(picture);
-  const imageKey = useRef<string>();
+  const imageKey = useRef<string>(picture);
 
   function handleChange(e: React.ChangeEvent | SelectChangeEvent) {
     const { name, value } = e.target as HTMLInputElement;
