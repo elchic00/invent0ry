@@ -7,7 +7,7 @@ import {
   Skeleton,
   TextField,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { sendNotification } from "../../utils/sendNotification";
 import { ItemDetailsInputs } from "../../interface/models/itemDetailsInputs";
 import { useModal } from "../../context";
@@ -17,6 +17,9 @@ import { useLocations } from "../../hooks/useLocations";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { Locations } from "../../models";
 import { useItems } from "../../context";
+import { useImageUrl } from "../../hooks";
+import { ImageOutlined } from "@mui/icons-material";
+import box from "../../assets/box.png";
 
 export const UpdateItem = ({
   id,
@@ -26,17 +29,16 @@ export const UpdateItem = ({
   sku,
   price,
   expirationDate,
-  getItems,
-  flip
+
+  flip,
 }: {
   id: string;
   name?: string;
   count?: number;
-  picture?: string;
+  picture: string;
   price?: number;
   expirationDate?: string;
   sku?: string;
-  getItems: Function;
   flip: Function;
 }) => {
   const [formData, setFormData] = useState<ItemDetailsInputs>({
@@ -50,6 +52,8 @@ export const UpdateItem = ({
   const { setComponent } = useModal();
   const { locations } = useLocations();
   const { listItems } = useItems();
+  const { imgUrl, setImgUrl } = useImageUrl(picture);
+  const imageKey = useRef<string>();
 
   function handleChange(e: React.ChangeEvent | SelectChangeEvent) {
     const { name, value } = e.target as HTMLInputElement;
@@ -62,33 +66,83 @@ export const UpdateItem = ({
 
   async function handleUpdate(e: any) {
     e.preventDefault();
-
+    let data = { ...formData, picture: imageKey.current };
     try {
       const item = (await API.getItemById(id)) as Items;
-      const update = await API.updateItem({ original: item, data: formData });
+      const update = await API.updateItem({ original: item, data });
       await listItems();
       setComponent(null);
-      flip()
-      sendNotification("Item was successfully updated", "success");
+      flip();
 
+      sendNotification("Item was successfully updated", "success");
     } catch (e) {
       sendNotification("Error trying to call the update item api", "error");
       setComponent(null);
       console.log(e);
     }
   }
+
+  const imageHandler = async (e: any) => {
+    const reader = new FileReader();
+    const file = e.target.files[0];
+    reader.onload = () => {
+      if (reader.readyState === 2) {
+        setImgUrl(reader.result);
+      }
+    };
+    try {
+      const result = await API.uploadItemImage({
+        file: file,
+        fileName: file.name,
+      });
+
+      imageKey.current = result.key;
+
+      reader.readAsDataURL(file);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
-    <Box 
-    //sx={{ p: 2 }}
-    >
+    <Box>
       <form onSubmit={handleUpdate}>
         <FormControl sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+          <Box>
+            <Box
+              sx={{
+                p: 1,
+                height: "150px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Box
+                component="img"
+                src={imgUrl || box}
+                sx={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "contain",
+                }}
+              />
+            </Box>
+
+            <input
+              type="file"
+              accept="image/*"
+              name="image-upload"
+              id="input"
+              onChange={imageHandler}
+            />
+          </Box>
+
           <TextField
             label="Item Name"
             name="itemName"
             value={formData.itemName}
             onChange={handleChange}
-            defaultValue={formData.itemName}
           />
 
           <TextField
@@ -97,7 +151,6 @@ export const UpdateItem = ({
             name="count"
             value={formData.count}
             onChange={handleChange}
-            defaultValue={formData.count}
           />
 
           {locations ? (
@@ -111,7 +164,7 @@ export const UpdateItem = ({
                 onChange={handleChange}
               >
                 {locations.map((location: Locations) => (
-                  <MenuItem value={location.id}>
+                  <MenuItem value={location.id} key={location.id}>
                     {`${location.name} - ${location.street}, ${location.town}`}
                   </MenuItem>
                 ))}
@@ -120,20 +173,13 @@ export const UpdateItem = ({
           ) : (
             <Skeleton width="auto" height="40px" />
           )}
-          <TextField
-            label="Picture"
-            name="picture"
-            value={formData.picture}
-            onChange={handleChange}
-            defaultValue={formData.picture}
-          />
+
           <TextField
             type="number"
             label="Price"
             name="price"
             value={formData.price}
             onChange={handleChange}
-            defaultValue={formData.price}
           />
           {formData.expirationDate && (
             <TextField
@@ -141,7 +187,6 @@ export const UpdateItem = ({
               name="expirationDate"
               value={formData.expirationDate}
               onChange={handleChange}
-              defaultValue={formData.expirationDate}
             />
           )}
 

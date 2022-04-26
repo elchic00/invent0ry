@@ -20,15 +20,18 @@ export const Inventory = () => {
   useEffect(() => {
     listItems();
   }, []);
+
+  console.log(items);
   return (
     <Box>
       <Typography mb={2} variant="h3">
         Items
       </Typography>
-      <Box sx={{display: "flex", flexWrap: "wrap", gap: 2 }}>
+      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
         {items ? (
           items.map((item) => (
-            < FlipCard
+            <FlipCard
+              key={item.id}
               name={item.name}
               itemCount={item.itemCount}
               picture={item.picture || ""}

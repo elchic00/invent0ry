@@ -10,17 +10,17 @@ import {
   CardActionArea,
   Skeleton,
 } from "@mui/material";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { API } from "../../services/api";
 import { sendNotification } from "../../utils/sendNotification";
 import { UpdateItem } from "../UpdateItem";
 import { useModal } from "../../context/ModalContext";
 import { Items } from "../../models";
-import potatoes from "../../assets/potatoe.png";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import Swal from "sweetalert2";
 import { useItems } from "../../context";
+import { useImageUrl } from "../../hooks";
 import "../../index.css";
 
 type ItemCardProps = {
@@ -30,9 +30,7 @@ type ItemCardProps = {
   expire?: string;
   price?: number;
   id: string;
-  getItems: Function;
   flip: Function;
-
 };
 
 export const ItemCardComponent = ({
@@ -42,12 +40,12 @@ export const ItemCardComponent = ({
   expire,
   price,
   id,
-  getItems,
   flip,
 }: ItemCardProps) => {
   const { setComponent, setTheme } = useModal();
   const { listItems } = useItems();
-  const [imgUrl, setImgUrl] = useState<string | null>(null);
+  const { imgUrl } = useImageUrl(picture);
+
   function handleDeleteConfirmation(e: React.SyntheticEvent) {
     Swal.fire({
       title: `Delete ${name} from your inventory?`,
@@ -85,75 +83,78 @@ export const ItemCardComponent = ({
   }
 
   function openUpdate() {
-    flip()
-    // setTheme({ height: "auto", width: "auto" });
-    // setComponent(
-    //   <UpdateItem
-    //     id={id}
-    //     name={name}
-    //     count={itemCount}
-    //     price={price}
-    //     picture={picture}
-    //     expirationDate={expire}
-    //     getItems={getItems}
-    //   />
-    // );
-
+    flip();
   }
-
-  async function getImageLink() {
-    try {
-      const result = await API.getItemImage(picture);
-      setImgUrl(result);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  useEffect(() => {
-    getImageLink();
-  }, []);
 
   return (
-    <Card sx={{width: { xs: "auto", sm: "300px" }, borderRadius: 2 }}>
-      <CardActionArea>
-        {imgUrl === null ? (
-          <Skeleton width="100%" height="160px" />
-        ) : (
-          <CardMedia component="img" height="160" src={imgUrl!} alt={name} />
-        )}
+    <Card
+      sx={{
+        width: { xs: "auto", sm: "300px" },
+        borderRadius: 2,
+      }}
+    >
+      {imgUrl === null ? (
+        <Skeleton
+          animation="wave"
+          variant="rectangular"
+          width="100%"
+          height={160}
+        />
+      ) : (
+        <CardMedia component="img" height="160" src={imgUrl!} alt={name} />
+      )}
 
-        <CardContent>
-          <Box
+      <CardContent>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            flexDirection: "column",
+          }}
+        >
+          <Typography variant="h4" sx={{ mb: 1 }}>
+            {name}
+          </Typography>
+          <Typography
+            variant="h5"
             sx={{
+              fontWeight: 100,
               display: "flex",
-              justifyContent: "space-between",
-              flexDirection: "column",
+              gap: 1,
+              alignItems: "center",
             }}
           >
-            <Typography variant="h4" sx={{ mb: 1 }}>
-              {name}
-            </Typography>
+            {" "}
+            Quantity:
             <Typography
-              variant="h5"
-              sx={{
-                fontWeight: 100,
-                display: "flex",
-                gap: 1,
-                alignItems: "center",
-              }}
+              variant="body2"
+              color="text.secondary"
+              sx={{ fontSize: "1.2rem", fontWeight: 100 }}
             >
-              {" "}
-              Quantity:
-              <Typography
-                variant="body2"
-                color="text.secondary"
-                sx={{ fontSize: "1.2rem", fontWeight: 100 }}
-              >
-                {itemCount}
-              </Typography>
+              {itemCount}
             </Typography>
+          </Typography>
 
+          <Typography
+            variant="h5"
+            sx={{
+              fontWeight: 100,
+              display: "flex",
+              gap: 1,
+              alignItems: "center",
+            }}
+          >
+            {" "}
+            Price:
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{ fontSize: "1.2rem", fontWeight: 100 }}
+            >
+              $ {price}
+            </Typography>
+          </Typography>
+          {expire && (
             <Typography
               variant="h5"
               sx={{
@@ -164,39 +165,19 @@ export const ItemCardComponent = ({
               }}
             >
               {" "}
-              Price:
+              Expire:
               <Typography
                 variant="body2"
                 color="text.secondary"
                 sx={{ fontSize: "1.2rem", fontWeight: 100 }}
               >
-                $ {price}
+                {expire}
               </Typography>
             </Typography>
-            {expire && (
-              <Typography
-                variant="h5"
-                sx={{
-                  fontWeight: 100,
-                  display: "flex",
-                  gap: 1,
-                  alignItems: "center",
-                }}
-              >
-                {" "}
-                Expire:
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                  sx={{ fontSize: "1.2rem", fontWeight: 100 }}
-                >
-                  {expire}
-                </Typography>
-              </Typography>
-            )}
-          </Box>
-        </CardContent>
-      </CardActionArea>
+          )}
+        </Box>
+      </CardContent>
+
       <CardActions>
         <IconButton onClick={openUpdate}>
           {" "}
