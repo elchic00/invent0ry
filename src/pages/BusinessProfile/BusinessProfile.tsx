@@ -75,8 +75,9 @@ export const BusinessProfile = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   }
 
-  return (
-    business == null ? <LinearProgress/> : 
+  return business == null ? (
+    <Skeleton variant="rectangular" width={250} height={350} />
+  ) : (
     <FormControl>
       <TextField
         id="standard-basic"
