@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useCallback, useRef } from "react";
 import {
   DataGrid,
   GridColumns,
@@ -22,6 +22,7 @@ import { API } from "../../services/api";
 import AddIcon from "@mui/icons-material/Add";
 import { sendNotification } from "../../utils/sendNotification";
 import { Locations } from "../../models";
+import Swal from "sweetalert2";
 
 const columns: GridColumns = [
   // { field: "owner", headerName: "owner", width: 200 },
@@ -55,20 +56,38 @@ export const LocationGrid = () => {
     GridSelectionModel | GridSelectionModel[]
   >([]);
 
-  const handleDelete = async () => {
+    function handleDeleteConfirmation(e: React.SyntheticEvent) {
+      Swal.fire({
+        title: `Delete these location(s)?`,
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete this item",
+        backdrop: "confirmationPopupStyle",
+        focusCancel: true,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          handleDelete(e);
+        } else {
+          Swal.fire("Cancelled!", `Locations remain in the inventory`, "info");
+        }
+      });
+    }
+
+  const handleDelete = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
     let arrLen = deleted.length;
     try {
       for (let i = 0; i <= arrLen - 1; i++) {
-        const loc = (await API.getLocationById(
-          deleted[i] as string
-        )) as Locations;
+        const loc = (await API.getLocationById(deleted[i] as string)) as Locations;
         await API.deleteLocation(loc);
       }
       sendNotification("Location was successfully deleted", "success");
-      // console.log(res);
       await listLocations();
     } catch (e) {
-      // console.log(e);
+      console.log(e)
       sendNotification("Error trying to call the delete location api", "error");
     }
   };
@@ -201,7 +220,7 @@ export const LocationGrid = () => {
         color="primary"
         aria-label="remove"
         sx={{ position: "fixed", bottom: 20, right: 124 }}
-        onClick={handleDelete}
+        onClick={handleDeleteConfirmation}
       >
         <RemoveIcon />
       </Fab>
