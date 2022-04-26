@@ -87,45 +87,74 @@ export const ItemCardComponent = ({
   }
 
   return (
-    <Card sx={{ width: { xs: "auto", sm: "300px" }, borderRadius: 2 }}>
-      <CardActionArea>
-        {imgUrl === null ? (
-          <Skeleton width="100%" height="160px" />
-        ) : (
-          <CardMedia component="img" height="160" src={imgUrl!} alt={name} />
-        )}
+    <Card
+      sx={{
+        width: { xs: "auto", sm: "300px" },
+        borderRadius: 2,
+      }}
+    >
+      {imgUrl === null ? (
+        <Skeleton
+          animation="wave"
+          variant="rectangular"
+          width="100%"
+          height={160}
+        />
+      ) : (
+        <CardMedia component="img" height="160" src={imgUrl!} alt={name} />
+      )}
 
-        <CardContent>
-          <Box
+      <CardContent>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            flexDirection: "column",
+          }}
+        >
+          <Typography variant="h4" sx={{ mb: 1 }}>
+            {name}
+          </Typography>
+          <Typography
+            variant="h5"
             sx={{
+              fontWeight: 100,
               display: "flex",
-              justifyContent: "space-between",
-              flexDirection: "column",
+              gap: 1,
+              alignItems: "center",
             }}
           >
-            <Typography variant="h4" sx={{ mb: 1 }}>
-              {name}
-            </Typography>
+            {" "}
+            Quantity:
             <Typography
-              variant="h5"
-              sx={{
-                fontWeight: 100,
-                display: "flex",
-                gap: 1,
-                alignItems: "center",
-              }}
+              variant="body2"
+              color="text.secondary"
+              sx={{ fontSize: "1.2rem", fontWeight: 100 }}
             >
-              {" "}
-              Quantity:
-              <Typography
-                variant="body2"
-                color="text.secondary"
-                sx={{ fontSize: "1.2rem", fontWeight: 100 }}
-              >
-                {itemCount}
-              </Typography>
+              {itemCount}
             </Typography>
+          </Typography>
 
+          <Typography
+            variant="h5"
+            sx={{
+              fontWeight: 100,
+              display: "flex",
+              gap: 1,
+              alignItems: "center",
+            }}
+          >
+            {" "}
+            Price:
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{ fontSize: "1.2rem", fontWeight: 100 }}
+            >
+              $ {price}
+            </Typography>
+          </Typography>
+          {expire && (
             <Typography
               variant="h5"
               sx={{
@@ -136,39 +165,19 @@ export const ItemCardComponent = ({
               }}
             >
               {" "}
-              Price:
+              Expire:
               <Typography
                 variant="body2"
                 color="text.secondary"
                 sx={{ fontSize: "1.2rem", fontWeight: 100 }}
               >
-                $ {price}
+                {expire}
               </Typography>
             </Typography>
-            {expire && (
-              <Typography
-                variant="h5"
-                sx={{
-                  fontWeight: 100,
-                  display: "flex",
-                  gap: 1,
-                  alignItems: "center",
-                }}
-              >
-                {" "}
-                Expire:
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                  sx={{ fontSize: "1.2rem", fontWeight: 100 }}
-                >
-                  {expire}
-                </Typography>
-              </Typography>
-            )}
-          </Box>
-        </CardContent>
-      </CardActionArea>
+          )}
+        </Box>
+      </CardContent>
+
       <CardActions>
         <IconButton onClick={openUpdate}>
           {" "}

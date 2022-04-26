@@ -20,6 +20,8 @@ export const Inventory = () => {
   useEffect(() => {
     listItems();
   }, []);
+
+  console.log(items);
   return (
     <Box>
       <Typography mb={2} variant="h3">
