@@ -58,14 +58,19 @@ const FlipCard = ({
         width: { xs: "auto", sm: "300px" },
         borderRadius: 2,
         prespective: "1000px",
+        height: "400px",
       }}
     >
-      <CardActionArea>
+      <CardActionArea
+        sx={{
+            height: "100%"
+        }}
+      >
         <Box
           sx={{
             ...StyleFlipCardContent,
             position: "absolute",
-            transform: `rotateY(${180 * +flipped}deg)`,
+            transform: `rotateY(${180 * +flipped}deg)`
           }}
         >
           <ItemCardComponent
@@ -82,6 +87,8 @@ const FlipCard = ({
           sx={{
             ...StyleFlipCardContent,
             transform: `rotateY(${180 * +!flipped}deg)`,
+            overflowX: "hidden",
+            overflowY: "scroll",
           }}
         >
           <UpdateItem
