@@ -76,9 +76,7 @@ export const UpdateItem = ({
     }
   }
   return (
-    <Box
-    //sx={{ p: 2 }}
-    >
+    <Box>
       <form onSubmit={handleUpdate}>
         <FormControl sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
           <TextField

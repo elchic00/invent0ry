@@ -10,17 +10,17 @@ import {
   CardActionArea,
   Skeleton,
 } from "@mui/material";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { API } from "../../services/api";
 import { sendNotification } from "../../utils/sendNotification";
 import { UpdateItem } from "../UpdateItem";
 import { useModal } from "../../context/ModalContext";
 import { Items } from "../../models";
-import potatoes from "../../assets/potatoe.png";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import Swal from "sweetalert2";
 import { useItems } from "../../context";
+import { useImageUrl } from "../../hooks";
 import "../../index.css";
 
 type ItemCardProps = {
@@ -30,7 +30,6 @@ type ItemCardProps = {
   expire?: string;
   price?: number;
   id: string;
-
   flip: Function;
 };
 
@@ -45,7 +44,8 @@ export const ItemCardComponent = ({
 }: ItemCardProps) => {
   const { setComponent, setTheme } = useModal();
   const { listItems } = useItems();
-  const [imgUrl, setImgUrl] = useState<string | null>(null);
+  const { imgUrl } = useImageUrl(picture);
+
   function handleDeleteConfirmation(e: React.SyntheticEvent) {
     Swal.fire({
       title: `Delete ${name} from your inventory?`,
@@ -84,32 +84,7 @@ export const ItemCardComponent = ({
 
   function openUpdate() {
     flip();
-    // setTheme({ height: "auto", width: "auto" });
-    // setComponent(
-    //   <UpdateItem
-    //     id={id}
-    //     name={name}
-    //     count={itemCount}
-    //     price={price}
-    //     picture={picture}
-    //     expirationDate={expire}
-    //     getItems={getItems}
-    //   />
-    // );
   }
-
-  async function getImageLink() {
-    try {
-      const result = await API.getItemImage(picture);
-      setImgUrl(result);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  useEffect(() => {
-    getImageLink();
-  }, []);
 
   return (
     <Card sx={{ width: { xs: "auto", sm: "300px" }, borderRadius: 2 }}>
