@@ -68,8 +68,9 @@ export const UpdateItem = ({
       const update = await API.updateItem({ original: item, data: formData });
       await listItems();
       setComponent(null);
-      console.log(update);
       flip()
+      sendNotification("Item was successfully updated", "success");
+
     } catch (e) {
       sendNotification("Error trying to call the update item api", "error");
       setComponent(null);
