@@ -30,9 +30,8 @@ type ItemCardProps = {
   expire?: string;
   price?: number;
   id: string;
-  getItems: Function;
-  flip: Function;
 
+  flip: Function;
 };
 
 export const ItemCardComponent = ({
@@ -42,7 +41,6 @@ export const ItemCardComponent = ({
   expire,
   price,
   id,
-  getItems,
   flip,
 }: ItemCardProps) => {
   const { setComponent, setTheme } = useModal();
@@ -85,7 +83,7 @@ export const ItemCardComponent = ({
   }
 
   function openUpdate() {
-    flip()
+    flip();
     // setTheme({ height: "auto", width: "auto" });
     // setComponent(
     //   <UpdateItem
@@ -98,7 +96,6 @@ export const ItemCardComponent = ({
     //     getItems={getItems}
     //   />
     // );
-
   }
 
   async function getImageLink() {
@@ -115,7 +112,7 @@ export const ItemCardComponent = ({
   }, []);
 
   return (
-    <Card sx={{width: { xs: "auto", sm: "300px" }, borderRadius: 2 }}>
+    <Card sx={{ width: { xs: "auto", sm: "300px" }, borderRadius: 2 }}>
       <CardActionArea>
         {imgUrl === null ? (
           <Skeleton width="100%" height="160px" />

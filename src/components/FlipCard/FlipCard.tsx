@@ -1,7 +1,7 @@
 import React, { ReactElement, useContext, useState, useEffect } from "react";
-import {ItemCardComponent} from "../ItemCard/ItemCard";
+import { ItemCardComponent } from "../ItemCard/ItemCard";
 import { UpdateItem } from "../UpdateItem/UpdateItem";
-import {Box, CardActionArea} from "@mui/material"
+import { Box, CardActionArea } from "@mui/material";
 
 // type FlipCardProps = {
 //     children: JSX.Element;
@@ -14,7 +14,7 @@ import {Box, CardActionArea} from "@mui/material"
 // }
 
 /* TEST FLIPCARD */
-// const item = { 
+// const item = {
 //     name: "flipcard test",
 //     itemCount: 25,
 //     picture: "abcd",
@@ -24,70 +24,79 @@ import {Box, CardActionArea} from "@mui/material"
 // }
 
 const getItems = () => {
-    return true;
-}
+  return true;
+};
 /* END TEST FLIPCARD */
 
 const StyleFlipCardContent = {
-    width: "100%",
-    height: "100%",
-    backfaceVisibility: "hidden",
-    transition: "transform 1s ease-in-out",
-    transformStyle: "preserve-3d"
-}
+  width: "100%",
+  height: "100%",
+  backfaceVisibility: "hidden",
+  transition: "transform 1s ease-in-out",
+  transformStyle: "preserve-3d",
+};
 
 const FlipCard = ({
-    name,
-    itemCount,
-    picture,
-    expire,
-    price,
-    id,
-    getItems
-  }:any) => {
-    //const flipCardContext = React.createContext<FlipCardContextInterface>();
-    const [flipped, setFlipped] = useState(false);
-    
-    const flip = () => {
-        setFlipped(!flipped);
-    }
+  name,
+  itemCount,
+  picture,
+  expire,
+  price,
+  id,
+  getItems,
+}: any) => {
+  //const flipCardContext = React.createContext<FlipCardContextInterface>();
+  const [flipped, setFlipped] = useState(false);
 
-    return (
-        <Box sx={{ width: { xs: "auto", sm: "300px" }, borderRadius: 2, prespective: "1000px" }}>
-            <CardActionArea>
-                <Box sx={{...StyleFlipCardContent,
-                    position: "absolute",
-                    transform: `rotateY(${180 * +flipped}deg)`
-                }}>
-                    <ItemCardComponent
-                        name={name}
-                        itemCount={itemCount}
-                        picture={picture}
-                        expire={expire}
-                        price={price}
-                        id={id}
-                        getItems={getItems}
-                        flip={flip}
-                    />
-                </Box>
-                <Box sx={{...StyleFlipCardContent,
-                    transform: `rotateY(${180 * +!flipped}deg)`
-                    
-                }}>
-                    <UpdateItem
-                        id={id}
-                        name={name}
-                        count={itemCount}
-                        price={price}
-                        picture={picture}
-                        expirationDate={expire}
-                        getItems={getItems}
-                        flip={flip}
-                    />
-                </Box>
-            </CardActionArea>
+  const flip = () => {
+    setFlipped(!flipped);
+  };
+
+  return (
+    <Box
+      sx={{
+        width: { xs: "auto", sm: "300px" },
+        borderRadius: 2,
+        prespective: "1000px",
+      }}
+    >
+      <CardActionArea>
+        <Box
+          sx={{
+            ...StyleFlipCardContent,
+            position: "absolute",
+            transform: `rotateY(${180 * +flipped}deg)`,
+          }}
+        >
+          <ItemCardComponent
+            name={name}
+            itemCount={itemCount}
+            picture={picture}
+            expire={expire}
+            price={price}
+            id={id}
+            flip={flip}
+          />
         </Box>
-    )
-}
+        <Box
+          sx={{
+            ...StyleFlipCardContent,
+            transform: `rotateY(${180 * +!flipped}deg)`,
+          }}
+        >
+          <UpdateItem
+            id={id}
+            name={name}
+            count={itemCount}
+            price={price}
+            picture={picture}
+            expirationDate={expire}
+            flip={flip}
+          />
+        </Box>
+      </CardActionArea>
+    </Box>
+  );
+};
 
 export default FlipCard;
