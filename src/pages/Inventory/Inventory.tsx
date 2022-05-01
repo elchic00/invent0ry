@@ -8,14 +8,9 @@ import { ItemCardComponent } from "../../components/ItemCard";
 import FlipCard from "../../components/FlipCard/FlipCard";
 import { useEffect, useState } from "react";
 
-interface location {
-  [key: string]: string
-}
-
 export const Inventory = () => {
   const { setComponent, setTheme } = useModal();
   const { items, listItems } = useItems();
-  const [ locations, setLocations ] = useState<location>({});
   
   function handleOpen() {
     setTheme({ height: "400px", width: "auto" });
