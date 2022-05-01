@@ -3,6 +3,8 @@ import { ItemCardComponent } from "../ItemCard/ItemCard";
 import { UpdateItem } from "../UpdateItem/UpdateItem";
 import { Box, CardActionArea } from "@mui/material";
 
+
+
 // type FlipCardProps = {
 //     children: JSX.Element;
 // }
@@ -44,6 +46,7 @@ const FlipCard = ({
   price,
   id,
   getItems,
+  locationID
 }: any) => {
   //const flipCardContext = React.createContext<FlipCardContextInterface>();
   const [flipped, setFlipped] = useState(false);
@@ -99,6 +102,7 @@ const FlipCard = ({
             picture={picture}
             expirationDate={expire}
             flip={flip}
+            locationID={locationID}
           />
         </Box>
       </CardActionArea>

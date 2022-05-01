@@ -29,7 +29,7 @@ export const UpdateItem = ({
   sku,
   price,
   expirationDate,
-
+  locationID,
   flip,
 }: {
   id: string;
@@ -40,6 +40,7 @@ export const UpdateItem = ({
   expirationDate?: string;
   sku?: string;
   flip: Function;
+  locationID: string;
 }) => {
   const [formData, setFormData] = useState<ItemDetailsInputs>({
     itemName: name,
@@ -162,8 +163,9 @@ export const UpdateItem = ({
                 value={formData.businessId}
                 label="Location Name"
                 onChange={handleChange}
+                defaultValue={locationID}
               >
-                {locations.map((location: Locations) => (
+                {locations.map((location: Locations, i) => (
                   <MenuItem value={location.id} key={location.id}>
                     {`${location.name} - ${location.street}, ${location.town}`}
                   </MenuItem>

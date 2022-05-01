@@ -6,12 +6,17 @@ import { useItems } from "../../context";
 import { Skeleton } from "@mui/material";
 import { ItemCardComponent } from "../../components/ItemCard";
 import FlipCard from "../../components/FlipCard/FlipCard";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+
+interface location {
+  [key: string]: string
+}
 
 export const Inventory = () => {
   const { setComponent, setTheme } = useModal();
   const { items, listItems } = useItems();
-
+  const [ locations, setLocations ] = useState<location>({});
+  
   function handleOpen() {
     setTheme({ height: "400px", width: "auto" });
     setComponent(<AddItem />);
@@ -21,7 +26,6 @@ export const Inventory = () => {
     listItems();
   }, []);
 
-  console.log(items);
   return (
     <Box>
       <Typography mb={2} variant="h3">
@@ -38,6 +42,7 @@ export const Inventory = () => {
               expire={item.expire}
               price={item.price}
               id={item.id}
+              locationID={item.locationsID}
             />
           ))
         ) : (
