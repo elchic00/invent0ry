@@ -4,7 +4,6 @@ import { AddItem } from "../../components/AddItem";
 import AddIcon from "@mui/icons-material/Add";
 import { useItems } from "../../context";
 import { Skeleton } from "@mui/material";
-import { ItemCardComponent } from "../../components/ItemCard";
 import FlipCard from "../../components/FlipCard/FlipCard";
 import { useEffect, useState } from "react";
 
