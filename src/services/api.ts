@@ -5,6 +5,7 @@ import { locationType } from "../interface/models/locationType";
 import { Items } from "../models";
 import { ItemDetailsInputs } from "../interface/models/itemDetailsInputs";
 import { Storage } from "@aws-amplify/storage";
+import { useLocations } from "../hooks";
 
 export class API {
   //------------------- Data Store ------------------------
@@ -20,12 +21,12 @@ export class API {
     return business[0];
   }
 
-  static async updateBusiness(data: businessType) {
+  static async updateBusiness(location: Locations, data: businessType) {
     const original = await this.getBusinessByUsername();
       return await DataStore.save(
         Business.copyOf(original, (updated) => {
           updated.name = data.name;
-          updated.businessLocationsId = data.businessLocationsId;
+          updated.Locations = location;
           updated.currency = data.currency;
         })
       );

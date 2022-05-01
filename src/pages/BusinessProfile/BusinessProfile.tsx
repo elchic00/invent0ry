@@ -4,7 +4,6 @@ import {
   Button,
   MenuItem,
   Skeleton,
-  LinearProgress,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { currencies } from "../../constants/currencies";
@@ -14,6 +13,7 @@ import { API } from "../../services/api";
 import { sendNotification } from "../../utils/sendNotification";
 import { useLocations } from "../../hooks/useLocations";
 import { useBusiness } from "../../hooks/useBusiness";
+import { Locations } from "../../models";
 
 export const BusinessProfile = () => {
   const [formData, setFormData] = useState<businessType>({
@@ -26,7 +26,7 @@ export const BusinessProfile = () => {
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
   const { locations } = useLocations();
-  const { business } = useBusiness();
+  const { business} = useBusiness();
 
   const getBusiness = async () => {
     setFormData(({
@@ -60,7 +60,8 @@ export const BusinessProfile = () => {
     setIsDisabled(true);
 
     try {
-      const result = await API.updateBusiness(formData);
+      const locationObject = await API.getLocationById(formData.businessLocationsId)
+      const result = await API.updateBusiness(locationObject!, formData);
       setIsDisabled(false);
       sendNotification("Business was successfully updated", "success");
     } catch (error) {
