@@ -18,7 +18,6 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { Locations } from "../../models";
 import { useItems } from "../../context";
 import { useImageUrl } from "../../hooks";
-import { ImageOutlined } from "@mui/icons-material";
 import box from "../../assets/box.png";
 
 export const UpdateItem = ({
