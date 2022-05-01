@@ -22,7 +22,7 @@ export const ItemsProvider = ({ children }: { children: JSX.Element }) => {
   async function listItems() {
     try {
       const result = await API.listItems();
-
+      console.log(result);
       setItems(result);
     } catch (error) {
       console.log(error);

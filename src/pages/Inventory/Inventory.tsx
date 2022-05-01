@@ -19,6 +19,7 @@ export const Inventory = () => {
 
   useEffect(() => {
     listItems();
+    console.log(items)
   }, []);
 
   return (

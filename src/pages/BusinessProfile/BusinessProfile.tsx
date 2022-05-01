@@ -38,6 +38,7 @@ export const BusinessProfile = () => {
     
   useEffect(() => {
     business && getBusiness();
+    console.log(business)
   }, [business]);
   
 
