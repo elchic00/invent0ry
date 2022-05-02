@@ -6,6 +6,7 @@ import { sendNotification } from "../utils/sendNotification";
 type ItemsContextInterface = {
   items: Items[] | null;
   listItems: Function;
+  setItems: Function;
 };
 
 const ItemsContext = React.createContext<ItemsContextInterface>(
@@ -30,7 +31,7 @@ export const ItemsProvider = ({ children }: { children: JSX.Element }) => {
     }
   }
   return (
-    <ItemsContext.Provider value={{ listItems, items }}>
+    <ItemsContext.Provider value={{ listItems, items, setItems }}>
       {children}
     </ItemsContext.Provider>
   );

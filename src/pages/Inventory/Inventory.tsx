@@ -1,4 +1,4 @@
-import { Box, Fab, Typography } from "@mui/material";
+import { Box, Button, Fab, Typography } from "@mui/material";
 import { useModal } from "../../context";
 import { AddItem } from "../../components/AddItem";
 import AddIcon from "@mui/icons-material/Add";
@@ -6,11 +6,12 @@ import { useItems } from "../../context";
 import { Skeleton } from "@mui/material";
 import FlipCard from "../../components/FlipCard/FlipCard";
 import { useEffect, useState } from "react";
+import { API } from "../../services/api";
 
 export const Inventory = () => {
   const { setComponent, setTheme } = useModal();
-  const { items, listItems } = useItems();
-  
+  const { items, listItems, setItems } = useItems();
+
   function handleOpen() {
     setTheme({ height: "400px", width: "auto" });
     setComponent(<AddItem />);
