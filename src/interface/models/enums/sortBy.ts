@@ -1,0 +1,6 @@
+export enum SortBy {
+  FEATURED = "FEATURED",
+  NEWEST = "NEWEST",
+  HIGHLOW = "HIGHLOW",
+  LOWHIGH = "LOWHIGH",
+}

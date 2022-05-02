@@ -1,13 +1,16 @@
-import { Auth, DataStore } from "aws-amplify";
+import { Auth, DataStore, Predicates, SortDirection } from "aws-amplify";
 import { businessType } from "../interface/models/businessType";
 import { Business, Locations } from "../models";
 import { locationType } from "../interface/models/locationType";
 import { Items } from "../models";
 import { ItemDetailsInputs } from "../interface/models/itemDetailsInputs";
 import { Storage } from "@aws-amplify/storage";
+import internal from "stream";
 
 export class API {
   //------------------- Data Store ------------------------
+
+  //___________________BUSINESS____________________
 
   static async addBusinessSpecifics(data: businessType) {
     return await DataStore.save(new Business(data));
@@ -22,14 +25,16 @@ export class API {
 
   static async updateBusiness(data: businessType) {
     const original = await this.getBusinessByUsername();
-      return await DataStore.save(
-        Business.copyOf(original, (updated) => {
-          updated.name = data.name;
-          updated.businessLocationsId = data.businessLocationsId;
-          updated.currency = data.currency;
-        })
-      );
+    return await DataStore.save(
+      Business.copyOf(original, (updated) => {
+        updated.name = data.name;
+        updated.businessLocationsId = data.businessLocationsId;
+        updated.currency = data.currency;
+      })
+    );
   }
+
+  //___________________LOCATION____________________
 
   static async listLocations() {
     return await DataStore.query(Locations);
@@ -58,6 +63,8 @@ export class API {
     );
   }
 
+  //_____________________ITEMS___________________
+
   static async listItems() {
     return await DataStore.query(Items);
   }
@@ -83,7 +90,13 @@ export class API {
     );
   }
 
-  static async updateItem({ original, data }: { original: Items; data: ItemDetailsInputs; }){
+  static async updateItem({
+    original,
+    data,
+  }: {
+    original: Items;
+    data: ItemDetailsInputs;
+  }) {
     return await DataStore.save(
       Items.copyOf(original, (updated) => {
         updated.name = data.itemName;
@@ -97,6 +110,40 @@ export class API {
 
   static async getItemById(id: string) {
     return await DataStore.query(Items, id);
+  }
+
+  static async listItemsByLowestToHighest() {
+    return await DataStore.query(Items, Predicates.ALL, {
+      sort: (s) => s.price(SortDirection.ASCENDING),
+    });
+  }
+
+  static async listItemsByHighestToLowest() {
+    return await DataStore.query(Items, Predicates.ALL, {
+      sort: (s) => s.price(SortDirection.DESCENDING),
+    });
+  }
+
+  static async listItemsFromAZ() {
+    return await DataStore.query(Items, Predicates.ALL, {
+      sort: (s) => s.name(SortDirection.ASCENDING),
+    });
+  }
+
+  static async listItemsByNewest() {
+    return await DataStore.query(Items, Predicates.ALL, {
+      sort: (s) => s.createdAt(SortDirection.DESCENDING),
+    });
+  }
+
+  static async listItemsFromZA() {
+    return await DataStore.query(Items, Predicates.ALL, {
+      sort: (s) => s.name(SortDirection.DESCENDING),
+    });
+  }
+
+  static async listItemsByRange(min: number, max: number) {
+    return await DataStore.query(Items, (c) => c.price("between", [min, max]));
   }
 
   // ----------------------- S3 Buckets ------------------------------

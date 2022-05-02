@@ -25,6 +25,7 @@ import Select from "@mui/material/Select";
 import { Locations } from "../../models";
 import { useItems } from "../../context";
 import box from "../../assets/box.png";
+
 const label = { inputProps: { "aria-label": "Switch demo" } };
 
 const ItemDetailsSchema = yup.object().shape({
@@ -76,11 +77,10 @@ export const AddItem = ({ setValue }: { setValue?: Function }) => {
     data: ItemDetailsInputs
   ) => {
     let formData = { ...data, picture: imageKey.current };
-    console.log(formData);
+
     try {
       await API.addItem(formData);
       listItems();
-
       // change the tab number on the Walkthrough component
       setValue && setValue(3);
       setComponent(null);
