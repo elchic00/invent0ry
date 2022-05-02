@@ -1,4 +1,13 @@
-import { Box, Button, Fab, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Fab,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Typography,
+} from "@mui/material";
 import { useModal } from "../../context";
 import { AddItem } from "../../components/AddItem";
 import AddIcon from "@mui/icons-material/Add";
@@ -6,7 +15,7 @@ import { useItems } from "../../context";
 import { Skeleton } from "@mui/material";
 import FlipCard from "../../components/FlipCard/FlipCard";
 import { useEffect, useState } from "react";
-import { API } from "../../services/api";
+import { SortByComponent } from "../../components/SortBy/SortBy";
 
 export const Inventory = () => {
   const { setComponent, setTheme } = useModal();
@@ -23,9 +32,22 @@ export const Inventory = () => {
 
   return (
     <Box>
-      <Typography mb={2} variant="h3">
-        Items
-      </Typography>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          maxWidth: "1200px",
+          mb: 3,
+        }}
+      >
+        <Typography mb={2} variant="h3">
+          Items
+        </Typography>
+
+        <SortByComponent />
+      </Box>
+
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
         {items ? (
           items.map((item) => (

@@ -1,12 +1,16 @@
-import React, { useEffect, useState, useContext } from "react";
+import { SortGridMenuItems } from "@mui/x-data-grid";
+import React, { useEffect, useState, useContext, useMemo } from "react";
+import { useSearchParams } from "react-router-dom";
+import { SortBy } from "../interface/models/enums";
 import { Items } from "../models";
 import { API } from "../services/api";
 import { sendNotification } from "../utils/sendNotification";
 
 type ItemsContextInterface = {
   items: Items[] | null;
-  listItems: Function;
+
   setItems: Function;
+  listItems: Function;
 };
 
 const ItemsContext = React.createContext<ItemsContextInterface>(
@@ -15,23 +19,44 @@ const ItemsContext = React.createContext<ItemsContextInterface>(
 
 export const ItemsProvider = ({ children }: { children: JSX.Element }) => {
   const [items, setItems] = useState<Items[] | null>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const sort = searchParams.get("sort");
+  const catchedSort = useMemo(() => sort, [sort]) as SortBy;
 
   useEffect(() => {
     listItems();
-  }, []);
+  }, [catchedSort]);
 
   async function listItems() {
-    try {
-      const result = await API.listItems();
+    let sortedItems = items !== null ? [...items] : null;
 
-      setItems(result);
-    } catch (error) {
-      console.log(error);
+    try {
+      switch (catchedSort) {
+        case SortBy.HIGHLOW:
+          sortedItems = await API.listItemsByHighestToLowest();
+          break;
+        case SortBy.LOWHIGH:
+          sortedItems = await API.listItemsByLowestToHighest();
+          break;
+        case SortBy.NEWEST:
+          sortedItems = await API.listItemsByNewest();
+          break;
+        default:
+          searchParams.delete("sort");
+          setSearchParams(searchParams);
+          sortedItems = await API.listItems();
+          break;
+      }
+      setItems(sortedItems);
+    } catch (e) {
+      console.log(e);
       sendNotification("Error trying to get items", "error");
     }
   }
+
   return (
-    <ItemsContext.Provider value={{ listItems, items, setItems }}>
+    <ItemsContext.Provider value={{ items, setItems, listItems }}>
       {children}
     </ItemsContext.Provider>
   );
