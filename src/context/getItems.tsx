@@ -22,6 +22,7 @@ export const ItemsProvider = ({ children }: { children: JSX.Element }) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const sort = searchParams.get("sort");
+  // to avoid rerender useEffect every  time ItemsProvider is triggered
   const catchedSort = useMemo(() => sort, [sort]) as SortBy;
 
   useEffect(() => {
@@ -30,7 +31,7 @@ export const ItemsProvider = ({ children }: { children: JSX.Element }) => {
 
   async function listItems() {
     let sortedItems = items !== null ? [...items] : null;
-
+    // to sort items based on a query string
     try {
       switch (catchedSort) {
         case SortBy.HIGHLOW:
