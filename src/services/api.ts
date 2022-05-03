@@ -33,8 +33,10 @@ export class API {
     return await DataStore.query(Categories, id);
   }
 
-  static async updateCategory(categoryId: string, data: CategoryType) {
-    const category = (await this.getCategoryById(categoryId)) as Categories;
+  static async updateCategory(data: CategoryType) {
+    const category = (await this.getCategoryById(
+      data.id as string
+    )) as Categories;
     return await DataStore.save(
       Categories.copyOf(category, (updated) => {
         updated.name = data.name;
@@ -118,6 +120,7 @@ export class API {
         price: item.price,
         locationsID: item.locationName || "",
         businessID: business.id || "",
+        categoriesID: item.categoryId || "",
       })
     );
   }
