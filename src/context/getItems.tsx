@@ -44,7 +44,9 @@ export const ItemsProvider = ({ children }: { children: JSX.Element }) => {
           sortedItems = await API.listItemsByNewest();
           break;
         default:
+          // To delete the previous query string
           searchParams.delete("sort");
+
           setSearchParams(searchParams);
           sortedItems = await API.listItems();
           break;
