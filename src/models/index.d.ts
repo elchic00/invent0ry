@@ -22,8 +22,8 @@ type BusinessMetaData = {
 
 export declare class Categories {
   readonly id: string;
-  readonly name?: string | null;
-  readonly Items?: Items | null;
+  readonly name: string;
+  readonly Items?: (Items | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<Categories, CategoriesMetaData>);
@@ -41,11 +41,10 @@ export declare class Items {
   readonly owner?: string | null;
   readonly locationsID: string;
   readonly businessID: string;
-  readonly Categories?: Categories | null;
   readonly isPerishable?: boolean | null;
+  readonly categoriesID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
-  readonly itemsCategoriesId?: string | null;
   constructor(init: ModelInit<Items, ItemsMetaData>);
   static copyOf(source: Items, mutator: (draft: MutableModel<Items, ItemsMetaData>) => MutableModel<Items, ItemsMetaData> | void): Items;
 }

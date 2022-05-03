@@ -14,20 +14,21 @@ export const schema = {
                     "name": "name",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": []
                 },
                 "Items": {
                     "name": "Items",
-                    "isArray": false,
+                    "isArray": true,
                     "type": {
                         "model": "Items"
                     },
                     "isRequired": false,
                     "attributes": [],
+                    "isArrayNullable": true,
                     "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetName": "categoriesItemsId"
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": "categoriesID"
                     }
                 },
                 "createdAt": {
@@ -166,25 +167,18 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "Categories": {
-                    "name": "Categories",
-                    "isArray": false,
-                    "type": {
-                        "model": "Categories"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "HAS_ONE",
-                        "associatedWith": "Items",
-                        "targetName": "itemsCategoriesId"
-                    }
-                },
                 "isPerishable": {
                     "name": "isPerishable",
                     "isArray": false,
                     "type": "Boolean",
                     "isRequired": false,
+                    "attributes": []
+                },
+                "categoriesID": {
+                    "name": "categoriesID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
                     "attributes": []
                 },
                 "createdAt": {
@@ -202,13 +196,6 @@ export const schema = {
                     "isRequired": false,
                     "attributes": [],
                     "isReadOnly": true
-                },
-                "itemsCategoriesId": {
-                    "name": "itemsCategoriesId",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": false,
-                    "attributes": []
                 }
             },
             "syncable": true,
@@ -233,6 +220,15 @@ export const schema = {
                         "name": "byBusiness",
                         "fields": [
                             "businessID"
+                        ]
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byCategories",
+                        "fields": [
+                            "categoriesID"
                         ]
                     }
                 },
@@ -475,5 +471,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "02ac551df4d0a2b424ae1e9e6a86f26b"
+    "version": "fbd6e927e104cacf2ad7ce3717da9a5a"
 };
