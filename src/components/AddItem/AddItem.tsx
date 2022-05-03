@@ -163,8 +163,8 @@ export const AddItem = ({ setValue }: { setValue?: Function }) => {
                 inputRef={ref}
                 label="Item Name"
                 variant="outlined"
-                error={!!errors.price}
-                helperText={errors.price ? errors.price?.message : ""}
+                error={!!errors.itemName}
+                helperText={errors.itemName ? errors.itemName?.message : ""}
               />
             )}
           />
