@@ -17,7 +17,7 @@
       },
       "storage": {
         "invent0rymain0558dd8c": {
-          "bucketName": "itemsbucket171702-staging",
+          "bucketName": "inventorybucketitems171702-staging",
           "region": "us-east-1"
         }
       }

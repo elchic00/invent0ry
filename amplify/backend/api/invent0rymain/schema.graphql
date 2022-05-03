@@ -1,3 +1,9 @@
+type Categories @model @auth(rules: [{allow: public}, {allow: owner}, {allow: private}]) {
+  id: ID!
+  name: String
+  Items: Items @belongsTo
+}
+
 type Locations @model @auth(rules: [{allow: owner, ownerField: "owner", operations: [create, update, delete, read]}]) {
   id: ID!
   name: String
@@ -19,6 +25,8 @@ type Items @model @auth(rules: [{allow: owner, ownerField: "owner", operations: 
   owner: String
   locationsID: ID! @index(name: "byLocations")
   businessID: ID! @index(name: "byBusiness")
+  Categories: Categories @hasOne
+  isPerishable: Boolean
 }
 
 type Business @model @auth(rules: [{allow: owner, ownerField: "owner", operations: [create, update, delete, read]}]) {
