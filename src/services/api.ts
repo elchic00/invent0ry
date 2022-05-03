@@ -1,6 +1,6 @@
 import { Auth, DataStore, Predicates, SortDirection } from "aws-amplify";
 import { businessType } from "../interface/models/businessType";
-import { CategoryType } from "../interface/models/categoryType";
+//import { CategoryType } from "../interface/models/categoryType";
 import { Business, Locations } from "../models";
 import { locationType } from "../interface/models/locationType";
 import { Items } from "../models";
@@ -52,21 +52,22 @@ export class API {
   }
   static async getBusinessByUsername() {
     const user = await Auth.currentUserInfo();
-    const business = await DataStore.query(Business, (b) =>
-      b.owner("eq", user.username)
-    );
+    // const business = await DataStore.query(Business, (b) =>
+    //   b.owner("eq", user.username)
+    // );
+    const business = await DataStore.query(Business);
     return business[0];
   }
 
   static async updateBusiness(location: Locations, data: businessType) {
     const original = await this.getBusinessByUsername();
-      return await DataStore.save(
-        Business.copyOf(original, (updated) => {
-          updated.name = data.name;
-          updated.Locations = location;
-          updated.currency = data.currency;
-        })
-      );
+    return await DataStore.save(
+      Business.copyOf(original, (updated) => {
+        updated.name = data.name;
+        updated.Locations = location;
+        updated.currency = data.currency;
+      })
+    );
   }
 
   //___________________LOCATION____________________

@@ -51,7 +51,7 @@ export const ItemsProvider = ({ children }: { children: JSX.Element }) => {
 
           break;
       }
-      console.log(sortedItems);
+
       setItems(sortedItems);
     } catch (e) {
       console.log(e);
