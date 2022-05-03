@@ -149,6 +149,7 @@ export const UpdateItem = ({
             type="number"
             label="Count"
             name="count"
+            inputProps={{ inputMode: 'numeric', min: 0 }}
             value={formData.count}
             onChange={handleChange}
           />
@@ -179,6 +180,7 @@ export const UpdateItem = ({
             type="number"
             label="Price"
             name="price"
+            inputProps={{ inputMode: "decimal", min: 0, step: ".01" }}
             value={formData.price}
             onChange={handleChange}
           />
