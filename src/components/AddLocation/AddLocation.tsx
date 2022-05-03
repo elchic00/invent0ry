@@ -45,62 +45,64 @@ export const AddLocation = ({
 
   return (
     <FormControl>
-      <TextField
-        sx={{
-          p: 1,
-          width: { xs: "auto", sm: "300px" },
-          display: "flex",
-          flexDirection: "column",
-        }}
-        name="name"
-        label="Name"
-        helperText="Add your location nickname, H.Q., main, etc"
-        value={formData.name}
-        onChange={handleChange}
-      />
-      <TextField
-        sx={{
-          p: 1,
-          width: { xs: "auto", sm: "300px" },
-          display: "flex",
-          flexDirection: "column",
-          gap: 2,
-        }}
-        name="street"
-        label="Street"
-        value={formData.street}
-        onChange={handleChange}
-      />
-      <TextField
-        sx={{
-          p: 1,
-          width: { xs: "auto", sm: "300px" },
-          display: "flex",
-          flexDirection: "column",
-          gap: 2,
-        }}
-        name="town"
-        label="Town"
-        value={formData.town}
-        onChange={handleChange}
-      />
-      <TextField
-        type="number"
-        sx={{
-          p: 1,
-          width: { xs: "auto", sm: "300px" },
-          display: "flex",
-          flexDirection: "column",
-          gap: 2,
-        }}
-        name="zip"
-        label="Zip"
-        value={formData.zip}
-        onChange={handleChange}
-      />
-      <Button disabled={isDisabled} onClick={handleSubmit}>
+      <form onSubmit={handleSubmit}>
+        <TextField
+          sx={{
+            p: 1,
+            width: { xs: "auto", sm: "300px" },
+            display: "flex",
+            flexDirection: "column",
+          }}
+          name="name"
+          label="Name"
+          helperText="Add your location nickname, H.Q., main, etc"
+          value={formData.name}
+          onChange={handleChange}
+        />
+        <TextField
+          sx={{
+            p: 1,
+            width: { xs: "auto", sm: "300px" },
+            display: "flex",
+            flexDirection: "column",
+            gap: 2,
+          }}
+          name="street"
+          label="Street"
+          value={formData.street}
+          onChange={handleChange}
+        />
+        <TextField
+          sx={{
+            p: 1,
+            width: { xs: "auto", sm: "300px" },
+            display: "flex",
+            flexDirection: "column",
+            gap: 2,
+          }}
+          name="town"
+          label="Town"
+          value={formData.town}
+          onChange={handleChange}
+        />
+        <TextField
+          type="number"
+          sx={{
+            p: 1,
+            width: { xs: "auto", sm: "300px" },
+            display: "flex",
+            flexDirection: "column",
+            gap: 2,
+          }}
+          name="zip"
+          label="Zip"
+          value={formData.zip}
+          onChange={handleChange}
+        />
+      <Button disabled={isDisabled} type="submit">
         submit
-      </Button>
+        </Button>
+      </form>
     </FormControl>
   );
 };

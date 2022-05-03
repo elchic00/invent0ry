@@ -64,14 +64,14 @@ export const LocationGrid = () => {
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete this item",
+        confirmButtonText: "Yes, delete this location",
         backdrop: "confirmationPopupStyle",
         focusCancel: true,
       }).then((result) => {
         if (result.isConfirmed) {
           handleDelete(e);
         } else {
-          Swal.fire("Cancelled!", `Locations remain in the inventory`, "info");
+          Swal.fire("Cancelled!", `Location(s) remains`, "info");
         }
       });
     }
@@ -88,7 +88,7 @@ export const LocationGrid = () => {
       await listLocations();
     } catch (e) {
       console.log(e)
-      sendNotification("Error trying to call the delete location api", "error");
+      sendNotification("Error trying to call the api to delete this location", "error");
     }
   };
 

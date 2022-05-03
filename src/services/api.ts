@@ -23,15 +23,15 @@ export class API {
     return business[0];
   }
 
-  static async updateBusiness(data: businessType) {
+  static async updateBusiness(location: Locations, data: businessType) {
     const original = await this.getBusinessByUsername();
-    return await DataStore.save(
-      Business.copyOf(original, (updated) => {
-        updated.name = data.name;
-        updated.businessLocationsId = data.businessLocationsId;
-        updated.currency = data.currency;
-      })
-    );
+      return await DataStore.save(
+        Business.copyOf(original, (updated) => {
+          updated.name = data.name;
+          updated.Locations = location;
+          updated.currency = data.currency;
+        })
+      );
   }
 
   //___________________LOCATION____________________
