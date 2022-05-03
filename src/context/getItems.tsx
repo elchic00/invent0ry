@@ -1,7 +1,6 @@
-import { SortGridMenuItems } from "@mui/x-data-grid";
 import React, { useEffect, useState, useContext, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
-import { SortBy } from "../interface/models/enums";
+import { SortBy } from "../interface/models/enums/sortBy";
 import { Items } from "../models";
 import { API } from "../services/api";
 import { sendNotification } from "../utils/sendNotification";
