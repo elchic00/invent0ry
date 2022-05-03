@@ -14,7 +14,6 @@ export type AmplifyDependentResourcesAttributes = {
     },
     "api": {
         "invent0rymain": {
-            "GraphQLAPIKeyOutput": "string",
             "GraphQLAPIIdOutput": "string",
             "GraphQLAPIEndpointOutput": "string"
         }

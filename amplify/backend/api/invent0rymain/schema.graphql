@@ -15,10 +15,11 @@ type Items @model @auth(rules: [{allow: owner, ownerField: "owner", operations: 
   picture: String
   sku: String
   expire: String
-  price: Int
+  price: Float
   owner: String
   locationsID: ID! @index(name: "byLocations")
   businessID: ID! @index(name: "byBusiness")
+  isPerishable: Boolean
 }
 
 type Business @model @auth(rules: [{allow: owner, ownerField: "owner", operations: [create, update, delete, read]}]) {
@@ -28,5 +29,4 @@ type Business @model @auth(rules: [{allow: owner, ownerField: "owner", operation
   owner: String
   Locations: Locations @hasOne
   Items: [Items] @hasMany(indexName: "byBusiness", fields: ["id"])
-}
- 
+} 

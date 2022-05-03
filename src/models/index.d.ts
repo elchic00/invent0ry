@@ -18,45 +18,46 @@ type BusinessMetaData = {
 
 export declare class Locations {
   readonly id: string;
-  readonly name?: string;
-  readonly street?: string;
-  readonly town?: string;
-  readonly zip?: number;
-  readonly owner?: string;
-  readonly Items?: (Items | null)[];
-  readonly createdAt?: string;
-  readonly updatedAt?: string;
+  readonly name?: string | null;
+  readonly street?: string | null;
+  readonly town?: string | null;
+  readonly zip?: number | null;
+  readonly owner?: string | null;
+  readonly Items?: (Items | null)[] | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
   constructor(init: ModelInit<Locations, LocationsMetaData>);
   static copyOf(source: Locations, mutator: (draft: MutableModel<Locations, LocationsMetaData>) => MutableModel<Locations, LocationsMetaData> | void): Locations;
 }
 
 export declare class Items {
   readonly id: string;
-  readonly name?: string;
-  readonly itemCount?: number;
-  readonly picture?: string;
-  readonly sku?: string;
-  readonly expire?: string;
-  readonly price?: number;
-  readonly owner?: string;
+  readonly name?: string | null;
+  readonly itemCount?: number | null;
+  readonly picture?: string | null;
+  readonly sku?: string | null;
+  readonly expire?: string | null;
+  readonly price?: number | null;
+  readonly owner?: string | null;
   readonly locationsID: string;
   readonly businessID: string;
-  readonly createdAt?: string;
-  readonly updatedAt?: string;
+  readonly isPerishable?: boolean | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
   constructor(init: ModelInit<Items, ItemsMetaData>);
   static copyOf(source: Items, mutator: (draft: MutableModel<Items, ItemsMetaData>) => MutableModel<Items, ItemsMetaData> | void): Items;
 }
 
 export declare class Business {
   readonly id: string;
-  readonly name?: string;
-  readonly currency?: string;
-  readonly owner?: string;
-  readonly Locations?: Locations;
-  readonly Items?: (Items | null)[];
-  readonly createdAt?: string;
-  readonly updatedAt?: string;
-  readonly businessLocationsId?: string;
+  readonly name?: string | null;
+  readonly currency?: string | null;
+  readonly owner?: string | null;
+  readonly Locations?: Locations | null;
+  readonly Items?: (Items | null)[] | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+  readonly businessLocationsId?: string | null;
   constructor(init: ModelInit<Business, BusinessMetaData>);
   static copyOf(source: Business, mutator: (draft: MutableModel<Business, BusinessMetaData>) => MutableModel<Business, BusinessMetaData> | void): Business;
 }

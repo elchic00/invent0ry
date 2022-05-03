@@ -19,6 +19,7 @@ export const RedirectComponent = ({
       const {
         payload: { event },
       } = capsule;
+      console.log(event);
       // console.log("DataStore event", event, data); //show events as data store syncs with models
       if (event === "ready") {
         await getData();
@@ -46,5 +47,5 @@ export const RedirectComponent = ({
     return navigate("/user/dashboard");
   }
 
-  return <LinearProgress />; //<div>Loading...</div>;
+  return <LinearProgress />;
 };

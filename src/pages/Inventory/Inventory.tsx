@@ -19,7 +19,7 @@ import { SortByComponent } from "../../components/SortBy/SortBy";
 
 export const Inventory = () => {
   const { setComponent, setTheme } = useModal();
-  const { items, listItems, setItems } = useItems();
+  const { items, listItems } = useItems();
 
   function handleOpen() {
     setTheme({ height: "400px", width: "auto" });
