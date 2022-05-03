@@ -13,6 +13,10 @@ export class API {
 
   //___________________CATEGORIES__________________
 
+  static async listCategories() {
+    return await DataStore.query(Categories);
+  }
+
   static async addCategory(data: CategoryType) {
     return await DataStore.save(
       new Categories({
