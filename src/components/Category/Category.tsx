@@ -17,7 +17,7 @@ export const CategoryComponent = ({
   async function handleAdd(e: React.SyntheticEvent) {
     e.preventDefault();
     try {
-      await API.addCategory({ name: value });
+      // await API.addCategory({ name: value });
     } catch (error) {
       console.log(error);
     }
@@ -26,7 +26,7 @@ export const CategoryComponent = ({
   async function handleSave(e: React.SyntheticEvent) {
     e.preventDefault();
     try {
-      await API.updateCategory({ id: categoryInput!.id, name: value });
+      // await API.updateCategory({ id: categoryInput!.id, name: value });
     } catch (error) {
       console.log(error);
     }

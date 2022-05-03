@@ -49,8 +49,10 @@ export const ItemsProvider = ({ children }: { children: JSX.Element }) => {
 
           setSearchParams(searchParams);
           sortedItems = await API.listItems();
+
           break;
       }
+      console.log(sortedItems);
       setItems(sortedItems);
     } catch (e) {
       console.log(e);

@@ -3,7 +3,7 @@ import { businessType } from "../interface/models/businessType";
 import { CategoryType } from "../interface/models/categoryType";
 import { Business, Locations } from "../models";
 import { locationType } from "../interface/models/locationType";
-import { Items, Categories } from "../models";
+import { Items } from "../models";
 import { ItemDetailsInputs } from "../interface/models/itemDetailsInputs";
 import { Storage } from "@aws-amplify/storage";
 import internal from "stream";
@@ -13,36 +13,37 @@ export class API {
 
   //___________________CATEGORIES__________________
 
-  static async listCategories() {
-    return await DataStore.query(Categories);
-  }
+  // static async listCategories() {
+  //   return await DataStore.query(Category);
+  // }
 
-  static async addCategory(data: CategoryType) {
-    return await DataStore.save(
-      new Categories({
-        name: data.name,
-      })
-    );
-  }
+  // static async addCategory(data: CategoryType) {
+  //   return await DataStore.save(
+  //     new Category({
+  //       name: data.name,
+  //       owner: "",
+  //     })
+  //   );
+  // }
 
-  static async removeCategory(category: Categories) {
-    return await DataStore.delete(category);
-  }
+  // static async removeCategory(category: Category) {
+  //   return await DataStore.delete(category);
+  // }
 
-  static async getCategoryById(id: string) {
-    return await DataStore.query(Categories, id);
-  }
+  // static async getCategoryById(id: string) {
+  //   return await DataStore.query(Category, id);
+  // }
 
-  static async updateCategory(data: CategoryType) {
-    const category = (await this.getCategoryById(
-      data.id as string
-    )) as Categories;
-    return await DataStore.save(
-      Categories.copyOf(category, (updated) => {
-        updated.name = data.name;
-      })
-    );
-  }
+  // static async updateCategory(data: CategoryType) {
+  //   const category = (await this.getCategoryById(
+  //     data.id as string
+  //   )) as Category;
+  //   return await DataStore.save(
+  //     Category.copyOf(category, (updated) => {
+  //       updated.name = data.name;
+  //     })
+  //   );
+  // }
 
   //___________________BUSINESS____________________
 
@@ -120,7 +121,6 @@ export class API {
         price: item.price,
         locationsID: item.locationName || "",
         businessID: business.id || "",
-        categoriesID: item.categoryId || "",
       })
     );
   }
