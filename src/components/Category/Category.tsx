@@ -1,8 +1,12 @@
-import { Box } from "@mui/material";
+import { Box, TextField } from "@mui/material";
 import { useState } from "react";
 
-export const Category = () => {
+export const CategoryComponent = () => {
   const [value, setValue] = useState<string>();
 
-  return <Box component="form"></Box>;
+  return (
+    <Box component="form">
+      <TextField value={value} />
+    </Box>
+  );
 };
