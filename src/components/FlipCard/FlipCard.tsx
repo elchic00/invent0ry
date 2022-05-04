@@ -58,7 +58,7 @@ const FlipCard = ({
   return (
     <Box
       sx={{
-        width: { xs: "auto", sm: "300px" },
+        width: { xs: "90%", sm: "300px" },
         borderRadius: 2,
         prespective: "1000px",
         height: "440px",
