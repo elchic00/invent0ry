@@ -181,7 +181,7 @@ export const ItemCardComponent = ({
         </Box>
       </CardContent>
 
-      <CardActions>
+      <CardActions sx={{ mt: "auto" }}>
         <IconButton onClick={openUpdate}>
           {" "}
           <EditIcon />
