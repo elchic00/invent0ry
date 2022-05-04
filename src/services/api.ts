@@ -147,15 +147,27 @@ export class API {
     return await DataStore.query(Items, id);
   }
 
-  static async listItemsByLowestToHighest() {
+  static async listItemsByPriceLowestToHighest() {
     return await DataStore.query(Items, Predicates.ALL, {
       sort: (s) => s.price(SortDirection.ASCENDING),
     });
   }
 
-  static async listItemsByHighestToLowest() {
+  static async listItemsByPriceHighestToLowest() {
     return await DataStore.query(Items, Predicates.ALL, {
       sort: (s) => s.price(SortDirection.DESCENDING),
+    });
+  }
+
+  static async listItemsByQuantityLowestToHighest() {
+    return await DataStore.query(Items, Predicates.ALL, {
+      sort: (s) => s.itemCount(SortDirection.ASCENDING),
+    });
+  }
+
+  static async listItemsByQuantityHighestToLowest() {
+    return await DataStore.query(Items, Predicates.ALL, {
+      sort: (s) => s.itemCount(SortDirection.DESCENDING),
     });
   }
 

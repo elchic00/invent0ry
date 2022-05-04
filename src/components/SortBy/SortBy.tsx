@@ -39,8 +39,10 @@ export const SortByComponent = () => {
         >
           <MenuItem value={SortBy.FEATURED}>Featured</MenuItem>
           <MenuItem value={SortBy.NEWEST}>Newest</MenuItem>
-          <MenuItem value={SortBy.HIGHLOW}>Price: High-Low</MenuItem>
-          <MenuItem value={SortBy.LOWHIGH}>Price: Low-High</MenuItem>
+          <MenuItem value={SortBy.PRICE_HIGHLOW}>Price: High-Low</MenuItem>
+          <MenuItem value={SortBy.PRICE_LOWHIGH}>Price: Low-High</MenuItem>
+          <MenuItem value={SortBy.QUANTITY_HIGHLOW}>Quantity: High-Low</MenuItem>
+          <MenuItem value={SortBy.QUANTITY_LOWHIGH}>Quantity: Low-High</MenuItem>
         </Select>
       </FormControl>
     </Box>

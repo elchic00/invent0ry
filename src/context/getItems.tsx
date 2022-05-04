@@ -33,12 +33,18 @@ export const ItemsProvider = ({ children }: { children: JSX.Element }) => {
     // to sort items based on a query string
     try {
       switch (catchedSort) {
-        case SortBy.HIGHLOW:
-          sortedItems = await API.listItemsByHighestToLowest();
+        case SortBy.PRICE_HIGHLOW:
+          sortedItems = await API.listItemsByPriceHighestToLowest();
           break;
-        case SortBy.LOWHIGH:
-          sortedItems = await API.listItemsByLowestToHighest();
+        case SortBy.PRICE_LOWHIGH:
+          sortedItems = await API.listItemsByPriceLowestToHighest();
           break;
+        case SortBy.QUANTITY_HIGHLOW:
+          sortedItems = await API.listItemsByQuantityHighestToLowest();
+          break;
+        case SortBy.QUANTITY_LOWHIGH:
+          sortedItems = await API.listItemsByQuantityLowestToHighest();
+            break;
         case SortBy.NEWEST:
           sortedItems = await API.listItemsByNewest();
           break;
