@@ -66,4 +66,6 @@ export const ItemsProvider = ({ children }: { children: JSX.Element }) => {
   );
 };
 
-export const useItems = () => useContext(ItemsContext);
+export const useItems = () => {
+  return useContext(ItemsContext);
+};

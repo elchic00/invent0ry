@@ -1,4 +1,21 @@
-type Locations @model @auth(rules: [{allow: owner, ownerField: "owner", operations: [create, update, delete, read]}]) {
+type Category
+  @model
+  @auth(rules: [{ allow: owner, operations: [create, update, delete, read] }]) {
+  id: ID!
+  name: String!
+}
+
+type Locations
+  @model
+  @auth(
+    rules: [
+      {
+        allow: owner
+        ownerField: "owner"
+        operations: [create, update, delete, read]
+      }
+    ]
+  ) {
   id: ID!
   name: String
   street: String
@@ -8,7 +25,17 @@ type Locations @model @auth(rules: [{allow: owner, ownerField: "owner", operatio
   Items: [Items] @hasMany(indexName: "byLocations", fields: ["id"])
 }
 
-type Items @model @auth(rules: [{allow: owner, ownerField: "owner", operations: [create, update, delete, read]}]) {
+type Items
+  @model
+  @auth(
+    rules: [
+      {
+        allow: owner
+        ownerField: "owner"
+        operations: [create, update, delete, read]
+      }
+    ]
+  ) {
   id: ID!
   name: String
   itemCount: Int
@@ -20,13 +47,24 @@ type Items @model @auth(rules: [{allow: owner, ownerField: "owner", operations: 
   locationsID: ID! @index(name: "byLocations")
   businessID: ID! @index(name: "byBusiness")
   isPerishable: Boolean
+  categoryId: ID
 }
 
-type Business @model @auth(rules: [{allow: owner, ownerField: "owner", operations: [create, update, delete, read]}]) {
+type Business
+  @model
+  @auth(
+    rules: [
+      {
+        allow: owner
+        ownerField: "owner"
+        operations: [create, update, delete, read]
+      }
+    ]
+  ) {
   id: ID!
   name: String
   currency: String
   owner: String
   Locations: Locations @hasOne
   Items: [Items] @hasMany(indexName: "byBusiness", fields: ["id"])
-} 
+}

@@ -182,6 +182,9 @@ export class API {
     return await DataStore.query(Items, (c) => c.price("between", [min, max]));
   }
 
+  static async listItemsByItemCount(min: number) {
+    return await DataStore.query(Items, (c) => c.itemCount("ge", min));
+  }
   // ----------------------- S3 Buckets ------------------------------
   static async uploadItemImage({
     file,
