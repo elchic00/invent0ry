@@ -48,7 +48,7 @@ const ItemDetailsSchema = yup.object().shape({
 const defaultValues = {
   itemName: "",
   locationName: "",
-  // businessName: "",
+  businessId: "",
   count: 0,
   picture: "",
   sku: "",

@@ -51,7 +51,7 @@ export const ItemsProvider = ({ children }: { children: JSX.Element }) => {
 
           break;
       }
-      console.log(sortedItems);
+
       setItems(sortedItems);
     } catch (e) {
       console.log(e);
@@ -66,4 +66,6 @@ export const ItemsProvider = ({ children }: { children: JSX.Element }) => {
   );
 };
 
-export const useItems = () => useContext(ItemsContext);
+export const useItems = () => {
+  return useContext(ItemsContext);
+};
