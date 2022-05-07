@@ -10,7 +10,6 @@ export const Dashboard = () => {
   const { business } = useBusiness();
   const { filteredItems } = useFilterItems(FilterItems.STOCK);
 
-  console.log({ locations, business, filteredItems });
   return (
     <Box>
       {/*---------------------BUSINESS---------------- */}
