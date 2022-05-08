@@ -215,6 +215,7 @@ export const AddItem = ({ setValue }: { setValue?: Function }) => {
             render={({ field: { onChange, ref, value } }) => (
               <TextField
                 type="number"
+                inputProps={{ inputMode: 'numeric', min: 0 }}
                 value={value}
                 onChange={onChange}
                 inputRef={ref}
@@ -274,6 +275,8 @@ export const AddItem = ({ setValue }: { setValue?: Function }) => {
             control={control}
             render={({ field: { onChange, ref, value } }) => (
               <TextField
+                type="number"
+                inputProps={{ inputMode: "decimal", min: 0, step: ".01" }}
                 value={value}
                 onChange={onChange}
                 inputRef={ref}
