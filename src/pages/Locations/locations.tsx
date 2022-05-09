@@ -16,6 +16,8 @@ import {
   DialogContent,
   DialogTitle,
   Fab,
+  Box,
+  Typography,
 } from "@mui/material";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { API } from "../../services/api";
@@ -174,8 +176,8 @@ export const LocationGrid = () => {
   };
 
   return (
-    <div
-      style={{
+    <Box
+      sx={{
         height: 600,
         width: "auto",
       }}
@@ -183,6 +185,9 @@ export const LocationGrid = () => {
       {renderConfirmDialog()}
       {locations != null ? (
         <>
+        <Typography mb={2} variant="h3">
+          Locations
+        </Typography>
           <DataGrid
             sx={{
               "& .MuiDataGrid-columnHeaders": {
@@ -224,6 +229,6 @@ export const LocationGrid = () => {
       >
         <RemoveIcon />
       </Fab>
-    </div>
+    </Box>
   );
 };

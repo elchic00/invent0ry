@@ -37,8 +37,9 @@ export const Inventory = () => {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          maxWidth: "1200px",
+          //maxWidth: "1200px",
           mb: 3,
+          mr: 6,
         }}
       >
         <Typography mb={2} variant="h3">

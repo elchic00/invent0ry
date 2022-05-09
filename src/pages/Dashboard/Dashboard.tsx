@@ -15,18 +15,18 @@ export const Dashboard = () => {
       {/*---------------------BUSINESS---------------- */}
       {business !== null ? (
         <Typography variant="h3" sx={{ fontWeight: 200, mb: 5 }}>
-          {business?.name}
+          {`Welcome Back, ${business?.name}`}
         </Typography>
       ) : (
         <Skeleton
-          sx={{ width: { xs: 350, sm: 450 }, height: 50 }}
+          sx={{ width: { xs: 450, sm: 550 }, height: 50 }}
           variant="rectangular"
         />
       )}
       {/* ----------------------LOCATIONS--------------------- */}
       <Box sx={{ display: "flex", flexDirection: "column" }}>
         <Typography variant="h4" sx={{ mb: 1, fontWeight: 100 }}>
-          Locations:
+          Your Locations:
         </Typography>
         {locations != null ? (
           <Box mb={5} sx={{ pl: 3, display: "flex", gap: 2, flexWrap: "wrap" }}>
@@ -50,7 +50,7 @@ export const Dashboard = () => {
       {/* ----------------OUT-OF-STOCK-ITEMS---------------- */}
       <Box>
         <Typography variant="h4" sx={{ mb: 1, fontWeight: 100 }}>
-          Out of Stock Items:
+          Items to Restock On:
         </Typography>
         <Box sx={{ pl: 3, display: "flex", flexWrap: "wrap", gap: 2 }}>
           {filteredItems ? (
