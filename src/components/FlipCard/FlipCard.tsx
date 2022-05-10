@@ -83,6 +83,7 @@ const FlipCard = ({
             price={price}
             id={id}
             flip={flip}
+            locationID={locationID}
           />
         </Box>
         <Box
