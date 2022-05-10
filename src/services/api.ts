@@ -1,7 +1,7 @@
 import { Auth, DataStore, Predicates, SortDirection } from "aws-amplify";
 import { businessType } from "../interface/models/businessType";
-//import { CategoryType } from "../interface/models/categoryType";
-import { Business, Locations } from "../models";
+import { CategoryType } from "../interface/models/categoryType";
+import { Business, Category, Locations } from "../models";
 import { locationType } from "../interface/models/locationType";
 import { Items } from "../models";
 import { ItemDetailsInputs } from "../interface/models/itemDetailsInputs";
@@ -13,37 +13,37 @@ export class API {
 
   //___________________CATEGORIES__________________
 
-  // static async listCategories() {
-  //   return await DataStore.query(Category);
-  // }
+  static async listCategories() {
+    return await DataStore.query(Category);
+  }
 
-  // static async addCategory(data: CategoryType) {
-  //   return await DataStore.save(
-  //     new Category({
-  //       name: data.name,
-  //       owner: "",
-  //     })
-  //   );
-  // }
+  static async addCategory(data: CategoryType) {
+    return await DataStore.save(
+      new Category({
+        name: data.name,
+      })
+    );
+  }
 
-  // static async removeCategory(category: Category) {
-  //   return await DataStore.delete(category);
-  // }
+  static async removeCategory(id: string) {
+    const category = (await this.getCategoryById(id)) as Category;
+    return await DataStore.delete(category);
+  }
 
-  // static async getCategoryById(id: string) {
-  //   return await DataStore.query(Category, id);
-  // }
+  static async getCategoryById(id: string) {
+    return await DataStore.query(Category, id);
+  }
 
-  // static async updateCategory(data: CategoryType) {
-  //   const category = (await this.getCategoryById(
-  //     data.id as string
-  //   )) as Category;
-  //   return await DataStore.save(
-  //     Category.copyOf(category, (updated) => {
-  //       updated.name = data.name;
-  //     })
-  //   );
-  // }
+  static async updateCategory(data: CategoryType) {
+    const category = (await this.getCategoryById(
+      data.id as string
+    )) as Category;
+    return await DataStore.save(
+      Category.copyOf(category, (updated) => {
+        updated.name = data.name;
+      })
+    );
+  }
 
   //___________________BUSINESS____________________
 
