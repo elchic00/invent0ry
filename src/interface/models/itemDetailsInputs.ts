@@ -1,8 +1,8 @@
 export interface ItemDetailsInputs {
   itemName?: string;
+  categoryId?: number;
   locationName?: string;
   businessId?: string;
-  categoryId?: string;
   count?: number;
   picture?: string;
   sku?: string;
