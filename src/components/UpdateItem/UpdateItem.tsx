@@ -17,13 +17,14 @@ import { useLocations } from "../../hooks/useLocations";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { Locations } from "../../models";
 import { useItems } from "../../context";
-import { useImageUrl } from "../../hooks";
+import { useImageUrl, useCategory } from "../../hooks";
 import box from "../../assets/box.png";
 
 export const UpdateItem = ({
   id,
   name,
-  count,
+categoryId,
+count,
   picture,
   sku,
   price,
@@ -33,6 +34,7 @@ export const UpdateItem = ({
 }: {
   id: string;
   name?: string;
+  categoryId?:number;
   count?: number;
   picture: string;
   price?: number;
@@ -43,6 +45,7 @@ export const UpdateItem = ({
 }) => {
   const [formData, setFormData] = useState<ItemDetailsInputs>({
     itemName: name,
+    categoryId,
     count,
     picture,
     price,
@@ -54,6 +57,7 @@ export const UpdateItem = ({
   const { listItems } = useItems();
   const { imgUrl, setImgUrl } = useImageUrl(picture);
   const imageKey = useRef<string>(picture);
+  const {categories} = useCategory();
 
   function handleChange(e: React.ChangeEvent | SelectChangeEvent) {
     const { name, value } = e.target as HTMLInputElement;
@@ -144,7 +148,27 @@ export const UpdateItem = ({
             value={formData.itemName}
             onChange={handleChange}
           />
-
+          {categories ? (
+              <FormControl>
+                <InputLabel id="Category">Category</InputLabel>
+                <Select
+                    name="category"
+                    id="category"
+                    value={formData.businessId}
+                    label="Location Name"
+                    onChange={handleChange}
+                    defaultValue={locationID}
+                >
+                  {categories.map((category, i) => (
+                      <MenuItem value={category.id} key={category.id}>
+                        {category.name}
+                      </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+          ) : (
+              <Skeleton width="auto" height="40px" />
+          )}
           <TextField
             type="number"
             label="Count"
@@ -153,7 +177,6 @@ export const UpdateItem = ({
             value={formData.count}
             onChange={handleChange}
           />
-
           {locations ? (
             <FormControl>
               <InputLabel id="location">Location</InputLabel>
