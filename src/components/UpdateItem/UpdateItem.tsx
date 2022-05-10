@@ -34,7 +34,7 @@ count,
 }: {
   id: string;
   name?: string;
-  categoryId?:number;
+  categoryId?:string;
   count?: number;
   picture: string;
   price?: number;
@@ -150,14 +150,14 @@ count,
           />
           {categories ? (
               <FormControl>
-                <InputLabel id="Category">Category</InputLabel>
+                <InputLabel id="category">Category</InputLabel>
                 <Select
-                    name="category"
+                    name="categoryId"
                     id="category"
-                    value={formData.businessId}
+                    value={formData.categoryId}
                     label="Location Name"
                     onChange={handleChange}
-                    defaultValue={locationID}
+                    defaultValue={categoryId}
                 >
                   {categories.map((category, i) => (
                       <MenuItem value={category.id} key={category.id}>

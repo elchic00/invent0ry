@@ -25,6 +25,7 @@ import "../../index.css";
 
 type ItemCardProps = {
   name?: string;
+  categoryId?:string;
   itemCount?: number;
   picture: string;
   expire?: string;
@@ -36,6 +37,7 @@ type ItemCardProps = {
 export const ItemCardComponent = ({
   name,
   itemCount,
+    categoryId,
   picture,
   expire,
   price,
@@ -157,6 +159,26 @@ export const ItemCardComponent = ({
               $ {price}
             </Typography>
           </Typography>
+
+          {/*<Typography*/}
+          {/*      variant="h5"*/}
+          {/*      sx={{*/}
+          {/*        fontWeight: 100,*/}
+          {/*        display: "flex",*/}
+          {/*        gap: 1,*/}
+          {/*        alignItems: "center",*/}
+          {/*      }}*/}
+          {/*  >*/}
+          {/*    {" "}*/}
+          {/*    Category:*/}
+          {/*    <Typography*/}
+          {/*        variant="body2"*/}
+          {/*        color="text.secondary"*/}
+          {/*        sx={{ fontSize: "1.2rem", fontWeight: 100 }}*/}
+          {/*    >*/}
+          {/*      {categoryId}*/}
+          {/*    </Typography>*/}
+          {/*</Typography>*/}
           {expire && (
             <Typography
               variant="h5"
