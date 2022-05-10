@@ -1,6 +1,7 @@
 import { Button, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { ChangeEvent, SyntheticEvent, useState } from "react";
+import { useId } from "../../hooks";
 import { API } from "../../services/api";
 
 export const CategoryForm = ({
@@ -13,7 +14,7 @@ export const CategoryForm = ({
   listCategories: Function;
 }) => {
   const [category, setCategory] = useState<string>(categoryField || "");
-  //const { id, handleDeleteId } = useId();
+  const { id } = useId();
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     setCategory(e.target.value);
@@ -23,12 +24,8 @@ export const CategoryForm = ({
     e.preventDefault();
 
     try {
-      //  await API.updateCategory(id, { name: category });
+      await API.updateCategory({ id, name: category });
 
-      // clean up
-      setCategory("");
-      // remove query string from url
-      // handleDeleteId();
       handleOpen();
       await listCategories();
     } catch (error) {
