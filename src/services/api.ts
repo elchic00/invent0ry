@@ -121,6 +121,7 @@ export class API {
         expire: item.expirationDate?.slice(0, 16),
         price: item.price,
         locationsID: item.locationName || "",
+        categoryId: item.categoryId||'',
         businessID: business.id || "",
       })
     );
