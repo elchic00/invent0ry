@@ -2,6 +2,7 @@ import { Box, Paper, Skeleton, Typography } from "@mui/material";
 import { useFilterItems } from "../../hooks";
 import { useBusiness } from "../../hooks";
 import { useLocations } from "../../hooks";
+import { useCategory } from "../../hooks";
 import { FilterItems } from "../../interface/models/enums";
 import FlipCard from "../../components/FlipCard/FlipCard";
 
@@ -9,7 +10,7 @@ export const Dashboard = () => {
   const { locations } = useLocations();
   const { business } = useBusiness();
   const { filteredItems } = useFilterItems(FilterItems.STOCK);
-
+  const {categories,listCategories} = useCategory();
   return (
     <Box>
       {/*---------------------BUSINESS---------------- */}
@@ -49,6 +50,10 @@ export const Dashboard = () => {
       </Box>
       {/* ----------------OUT-OF-STOCK-ITEMS---------------- */}
       <Box>
+          {categories && <Typography variant="h4" sx={{ mb: 2, fontWeight: 100}}>
+             Number of Categories: {categories.length}
+          </Typography>}
+
         <Typography variant="h4" sx={{ mb: 1, fontWeight: 100 }}>
           Items to Restock On:
         </Typography>
