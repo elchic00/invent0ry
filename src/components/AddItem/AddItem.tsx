@@ -20,7 +20,8 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
 import Switch from "@mui/material/Switch";
-import { useLocations } from "../../hooks/useLocations";
+import { useLocations, useCategory } from "../../hooks";
+
 import Select from "@mui/material/Select";
 import { Locations } from "../../models";
 import { useItems } from "../../context";
@@ -31,6 +32,7 @@ const label = { inputProps: { "aria-label": "Switch demo" } };
 const ItemDetailsSchema = yup.object().shape({
   itemName: yup.string().required("Required field - must be a string"),
   locationName: yup.string().required("Required field - must be a string"),
+  categoryId: yup.number(),
   // businessName: yup.string().required("Required field - must be a string"),
   count: yup
     .number()
@@ -47,6 +49,7 @@ const ItemDetailsSchema = yup.object().shape({
 
 const defaultValues = {
   itemName: "",
+  categoryId: 0,
   locationName: "",
   businessId: "",
   count: 0,
@@ -70,6 +73,7 @@ export const AddItem = ({ setValue }: { setValue?: Function }) => {
   const { setComponent } = useModal();
   const { locations } = useLocations();
   const { listItems } = useItems();
+  const {categories} = useCategory();
   const [image, setImage] = useState<any>(box);
   const imageKey = useRef<string>();
 
@@ -168,6 +172,32 @@ export const AddItem = ({ setValue }: { setValue?: Function }) => {
               />
             )}
           />
+          {categories ? (
+              <Controller
+                  name="categoryId"
+                  control={control}
+                  render={({ field: { onChange, ref, value } }) => (
+                      <FormControl>
+                        <InputLabel id="category">Category</InputLabel>
+                        <Select
+                            id="categoryId"
+                            value={value}
+                            label="Category"
+                            onChange={onChange}
+                            inputRef={ref}
+                        >
+                          {categories.map((category) => (
+                              <MenuItem value={category.id}>
+                                {category.name}
+                              </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                  )}
+              />
+          ) : (
+              <Skeleton width="500px" height="200px" />
+          )}
           {locations ? (
             <Controller
               name="locationName"
