@@ -1,6 +1,6 @@
 export interface ItemDetailsInputs {
   itemName?: string;
-  categoryId?: number;
+  categoryId?: string;
   locationName?: string;
   businessId?: string;
   count?: number;

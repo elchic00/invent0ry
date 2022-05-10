@@ -32,7 +32,7 @@ const label = { inputProps: { "aria-label": "Switch demo" } };
 const ItemDetailsSchema = yup.object().shape({
   itemName: yup.string().required("Required field - must be a string"),
   locationName: yup.string().required("Required field - must be a string"),
-  categoryId: yup.number(),
+  categoryId: yup.string(),
   // businessName: yup.string().required("Required field - must be a string"),
   count: yup
     .number()
@@ -49,7 +49,7 @@ const ItemDetailsSchema = yup.object().shape({
 
 const defaultValues = {
   itemName: "",
-  categoryId: 0,
+  categoryId: "",
   locationName: "",
   businessId: "",
   count: 0,
@@ -180,7 +180,7 @@ export const AddItem = ({ setValue }: { setValue?: Function }) => {
                       <FormControl>
                         <InputLabel id="category">Category</InputLabel>
                         <Select
-                            id="categoryId"
+                            id="category"
                             value={value}
                             label="Category"
                             onChange={onChange}
