@@ -59,11 +59,11 @@ export const CategoryForm = ({
       <Box>
         {categoryField != null ? (
           <Button variant="outlined" onClick={handleSave}>
-            Guardar
+            Save
           </Button>
         ) : (
           <Button variant="outlined" onClick={handleAdd}>
-            Añadir
+            Add
           </Button>
         )}
       </Box>
