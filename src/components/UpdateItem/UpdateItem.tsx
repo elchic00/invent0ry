@@ -45,7 +45,7 @@ count,
 }) => {
   const [formData, setFormData] = useState<ItemDetailsInputs>({
     itemName: name,
-    categoryId,
+    categoryId:categoryId,
     count,
     picture,
     price,

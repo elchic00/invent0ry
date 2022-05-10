@@ -141,6 +141,7 @@ export class API {
         updated.itemCount = data.count;
         updated.expire = data.expirationDate;
         updated.price = data.price;
+        updated.categoryId = data.categoryId
       })
     );
   }
