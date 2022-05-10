@@ -10,8 +10,5 @@ export const useId = () => {
     setSearchParams(searchParams);
   }
 
-  useEffect(() => {
-    handleDeleteId();
-  }, [id]);
   return { id, handleDeleteId };
 };

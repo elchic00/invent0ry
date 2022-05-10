@@ -14,7 +14,7 @@ export const CategoryForm = ({
   listCategories: Function;
 }) => {
   const [category, setCategory] = useState<string>(categoryField || "");
-  const { id } = useId();
+  const { id, handleDeleteId } = useId();
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     setCategory(e.target.value);
@@ -27,6 +27,7 @@ export const CategoryForm = ({
       await API.updateCategory({ id, name: category });
 
       handleOpen();
+      handleDeleteId();
       await listCategories();
     } catch (error) {
       console.log(error);
@@ -51,7 +52,7 @@ export const CategoryForm = ({
     >
       <TextField
         id="category"
-        label="Categoría"
+        label="Category"
         variant="standard"
         value={category}
         onChange={handleChange}
