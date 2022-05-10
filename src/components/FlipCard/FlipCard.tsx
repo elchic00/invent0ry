@@ -3,8 +3,6 @@ import { ItemCardComponent } from "../ItemCard/ItemCard";
 import { UpdateItem } from "../UpdateItem/UpdateItem";
 import { Box, CardActionArea } from "@mui/material";
 
-
-
 // type FlipCardProps = {
 //     children: JSX.Element;
 // }
@@ -46,9 +44,8 @@ const FlipCard = ({
   price,
   id,
   getItems,
-  locationID
+  locationID,
 }: any) => {
-  //const flipCardContext = React.createContext<FlipCardContextInterface>();
   const [flipped, setFlipped] = useState(false);
 
   const flip = () => {
@@ -66,14 +63,14 @@ const FlipCard = ({
     >
       <CardActionArea
         sx={{
-            height: "100%"
+          height: "100%",
         }}
       >
         <Box
           sx={{
             ...StyleFlipCardContent,
             position: "absolute",
-            transform: `rotateY(${180 * +flipped}deg)`
+            transform: `rotateY(${180 * +flipped}deg)`,
           }}
         >
           <ItemCardComponent
