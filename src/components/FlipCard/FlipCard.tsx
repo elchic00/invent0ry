@@ -39,6 +39,7 @@ const StyleFlipCardContent = {
 const FlipCard = ({
   name,
   itemCount,
+    categoryId,
   picture,
   expire,
   price,
@@ -75,6 +76,7 @@ const FlipCard = ({
         >
           <ItemCardComponent
             name={name}
+            categoryId={categoryId}
             itemCount={itemCount}
             picture={picture}
             expire={expire}
@@ -94,6 +96,7 @@ const FlipCard = ({
           <UpdateItem
             id={id}
             name={name}
+            categoryId={categoryId}
             count={itemCount}
             price={price}
             picture={picture}

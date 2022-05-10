@@ -121,6 +121,7 @@ export class API {
         expire: item.expirationDate?.slice(0, 16),
         price: item.price,
         locationsID: item.locationName || "",
+        categoryId: item.categoryId||'',
         businessID: business.id || "",
       })
     );
@@ -140,6 +141,7 @@ export class API {
         updated.itemCount = data.count;
         updated.expire = data.expirationDate;
         updated.price = data.price;
+        updated.categoryId = data.categoryId
       })
     );
   }

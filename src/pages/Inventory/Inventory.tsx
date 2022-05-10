@@ -55,6 +55,7 @@ export const Inventory = () => {
             <FlipCard
               key={item.id}
               name={item.name}
+              categoryId={item.categoryId}
               itemCount={item.itemCount}
               picture={item.picture || ""}
               expire={item.expire}
