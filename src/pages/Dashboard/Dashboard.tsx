@@ -1,16 +1,29 @@
-import { Box, Paper, Skeleton, Typography } from "@mui/material";
+import { Box, FormControl, InputLabel, MenuItem, Paper, Select, Skeleton, Tab, Tabs, Typography } from "@mui/material";
 import { useFilterItems } from "../../hooks";
 import { useBusiness } from "../../hooks";
 import { useLocations } from "../../hooks";
 import { useCategory } from "../../hooks";
 import { FilterItems } from "../../interface/models/enums";
 import FlipCard from "../../components/FlipCard/FlipCard";
+import { useEffect, useState } from "react";
+import { API } from "../../services/api";
 
 export const Dashboard = () => {
   const { locations } = useLocations();
   const { business } = useBusiness();
-  const { filteredItems } = useFilterItems(FilterItems.STOCK);
-  const {categories,listCategories} = useCategory();
+  const { filteredItems, locationFilter, setLocationFilter, amountFilter, setAmountFilter } = useFilterItems();
+  const amounts = [5, 10, 20, 50, 100, 500, 1000] 
+
+
+  const selectLocation = (e:any, val:string) => {
+    setLocationFilter(val)
+    console.log(val)
+  }
+
+  const setAmount = (e:any, z:any) => {
+    setAmountFilter(z.props.value)
+  }
+
   return (
     <Box>
       {/*---------------------BUSINESS---------------- */}
@@ -27,32 +40,60 @@ export const Dashboard = () => {
       {/* ----------------------LOCATIONS--------------------- */}
       <Box sx={{ display: "flex", flexDirection: "column" }}>
         <Typography variant="h4" sx={{ mb: 1, fontWeight: 100 }}>
-          Your Locations:
+          Location Filter:
         </Typography>
-        {locations != null ? (
-          <Box mb={5} sx={{ pl: 3, display: "flex", gap: 2, flexWrap: "wrap" }}>
-            {locations.map((location) => (
-              <Paper
-                elevation={1}
-                key={location.id}
-                sx={{ p: 1, width: "auto" }}
+        <Box sx={{ display: "flex", flexDirection: "row" }}>
+          {locations != null ? (
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+              <Tabs 
+                onChange={selectLocation}
+                value={locationFilter}
               >
-                {`${location.street} - ${location.town} - ${location.zip}`}
-              </Paper>
-            ))}
+                <Tab value={"all"} label={"all"}></Tab>
+                {locations.map((location, i) => (
+                  <Tab
+                    value={location.id}
+                    // elevation={1}
+                    // sx={{ p: 1, width: "auto" }}
+                    label={`${location.street} - ${location.town} - ${location.zip}`}
+                  />
+                ))}  
+              </Tabs>
+            </Box>
+          ) : (
+            <Skeleton
+              sx={{ width: { xs: 350, sm: 450 }, height: { xs: 200, sm: 300 } }}
+              variant="rectangular"
+            />
+          )} 
+          {/* ----------------------AMOUNT--------------------- */} 
+          <Box sx={{ minWidth: 120 }}>
+            <FormControl fullWidth>
+              <InputLabel id="amounts">Quantity</InputLabel>
+              <Select
+                labelId="amounts"
+                id="amounts"
+                value={amountFilter}
+                label="Sort By"
+                onChange={setAmount}
+              >
+                {
+                  amounts.map(val => (
+                    <MenuItem value={val}>{`0 - ${val}`}</MenuItem>
+                  ))
+                }
+                
+                
+              </Select>
+            </FormControl>
           </Box>
-        ) : (
-          <Skeleton
-            sx={{ width: { xs: 350, sm: 450 }, height: { xs: 200, sm: 300 } }}
-            variant="rectangular"
-          />
-        )}
+        </Box>
       </Box>
       {/* ----------------OUT-OF-STOCK-ITEMS---------------- */}
       <Box>
-          {categories && <Typography variant="h4" sx={{ mb: 2, fontWeight: 100}}>
+          {/* {categories && <Typography variant="h4" sx={{ mb: 2, fontWeight: 100}}>
              Number of Categories: {categories.length}
-          </Typography>}
+          </Typography>} */}
 
         <Typography variant="h4" sx={{ mb: 1, fontWeight: 100 }}>
           Items to Restock On:

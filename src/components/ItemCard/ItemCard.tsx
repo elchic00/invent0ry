@@ -10,12 +10,12 @@ import {
   CardActionArea,
   Skeleton,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { API } from "../../services/api";
 import { sendNotification } from "../../utils/sendNotification";
 import { UpdateItem } from "../UpdateItem";
 import { useModal } from "../../context/ModalContext";
-import { Items } from "../../models";
+import { Items, Locations } from "../../models";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import Swal from "sweetalert2";
@@ -32,6 +32,7 @@ type ItemCardProps = {
   price?: number;
   id: string;
   flip: Function;
+  locationID: string;
 };
 
 export const ItemCardComponent = ({
@@ -43,10 +44,12 @@ export const ItemCardComponent = ({
   price,
   id,
   flip,
+  locationID,
 }: ItemCardProps) => {
   const { setComponent, setTheme } = useModal();
   const { listItems } = useItems();
   const { imgUrl } = useImageUrl(picture);
+  const [location, setLocation] = useState("")
 
   function handleDeleteConfirmation(e: React.SyntheticEvent) {
     Swal.fire({
@@ -87,6 +90,12 @@ export const ItemCardComponent = ({
   function openUpdate() {
     flip();
   }
+
+  useEffect(() => {
+    API.getLocationById(locationID).then((res) => {
+      res?setLocation(`${res.name}`):console.log("null");
+    } )
+  }, [])
 
   return (
     <Card
@@ -156,8 +165,9 @@ export const ItemCardComponent = ({
               color="text.secondary"
               sx={{ fontSize: "1.2rem", fontWeight: 100 }}
             >
-              $ {price}
+              ${price}
             </Typography>
+            
           </Typography>
 
           {/*<Typography*/}

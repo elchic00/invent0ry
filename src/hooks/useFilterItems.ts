@@ -4,23 +4,23 @@ import { API } from "../services/api";
 import { useEffect, useState } from "react";
 import { useItems } from "../context";
 
-export const useFilterItems = (filter: FilterItems) => {
+export const useFilterItems = () => {
   const [filteredItems, setFilteredItems] = useState<Items[] | null>(null);
+  const [locationFilter, setLocationFilter] = useState("all")
+  const [amountFilter, setAmountFilter] = useState(1000)
   const { items } = useItems();
 
   useEffect(() => {
     filterItems();
-  }, [items]);
+  }, [items, locationFilter, amountFilter]);
 
   async function filterItems() {
     let items = null;
     try {
-      switch (filter) {
-        case FilterItems.STOCK:
-          items = await API.listItemsByItemCount(1);
-          break;
-        default:
-          return;
+      if(locationFilter == "all"){
+        items = await API.listItemsByItemCount(amountFilter);
+      } else {
+        items = await API.listItemsFromLocationBelowCount(locationFilter, amountFilter)
       }
       setFilteredItems(items);
     } catch (error) {
@@ -28,5 +28,5 @@ export const useFilterItems = (filter: FilterItems) => {
     }
   }
 
-  return { filteredItems };
+  return { filteredItems, locationFilter, setLocationFilter, amountFilter, setAmountFilter };
 };

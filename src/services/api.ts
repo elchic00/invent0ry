@@ -199,6 +199,10 @@ export class API {
   static async listItemsByItemCount(min: number) {
     return await DataStore.query(Items, (c) => c.itemCount("le", min));
   }
+
+  static async listItemsFromLocationBelowCount(locationID: string, max: number){
+    return await DataStore.query(Items, (c) => c.locationsID("eq", locationID).itemCount("le", max))
+  }
   // ----------------------- S3 Buckets ------------------------------
   static async uploadItemImage({
     file,
