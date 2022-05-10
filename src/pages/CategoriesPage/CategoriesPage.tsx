@@ -1,20 +1,14 @@
-import { Box, Typography } from "@mui/material";
-import { CategoryComponent } from "../../components/Category/Category";
+import { CircularProgress, Typography } from "@mui/material";
 import { useCategory } from "../../hooks";
-import { useState } from "react";
+import { CategoryFields } from "./CategoryFields";
 
 export const CategoriesPage = () => {
-  const { categories } = useCategory();
-  const [open, setOpen] = useState<boolean>(true);
+  const { categories, listCategories } = useCategory();
 
-  return (
-    <Box>
-      <Box>
-        <Typography variant="h3">Add Category</Typography>
-        <Box>
-          <CategoryComponent />
-        </Box>
-      </Box>
-    </Box>
-  );
+  if (categories)
+    return (
+      <CategoryFields categories={categories} listCategories={listCategories} />
+    );
+
+  return <CircularProgress />;
 };

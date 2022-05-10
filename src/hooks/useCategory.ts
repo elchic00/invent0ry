@@ -18,5 +18,5 @@ export const useCategory = () => {
     }
   }
 
-  return { categories, setCategories };
+  return { categories, listCategories };
 };

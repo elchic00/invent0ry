@@ -22,6 +22,7 @@ import { Outlet, Link } from "react-router-dom";
 import { AmplifyAuth } from "../../services";
 import { LocalStorage } from "../../services";
 import BusinessIcon from "@mui/icons-material/Business";
+import CategoryIcon from "@mui/icons-material/Category";
 
 const drawerWidth = 260;
 
@@ -75,6 +76,12 @@ export const SideBar = ({ window }: Props) => {
       icon: <BusinessIcon />,
       path: "/user/BusinessSpecifics",
     },
+    {
+      id: "categories",
+      name: "Categories",
+      icon: <CategoryIcon />,
+      path: "/user/categories",
+    },
   ];
   const drawer = (
     <Box>
@@ -119,7 +126,9 @@ export const SideBar = ({ window }: Props) => {
     window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box sx={{ display: "flex", alignItems: "center", justifyContent: "stretch"}}>
+    <Box
+      sx={{ display: "flex", alignItems: "center", justifyContent: "stretch" }}
+    >
       <CssBaseline />
       <AppBar
         position="fixed"

@@ -8,8 +8,9 @@ export const paths = {
   profile: "profile",
   businessSpecifics: "businessSpecifics",
   addItem: "addItem",
-  addLoc: 'addLoc',
-  locations: 'locations',
+  addLoc: "addLoc",
+  locations: "locations",
   flipcardtest: "flipcardtest", //REMOVE THIS UPON COMPLETION OF FLIPCARD
   walkthrough: "walkthrough",
+  categories: "categories",
 };
