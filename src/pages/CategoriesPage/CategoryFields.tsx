@@ -4,8 +4,8 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import CloseIcon from "@mui/icons-material/Close";
 import { Category } from "../../models";
 
-import { useOpen } from "src/hooks/useOpen";
 import { CategoryForm } from "../../components/CategoryForm/CategoryForm";
+import { useOpen } from "../../hooks";
 
 export const CategoryFields = ({
   categories,
