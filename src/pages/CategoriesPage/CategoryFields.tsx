@@ -6,6 +6,7 @@ import { Category } from "../../models";
 
 import { CategoryForm } from "../../components/CategoryForm/CategoryForm";
 import { useOpen } from "../../hooks";
+import { FormFieldItem } from "../../components/FormField";
 
 export const CategoryFields = ({
   categories,
@@ -32,20 +33,20 @@ export const CategoryFields = ({
             }}
           >
             {categories!.map((category) => (
-            //   <FormFieldItem
-            //     name={category.name}
-            //     key={category.id}
-            //     id={category.id}
-            //     listFields={listCategories}
-            //   >
-            //     {({ handleOpen }) => (
-            //       <CategoryForm
-            //         categoryField={category.name}
-            //         handleOpen={handleOpen}
-            //         listCategories={listCategories}
-            //       />
-            //     )}
-            //   </FormFieldItem>
+              <FormFieldItem
+                name={category.name}
+                key={category.id}
+                id={category.id}
+                listFields={listCategories}
+              >
+                {({ handleOpen }) => (
+                  <CategoryForm
+                    categoryField={category.name}
+                    handleOpen={handleOpen}
+                    listCategories={listCategories}
+                  />
+                )}
+              </FormFieldItem>
             ))}
           </Box>
         )}
