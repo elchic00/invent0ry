@@ -1,1 +1,3 @@
-An inventory management Application to help you keep track of your inventory. You can keep track of multiple storage locations for your business and make sure you have enough inventory to serve your customers.
+An inventory management Application to help you keep track of your inventory. 
+* Keep track of multiple storage locations for your business 
+* Make sure you have enough inventory to serve your customers.
