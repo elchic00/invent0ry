@@ -20,8 +20,8 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
 import Switch from "@mui/material/Switch";
-import { useLocations, useCategory } from "../../hooks";
-
+import {useLocations, useCategory, useOpen} from "../../hooks";
+import {CategoryForm} from "../CategoryForm";
 import Select from "@mui/material/Select";
 import { Locations } from "../../models";
 import { useItems } from "../../context";
@@ -70,12 +70,14 @@ export const AddItem = ({ setValue }: { setValue?: Function }) => {
     resolver,
   });
   const [isOpen, setIsOpen] = useState<boolean>();
+  const [isOpenNewCat, setIsOpenNewCat] = useState<boolean>();
   const { setComponent } = useModal();
   const { locations } = useLocations();
   const { listItems } = useItems();
-  const {categories} = useCategory();
+  const {categories, listCategories} = useCategory();
   const [image, setImage] = useState<any>(box);
   const imageKey = useRef<string>();
+  const { open, handleOpen } = useOpen();
 
   const formSubmitHandler: SubmitHandler<ItemDetailsInputs> = async (
     data: ItemDetailsInputs
@@ -172,33 +174,7 @@ export const AddItem = ({ setValue }: { setValue?: Function }) => {
               />
             )}
           />
-          {categories ? (
-              <Controller
-                  name="categoryId"
-                  control={control}
-                  render={({ field: { onChange, ref, value } }) => (
-                      <FormControl>
-                        <InputLabel id="category">Category</InputLabel>
-                        <Select
-                            id="category"
-                            value={value}
-                            label="Category"
-                            onChange={onChange}
-                            inputRef={ref}
-                        >
-                          {categories.map((category) => (
-                              <MenuItem value={category.id}>
-                                {category.name}
-                              </MenuItem>
-                          ))}
-                        </Select>
-                      </FormControl>
-                  )}
-              />
-          ) : (
-              <Skeleton width="500px" height="200px" />
-          )}
-          {locations ? (
+          {locations && (
             <Controller
               name="locationName"
               control={control}
@@ -221,8 +197,6 @@ export const AddItem = ({ setValue }: { setValue?: Function }) => {
                 </FormControl>
               )}
             />
-          ) : (
-            <Skeleton width="500px" height="200px" />
           )}
           {/* <Controller
             name="businessName"
@@ -277,6 +251,34 @@ export const AddItem = ({ setValue }: { setValue?: Function }) => {
               />
             )}
           />
+          <Typography variant="body2" sx={{ fontWeight: 100, color: "red" }}>
+            <Switch {...label} onClick={() => setIsOpenNewCat(!isOpenNewCat)} /> Add new category?
+          </Typography>
+          {isOpenNewCat && <CategoryForm handleOpen={handleOpen} listCategories={listCategories}/>}
+          {categories  && (
+              <Controller
+                  name="categoryId"
+                  control={control}
+                  render={({ field: { onChange, ref, value } }) => (
+                      <FormControl>
+                        <InputLabel id="category">Category</InputLabel>
+                        <Select
+                            id="category"
+                            value={value}
+                            label="Category"
+                            onChange={onChange}
+                            inputRef={ref}
+                        >
+                          {categories.map((category) => (
+                              <MenuItem value={category.id}>
+                                {category.name}
+                              </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                  )}
+              />
+          )}
           <Typography variant="body2" sx={{ fontWeight: 100, color: "red" }}>
             <Switch {...label} onClick={() => setIsOpen(!isOpen)} /> is the item
             perishable ?
