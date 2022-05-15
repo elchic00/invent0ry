@@ -9,7 +9,7 @@ const SummaryStack = () => {
     const { items } = useItems();
     const { business } = useBusiness();
     const [ totalQuantity, setTotalQuantity ] = useState<number>(0);
-    const [ totalAssets, setTotalAssets ] = useState<number>(0);
+    const [ totalAssets, setTotalAssets ] = useState<string>("0");
 
     useEffect(() => {
         let quantity: number = 0;
@@ -23,7 +23,7 @@ const SummaryStack = () => {
             };
         }); 
         setTotalQuantity(quantity);
-        setTotalAssets(assets);
+        setTotalAssets(assets.toFixed(2));
     }, [items]);
 
     return (
