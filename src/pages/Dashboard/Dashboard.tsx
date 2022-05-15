@@ -29,7 +29,7 @@ export const Dashboard = () => {
     <Box>
       {/*---------------------BUSINESS---------------- */}
       {business !== null ? (
-        <Typography variant="h3" sx={{ fontWeight: 200, mb: 3 }}>
+        <Typography variant="h3" sx={{ fontWeight: 200, mb: 2 }}>
           {`Welcome Back, ${business?.name}`}
         </Typography>
       ) : (
@@ -41,16 +41,18 @@ export const Dashboard = () => {
       {/*---------------------SUMMARY---------------- */}
       <SummaryStack />
       {/* ----------------------LOCATIONS--------------------- */}
-      <Box sx={{ display: "flex", flexDirection: "column" }}>
+      <Box sx={{ display: "flex", flexDirection: "column", mb: 2 }}>
         <Typography variant="h4" sx={{ mb: 1, fontWeight: 100 }}>
           Location Filter:
         </Typography>
-        <Box sx={{ display: "flex", flexDirection: "row" }}>
+        <Box sx={{ display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between" }}>
           {locations != null ? (
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <Box>
               <Tabs 
                 onChange={selectLocation}
                 value={locationFilter}
+                variant="scrollable"
+                scrollButtons="auto"
               >
                 <Tab value={"all"} label={"all"}></Tab>
                 {locations.map((location, i) => (
@@ -70,7 +72,7 @@ export const Dashboard = () => {
             />
           )} 
           {/* ----------------------AMOUNT--------------------- */} 
-          <Box sx={{ minWidth: 120 }}>
+          <Box sx={{ minWidth: 120, mr: 4, mt: { md: 2, xl: 0 } }}>
             <FormControl fullWidth>
               <InputLabel id="amounts">Quantity</InputLabel>
               <Select
@@ -85,8 +87,6 @@ export const Dashboard = () => {
                     <MenuItem value={val}>{`0 - ${val}`}</MenuItem>
                   ))
                 }
-                
-                
               </Select>
             </FormControl>
           </Box>
