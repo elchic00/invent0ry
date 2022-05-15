@@ -50,7 +50,7 @@ const ItemDetailsSchema = yup.object().shape({
 const defaultValues = {
   itemName: "",
   categoryId: "",
-  locationName: "",
+  locationID: "",
   businessId: "",
   count: 0,
   picture: "",
@@ -176,7 +176,7 @@ export const AddItem = ({ setValue }: { setValue?: Function }) => {
           />
           {locations && (
             <Controller
-              name="locationName"
+              name="locationID"
               control={control}
               render={({ field: { onChange, ref, value } }) => (
                 <FormControl>
@@ -184,7 +184,7 @@ export const AddItem = ({ setValue }: { setValue?: Function }) => {
                   <Select
                     id="location"
                     value={value}
-                    label="Location Name"
+                    label="Location"
                     onChange={onChange}
                     inputRef={ref}
                   >
