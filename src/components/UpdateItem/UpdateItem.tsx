@@ -45,12 +45,13 @@ count,
 }) => {
   const [formData, setFormData] = useState<ItemDetailsInputs>({
     itemName: name,
-    categoryId:categoryId,
+    categoryId,
     count,
     picture,
     price,
     expirationDate,
     sku,
+    locationID
   });
   const { setComponent } = useModal();
   const { locations } = useLocations();
@@ -73,7 +74,7 @@ count,
     let data = { ...formData, picture: imageKey.current };
     try {
       const item = (await API.getItemById(id)) as Items;
-      const update = await API.updateItem({ original: item, data });
+      await API.updateItem({ original: item, data });
       await listItems();
       setComponent(null);
       flip();
@@ -181,9 +182,9 @@ count,
             <FormControl>
               <InputLabel id="location">Location</InputLabel>
               <Select
-                name="locationName"
+                name="locationID"
                 id="location"
-                value={formData.businessId}
+                value={formData.locationID}
                 label="Location Name"
                 onChange={handleChange}
                 defaultValue={locationID}

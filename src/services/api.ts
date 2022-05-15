@@ -120,20 +120,14 @@ export class API {
         sku: item.sku,
         expire: item.expirationDate?.slice(0, 16),
         price: item.price,
-        locationsID: item.locationName || "",
+        locationsID: item.locationID || "",
         categoryId: item.categoryId||'',
         businessID: business.id || "",
       })
     );
   }
 
-  static async updateItem({
-    original,
-    data,
-  }: {
-    original: Items;
-    data: ItemDetailsInputs;
-  }) {
+  static async updateItem({original,data,}: {original: Items; data: ItemDetailsInputs;}) {
     return await DataStore.save(
       Items.copyOf(original, (updated) => {
         updated.name = data.itemName;
@@ -142,6 +136,7 @@ export class API {
         updated.expire = data.expirationDate;
         updated.price = data.price;
         updated.categoryId = data.categoryId
+        updated.locationsID = data.locationID
       })
     );
   }
