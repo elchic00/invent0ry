@@ -7,6 +7,7 @@ import { FilterItems } from "../../interface/models/enums";
 import FlipCard from "../../components/FlipCard/FlipCard";
 import { useEffect, useState } from "react";
 import { API } from "../../services/api";
+import SummaryStack from "../../components/SummaryStack/SummaryStack";
 
 export const Dashboard = () => {
   const { locations } = useLocations();
@@ -28,7 +29,7 @@ export const Dashboard = () => {
     <Box>
       {/*---------------------BUSINESS---------------- */}
       {business !== null ? (
-        <Typography variant="h3" sx={{ fontWeight: 200, mb: 5 }}>
+        <Typography variant="h3" sx={{ fontWeight: 200, mb: 3 }}>
           {`Welcome Back, ${business?.name}`}
         </Typography>
       ) : (
@@ -37,6 +38,8 @@ export const Dashboard = () => {
           variant="rectangular"
         />
       )}
+      {/*---------------------SUMMARY---------------- */}
+      <SummaryStack />
       {/* ----------------------LOCATIONS--------------------- */}
       <Box sx={{ display: "flex", flexDirection: "column" }}>
         <Typography variant="h4" sx={{ mb: 1, fontWeight: 100 }}>
