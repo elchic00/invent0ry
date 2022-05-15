@@ -31,7 +31,7 @@ const label = { inputProps: { "aria-label": "Switch demo" } };
 
 const ItemDetailsSchema = yup.object().shape({
   itemName: yup.string().required("Required field - must be a string"),
-  locationName: yup.string().required("Required field - must be a string"),
+  locationID: yup.string().required("Required field - must be a string"),
   categoryId: yup.string(),
   // businessName: yup.string().required("Required field - must be a string"),
   count: yup
@@ -83,7 +83,6 @@ export const AddItem = ({ setValue }: { setValue?: Function }) => {
     data: ItemDetailsInputs
   ) => {
     let formData = { ...data, picture: imageKey.current };
-
     try {
       await API.addItem(formData);
       listItems();
@@ -182,7 +181,7 @@ export const AddItem = ({ setValue }: { setValue?: Function }) => {
                 <FormControl>
                   <InputLabel id="location">Location</InputLabel>
                   <Select
-                    id="location"
+                    id="locationID"
                     value={value}
                     label="Location"
                     onChange={onChange}
