@@ -29,6 +29,7 @@ export const AddLocation = ({
       getLocations && (await getLocations());
       setValue && setValue(1);
       setComponent(null);
+      sendNotification("You added a new location!", "success");
       setIsDisabled(false);
     } catch (e) {
       sendNotification("Error trying to call the add location api", "error");
