@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { API } from "../../services/api";
 import { Hub, DataStore } from "aws-amplify";
 import { LinearProgress } from "@mui/material";
+import { Business, Category, Locations } from "../../models";
 
 export const RedirectComponent = ({
   user,
@@ -38,12 +39,23 @@ export const RedirectComponent = ({
   async function getData() {
     const locations = await API.listLocations();
     const business = await API.getBusinessByUsername();
-    const promise = (await Promise.all([locations, business])) as any[];
-    const isRedirected = promise.includes(null || undefined);
+    const categories = await API.listCategories();
 
-    if (isRedirected) return navigate("/user/walkthrough");
+    if (
+      validateData<Locations[]>(locations) ||
+      validateData<Business>(business) ||
+      validateData<Category[]>(categories)
+    )
+      return navigate("/user/walkthrough");
 
     return navigate("/user/dashboard");
+  }
+
+  function validateData<T>(data: T[] | T): any {
+    if (Array.isArray(data))
+      return data === undefined || data === null || data.length < 1;
+
+    return data === undefined || data === null;
   }
 
   return <LinearProgress />;
