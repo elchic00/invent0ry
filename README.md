@@ -1,12 +1,37 @@
-## An inventory management Application. 
-* Keep track of multiple storage locations for your business 
-* Make sure you have enough inventory to serve your customers.
+<div align="center">
+    <img src="https://raw.githubusercontent.com/elchic00/invent0ry/main/src/assets/inventory-logo.jpg" width="40%">
 
-### Registering a new account:
-![walkThrough](https://user-images.githubusercontent.com/40577932/168478484-fce3d363-4491-4ce1-8ab0-7b1323365b52.gif)
+<h2><u>Description</u></h2>
+<strong>With this inventory management application, a business owner, manager, or employee can:</strong> <br/>
+Keep track of multiple storage locations for your business. <br/> 
+Sort items in your inventory by your custom categories. <br/>
+Make sure you have enough inventory to serve your customers.
 
-### Adding a new item:
-![addItem](https://user-images.githubusercontent.com/40577932/168478502-ccf5edb6-326a-422d-bb5b-4847fcb74af6.gif)
+<h2><u>User Stories</u></h2>
+<h3>Registering a New Account:</h3>
+<details>
+  <summary>Demo</summary>
 
-### Adding a new location or category:
-![addLoc_addCat](https://user-images.githubusercontent.com/40577932/168478506-21618a5c-9c99-40bd-9fb8-99f2af132b32.gif)
+![InvRegister](https://user-images.githubusercontent.com/40577932/168584742-5f09d0d2-5683-46b3-9393-748f5dad6a89.gif)
+</details>
+
+<h3> Add a New Item:</h3>
+<details>
+  <summary>Demo</summary>
+
+![addItem](https://user-images.githubusercontent.com/40577932/168585582-c23a5d9d-8e3b-4e75-b49d-ace8b6c97ad5.gif)
+</details>
+<h3>Add a New Location:</h3>
+<details>
+  <summary>Demo</summary>
+
+![addLoc](https://user-images.githubusercontent.com/40577932/168585983-96722c86-f7e6-438d-a148-9c55951833e2.gif)
+</details>
+
+<h3>Add a New Category or Update Your Business Profile:</h3>
+<details>
+  <summary>Demo</summary>
+
+![UpdateBuis_viewCats](https://user-images.githubusercontent.com/40577932/168586565-6d4fedaf-df29-4729-b6dc-88d6ec88b0a3.gif)
+</details>
+</div>
