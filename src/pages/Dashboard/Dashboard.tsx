@@ -3,6 +3,7 @@ import { useFilterItems } from "../../hooks";
 import { useBusiness } from "../../hooks";
 import { useLocations } from "../../hooks";
 import { useCategory } from "../../hooks";
+import { useItems } from "../../context";
 import { FilterItems } from "../../interface/models/enums";
 import FlipCard from "../../components/FlipCard/FlipCard";
 import { useEffect, useState } from "react";
@@ -12,6 +13,7 @@ import SummaryStack from "../../components/SummaryStack/SummaryStack";
 export const Dashboard = () => {
   const { locations } = useLocations();
   const { business } = useBusiness();
+  const { items } = useItems();
   const { filteredItems, locationFilter, setLocationFilter, amountFilter, setAmountFilter } = useFilterItems();
   const amounts = [5, 10, 20, 50, 100, 500, 1000] 
 
@@ -54,13 +56,14 @@ export const Dashboard = () => {
                 variant="scrollable"
                 scrollButtons="auto"
               >
-                <Tab value={"all"} label={"all"}></Tab>
+                <Tab value={"all"} label={"all"} wrapped></Tab>
                 {locations.map((location, i) => (
                   <Tab
                     value={location.id}
                     // elevation={1}
                     // sx={{ p: 1, width: "auto" }}
                     label={`${location.street} - ${location.town} - ${location.zip}`}
+                    wrapped
                   />
                 ))}  
               </Tabs>
@@ -72,7 +75,7 @@ export const Dashboard = () => {
             />
           )} 
           {/* ----------------------AMOUNT--------------------- */} 
-          <Box sx={{ minWidth: 120, mr: 4, mt: { md: 2, xl: 0 } }}>
+          <Box sx={{ minWidth: 120, mr: 4, mt: { xs: 2, sm: 2, md: 2, xl: 0 } }}>
             <FormControl fullWidth>
               <InputLabel id="amounts">Quantity</InputLabel>
               <Select
