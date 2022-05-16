@@ -44,7 +44,7 @@ export const ItemsProvider = ({ children }: { children: JSX.Element }) => {
           break;
         case SortBy.QUANTITY_LOWHIGH:
           sortedItems = await API.listItemsByQuantityLowestToHighest();
-            break;
+          break;
         case SortBy.NEWEST:
           sortedItems = await API.listItemsByNewest();
           break;
