@@ -23,8 +23,8 @@ import box from "../../assets/box.png";
 export const UpdateItem = ({
   id,
   name,
-categoryId,
-count,
+  categoryId,
+  count,
   picture,
   sku,
   price,
@@ -34,7 +34,7 @@ count,
 }: {
   id: string;
   name?: string;
-  categoryId?:string;
+  categoryId?: string;
   count?: number;
   picture: string;
   price?: number;
@@ -51,14 +51,14 @@ count,
     price,
     expirationDate,
     sku,
-    locationID
+    locationID,
   });
   const { setComponent } = useModal();
   const { locations } = useLocations();
   const { listItems } = useItems();
   const { imgUrl, setImgUrl } = useImageUrl(picture);
   const imageKey = useRef<string>(picture);
-  const {categories} = useCategory();
+  const { categories } = useCategory();
 
   function handleChange(e: React.ChangeEvent | SelectChangeEvent) {
     const { name, value } = e.target as HTMLInputElement;
@@ -110,9 +110,16 @@ count,
   };
 
   return (
-    <Box sx={{height: "100%"}}>
+    <Box sx={{ height: "100%" }}>
       <form onSubmit={handleUpdate}>
-        <FormControl sx={{ display: "flex", flexDirection: "column", gap: 2, height: "100%"}}>
+        <FormControl
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 2,
+            height: "100%",
+          }}
+        >
           <Box>
             <Box
               sx={{
@@ -150,31 +157,31 @@ count,
             onChange={handleChange}
           />
           {categories ? (
-              <FormControl>
-                <InputLabel id="category">Category</InputLabel>
-                <Select
-                    name="categoryId"
-                    id="category"
-                    value={formData.categoryId}
-                    label="Location Name"
-                    onChange={handleChange}
-                    defaultValue={categoryId}
-                >
-                  {categories.map((category, i) => (
-                      <MenuItem value={category.id} key={category.id}>
-                        {category.name}
-                      </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+            <FormControl>
+              <InputLabel id="category">Category</InputLabel>
+              <Select
+                name="categoryId"
+                id="category"
+                value={formData.categoryId || ""}
+                label="Location Name"
+                onChange={handleChange}
+                defaultValue={categoryId}
+              >
+                {categories.map((category) => (
+                  <MenuItem value={category.id} key={category.id}>
+                    {category.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           ) : (
-              <Skeleton width="auto" height="40px" />
+            <Skeleton width="auto" height="40px" />
           )}
           <TextField
             type="number"
             label="Count"
             name="count"
-            inputProps={{ inputMode: 'numeric', min: 0 }}
+            inputProps={{ inputMode: "numeric", min: 0 }}
             value={formData.count}
             onChange={handleChange}
           />

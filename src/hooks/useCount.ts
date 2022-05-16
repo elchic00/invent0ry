@@ -10,7 +10,7 @@ export const useCount = () => {
   const { items } = useItems();
 
   useEffect(() => {
-    getCount();
+    items && getCount();
   }, [items]);
 
   function getCount() {

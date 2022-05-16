@@ -25,7 +25,7 @@ import "../../index.css";
 
 type ItemCardProps = {
   name?: string;
-  categoryId?:string;
+  categoryId?: string;
   itemCount?: number;
   picture: string;
   expire?: string;
@@ -38,7 +38,7 @@ type ItemCardProps = {
 export const ItemCardComponent = ({
   name,
   itemCount,
-    categoryId,
+  categoryId,
   picture,
   expire,
   price,
@@ -49,7 +49,7 @@ export const ItemCardComponent = ({
   const { setComponent, setTheme } = useModal();
   const { listItems } = useItems();
   const { imgUrl } = useImageUrl(picture);
-  const [location, setLocation] = useState("")
+  const [location, setLocation] = useState("");
 
   function handleDeleteConfirmation(e: React.SyntheticEvent) {
     Swal.fire({
@@ -93,9 +93,9 @@ export const ItemCardComponent = ({
 
   useEffect(() => {
     API.getLocationById(locationID).then((res) => {
-      res?setLocation(`${res.name}`):console.log("null");
-    } )
-  }, [])
+      res ? setLocation(`${res.name}`) : console.log("null");
+    });
+  }, []);
 
   return (
     <Card
@@ -104,7 +104,7 @@ export const ItemCardComponent = ({
         borderRadius: 2,
         height: "100%",
         display: "flex",
-        flexDirection: "column"
+        flexDirection: "column",
       }}
     >
       {imgUrl === null ? (
@@ -167,7 +167,6 @@ export const ItemCardComponent = ({
             >
               ${price}
             </Typography>
-            
           </Typography>
 
           {/*<Typography*/}
@@ -215,11 +214,10 @@ export const ItemCardComponent = ({
 
       <CardActions sx={{ mt: "auto" }}>
         <IconButton onClick={openUpdate}>
-          {" "}
           <EditIcon />
         </IconButton>
         <IconButton onClick={handleDeleteConfirmation}>
-          <DeleteIcon />{" "}
+          <DeleteIcon />
         </IconButton>
       </CardActions>
     </Card>

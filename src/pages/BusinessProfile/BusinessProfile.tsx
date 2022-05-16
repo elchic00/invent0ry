@@ -22,24 +22,22 @@ export const BusinessProfile = () => {
     currency: "USD",
   });
 
-  
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
   const { locations } = useLocations();
-  const { business} = useBusiness();
+  const { business } = useBusiness();
 
   const getBusiness = async () => {
-    setFormData(({
+    setFormData({
       name: business!.name!,
       businessLocationsId: business!.businessLocationsId!,
-      currency: business!.currency!
-    }));
-  }
-    
+      currency: business!.currency!,
+    });
+  };
+
   useEffect(() => {
     business && getBusiness();
   }, [business]);
-  
 
   const locSelect = locations ? (
     locations.map((location) => (
@@ -52,7 +50,9 @@ export const BusinessProfile = () => {
   );
 
   const currencyList = Object.keys(currencies).map((key) => (
-    <MenuItem value={key}>{key}</MenuItem>
+    <MenuItem key={`${key}-id`} value={key}>
+      {key}
+    </MenuItem>
   ));
 
   async function handleSubmit(e: React.SyntheticEvent) {
@@ -60,13 +60,17 @@ export const BusinessProfile = () => {
     setIsDisabled(true);
 
     try {
-      const locationObject = await API.getLocationById(formData.businessLocationsId)
+      const locationObject = await API.getLocationById(
+        formData.businessLocationsId
+      );
       const result = await API.updateBusiness(locationObject!, formData);
       setIsDisabled(false);
       sendNotification("Business was successfully updated", "success");
     } catch (error) {
       sendNotification(
-        "Error trying to call the business profile api","error");
+        "Error trying to call the business profile api",
+        "error"
+      );
       setIsDisabled(false);
     }
   }
