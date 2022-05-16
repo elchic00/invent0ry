@@ -6,22 +6,8 @@ import { useItems } from "../../context";
 const SummaryStack = () => {
     const { locations, listLocations } = useLocations();
     const { items, listItems } = useItems();
-    // const [ totalQuantity, setTotalQuantity ] = useState<number>(0);
-    // const [ totalAssets, setTotalAssets ] = useState<string>("0");
 
     useEffect(() => {
-        // let quantity: number = 0;
-        // let assets: number = 0;
-        // items && items.forEach((item) => {
-        //     if (item.itemCount != undefined) {
-        //         quantity += item.itemCount;
-        //         if (item.price != undefined) {
-        //             assets += (item.itemCount * item.price);
-        //         }
-        //     };
-        // }); 
-        // setTotalQuantity(quantity);
-        // setTotalAssets(assets.toFixed(2));
         listItems();
         listLocations();
     }, []);
@@ -54,10 +40,10 @@ const SummaryStack = () => {
                 spacing={2}
                 mb={3}
             >
-                <Box><Typography variant="h5">{`Total Locations: ${locations !== null ? locations.length : 0}`}</Typography></Box>
-                <Box><Typography variant="h5">{`Total Kinds of Products: ${items !== null ? items.length : 0}`}</Typography></Box>
-                <Box><Typography variant="h5">{`Total Quantity: ${getTotalQuantity()}`}</Typography></Box>
-                <Box><Typography variant="h5">{`Total Assets: $${getTotalAssets()}`}</Typography></Box>
+                <Typography variant="h5">{`Total Locations: ${locations !== null ? locations.length : 0}`}</Typography>
+                <Typography variant="h5">{`Total Kinds of Products: ${items !== null ? items.length : 0}`}</Typography>
+                <Typography variant="h5">{`Total Quantity: ${getTotalQuantity()}`}</Typography>
+               <Typography variant="h5">{`Total Assets: $${getTotalAssets()}`}</Typography>
             </Stack>
         </Box>
     );
