@@ -12,9 +12,9 @@ const SummaryStack = () => {
   return (
     <Box>
       <Stack
-        direction="row"
+        direction={{ xs: "column", sm: "column", md: "row" }}
         divider={<Divider orientation="vertical" flexItem />}
-        spacing={2}
+        spacing={{ xs: 1, sm: 1, md: 2 }}
         mb={3}
       >
         <Typography variant="h5">{`Total Locations: ${
