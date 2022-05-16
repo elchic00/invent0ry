@@ -8,6 +8,7 @@ import { AddItem } from "../../components/AddItem";
 import { useNavigate } from "react-router-dom";
 import { CenteredComponent } from "../../components/CenteredComponent";
 import { Modal } from "@mui/material";
+import { CategoryForm } from "../../components/CategoryForm";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -39,18 +40,19 @@ function a11yProps(index: number) {
 }
 
 export const WalkThrough = () => {
-  const [value, setValue] = useState(0);
-  const [open, setOpen] = useState(true);
+  const [value, setValue] = useState<number>(0);
+  const [open, setOpen] = useState<boolean>(true);
   return (
-    <Modal open={open} onClose={() => {}}>
+    <Modal open={open} onClose={() => setOpen(false)}>
       <CenteredComponent>
         <Box sx={{ width: "100%" }}>
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
             <Tabs value={value} aria-label="basic tabs example">
               <Tab label="Add a location" {...a11yProps(0)} />
               <Tab label="Add a business" {...a11yProps(1)} />
-              <Tab label="Add an item" {...a11yProps(2)} />
-              <Tab label="Thank you" {...a11yProps(3)} />
+              <Tab label="Add a category" {...a11yProps(2)} />
+              <Tab label="Add an item" {...a11yProps(3)} />
+              <Tab label="Thank you" {...a11yProps(4)} />
             </Tabs>
           </Box>
           <TabPanel value={value} index={0}>
@@ -60,9 +62,12 @@ export const WalkThrough = () => {
             <BusinessForm setValue={setValue} />
           </TabPanel>
           <TabPanel value={value} index={2}>
-            <AddItem setValue={setValue} />
+            <CategoryForm setValue={setValue} />
           </TabPanel>
           <TabPanel value={value} index={3}>
+            <AddItem setValue={setValue} />
+          </TabPanel>
+          <TabPanel value={value} index={4}>
             <ThankYou />
           </TabPanel>
         </Box>

@@ -20,8 +20,8 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
 import Switch from "@mui/material/Switch";
-import {useLocations, useCategory, useOpen} from "../../hooks";
-import {CategoryForm} from "../CategoryForm";
+import { useLocations, useCategory, useOpen } from "../../hooks";
+import { CategoryForm } from "../CategoryForm";
 import Select from "@mui/material/Select";
 import { Locations } from "../../models";
 import { useItems } from "../../context";
@@ -74,7 +74,7 @@ export const AddItem = ({ setValue }: { setValue?: Function }) => {
   const { setComponent } = useModal();
   const { locations } = useLocations();
   const { listItems } = useItems();
-  const {categories, listCategories} = useCategory();
+  const { categories, listCategories } = useCategory();
   const [image, setImage] = useState<any>(box);
   const imageKey = useRef<string>();
   const { open, handleOpen } = useOpen();
@@ -87,7 +87,7 @@ export const AddItem = ({ setValue }: { setValue?: Function }) => {
       await API.addItem(formData);
       listItems();
       // change the tab number on the Walkthrough component
-      setValue && setValue(3);
+      setValue && setValue(4);
       setComponent(null);
     } catch (error) {
       console.log(error);
@@ -218,7 +218,7 @@ export const AddItem = ({ setValue }: { setValue?: Function }) => {
             render={({ field: { onChange, ref, value } }) => (
               <TextField
                 type="number"
-                inputProps={{ inputMode: 'numeric', min: 0 }}
+                inputProps={{ inputMode: "numeric", min: 0 }}
                 value={value}
                 onChange={onChange}
                 inputRef={ref}
@@ -251,32 +251,36 @@ export const AddItem = ({ setValue }: { setValue?: Function }) => {
             )}
           />
           <Typography variant="body2" sx={{ fontWeight: 100, color: "red" }}>
-            <Switch {...label} onClick={() => setIsOpenNewCat(!isOpenNewCat)} /> Add new category?
+            <Switch {...label} onClick={() => setIsOpenNewCat(!isOpenNewCat)} />{" "}
+            Add new category?
           </Typography>
-          {isOpenNewCat && <CategoryForm handleOpen={handleOpen} listCategories={listCategories}/>}
-          {categories  && (
-              <Controller
-                  name="categoryId"
-                  control={control}
-                  render={({ field: { onChange, ref, value } }) => (
-                      <FormControl>
-                        <InputLabel id="category">Category</InputLabel>
-                        <Select
-                            id="category"
-                            value={value}
-                            label="Category"
-                            onChange={onChange}
-                            inputRef={ref}
-                        >
-                          {categories.map((category) => (
-                              <MenuItem value={category.id}>
-                                {category.name}
-                              </MenuItem>
-                          ))}
-                        </Select>
-                      </FormControl>
-                  )}
-              />
+          {isOpenNewCat && (
+            <CategoryForm
+              handleOpen={handleOpen}
+              listCategories={listCategories}
+            />
+          )}
+          {categories && (
+            <Controller
+              name="categoryId"
+              control={control}
+              render={({ field: { onChange, ref, value } }) => (
+                <FormControl>
+                  <InputLabel id="category">Category</InputLabel>
+                  <Select
+                    id="category"
+                    value={value}
+                    label="Category"
+                    onChange={onChange}
+                    inputRef={ref}
+                  >
+                    {categories.map((category) => (
+                      <MenuItem value={category.id}>{category.name}</MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              )}
+            />
           )}
           <Typography variant="body2" sx={{ fontWeight: 100, color: "red" }}>
             <Switch {...label} onClick={() => setIsOpen(!isOpen)} /> is the item

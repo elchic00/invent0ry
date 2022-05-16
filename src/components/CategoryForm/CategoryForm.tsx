@@ -8,10 +8,12 @@ export const CategoryForm = ({
   categoryField,
   handleOpen,
   listCategories,
+  setValue,
 }: {
   categoryField?: string;
-  handleOpen: Function;
-  listCategories: Function;
+  handleOpen?: Function;
+  listCategories?: Function;
+  setValue?: Function;
 }) => {
   const [category, setCategory] = useState<string>(categoryField || "");
   const { id, handleDeleteId } = useId();
@@ -26,9 +28,9 @@ export const CategoryForm = ({
     try {
       await API.updateCategory({ id, name: category });
 
-      handleOpen();
+      handleOpen && handleOpen();
       handleDeleteId();
-      await listCategories();
+      listCategories && (await listCategories());
     } catch (error) {
       console.log(error);
     }
@@ -39,8 +41,9 @@ export const CategoryForm = ({
     try {
       const result = await API.addCategory({ name: category });
       setCategory("");
-      handleOpen();
-      await listCategories();
+      handleOpen && handleOpen();
+      listCategories && (await listCategories());
+      setValue && setValue(3);
     } catch (error) {
       console.log(error);
     }
