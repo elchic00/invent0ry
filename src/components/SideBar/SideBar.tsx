@@ -37,6 +37,14 @@ interface Props {
 
 export const SideBar = ({ window }: Props) => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
+
+  const handleListItemClick = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    index: number,
+  ) => {
+    setSelectedIndex(index);
+  };
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -95,7 +103,11 @@ export const SideBar = ({ window }: Props) => {
       <List>
         {items.map((item, index) => (
           <Link to={item.path} key={item.id} style={{}}>
-            <ListItem button>
+            <ListItem 
+              button 
+              selected={selectedIndex === index} 
+              onClick={(event) => handleListItemClick(event, index)}
+            >
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText primary={item.name} />
             </ListItem>
