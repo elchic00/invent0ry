@@ -50,6 +50,7 @@ export const ItemCardComponent = ({
   const { listItems } = useItems();
   const { imgUrl } = useImageUrl(picture);
   const [location, setLocation] = useState("");
+  const [category, setCategory] = useState('')
 
   function handleDeleteConfirmation(e: React.SyntheticEvent) {
     Swal.fire({
@@ -92,10 +93,13 @@ export const ItemCardComponent = ({
   }
 
   useEffect(() => {
-    API.getLocationById(locationID).then((res) => {
-      res ? setLocation(`${res.name}`) : console.log("null");
+    API.getLocationById(locationID).then((loc) => {
+      loc ? setLocation(`${loc.name}`) : console.log("null");
     });
-  }, [locationID]);
+    API.getCategoryById(categoryId!).then((cat) => {
+      cat ? setCategory(`${cat.name}`) : console.log("null");
+    });
+  }, [locationID,categoryId]);
 
   return (
     <Card
@@ -188,25 +192,27 @@ export const ItemCardComponent = ({
             </Typography>
           </Typography>
 
-          {/*<Typography*/}
-          {/*      variant="h5"*/}
-          {/*      sx={{*/}
-          {/*        fontWeight: 100,*/}
-          {/*        display: "flex",*/}
-          {/*        gap: 1,*/}
-          {/*        alignItems: "center",*/}
-          {/*      }}*/}
-          {/*  >*/}
-          {/*    {" "}*/}
-          {/*    Category:*/}
-          {/*    <Typography*/}
-          {/*        variant="body2"*/}
-          {/*        color="text.secondary"*/}
-          {/*        sx={{ fontSize: "1.2rem", fontWeight: 100 }}*/}
-          {/*    >*/}
-          {/*      {categoryId}*/}
-          {/*    </Typography>*/}
-          {/*</Typography>*/}
+
+          <Typography
+                variant="h5"
+                sx={{
+                 fontWeight: 100,
+                display: "flex",
+                  gap: 1,
+                  alignItems: "center",
+                }}
+            >
+              {" "}
+              Category:
+              <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ fontSize: "1.2rem", fontWeight: 100 }}
+              >
+                {category}
+            </Typography>
+            
+          </Typography>
           {expire && (
             <Typography
               variant="h5"
