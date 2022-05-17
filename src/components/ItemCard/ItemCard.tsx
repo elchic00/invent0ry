@@ -95,7 +95,7 @@ export const ItemCardComponent = ({
     API.getLocationById(locationID).then((res) => {
       res ? setLocation(`${res.name}`) : console.log("null");
     });
-  }, []);
+  }, [locationID]);
 
   return (
     <Card
@@ -166,6 +166,25 @@ export const ItemCardComponent = ({
               sx={{ fontSize: "1.2rem", fontWeight: 100 }}
             >
               ${price}
+            </Typography>
+          </Typography>
+          <Typography
+            variant="h5"
+            sx={{
+              fontWeight: 100,
+              display: "flex",
+              gap: 1,
+              alignItems: "center",
+            }}
+          >
+            {" "}
+            Location:
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{ fontSize: "1.2rem", fontWeight: 100 }}
+            >
+              {location}
             </Typography>
           </Typography>
 
