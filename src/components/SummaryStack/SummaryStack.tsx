@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { Box, Stack, Divider, Typography } from "@mui/material";
 import { useLocations } from "../../hooks/useLocations";
 import { useItems } from "../../context";
@@ -6,15 +6,20 @@ import { useCount } from "../../hooks/useCount";
 
 const SummaryStack = () => {
   const { locations } = useLocations();
-  const { items } = useItems();
+  const { items, listItems } = useItems();
   const { count } = useCount();
+
+  // Needed since although listItems is called when App is mounted, items array is empty
+  useEffect(() => {
+    listItems();
+  }, []);
 
   return (
     <Box>
       <Stack
-        direction="row"
+        direction={{ xs: "column", sm: "column", md: "row" }}
         divider={<Divider orientation="vertical" flexItem />}
-        spacing={2}
+        spacing={{ xs: 1, sm: 1, md: 2 }}
         mb={3}
       >
         <Typography variant="h5">{`Total Locations: ${
