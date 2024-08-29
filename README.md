@@ -9,29 +9,18 @@ Make sure you have enough inventory to serve your customers.
 
 <h2><u>User Stories</u></h2>
 <h3>Registering a New Account:</h3>
-<details>
-  <summary>Demo</summary>
 
 ![InvRegister](https://user-images.githubusercontent.com/40577932/168584742-5f09d0d2-5683-46b3-9393-748f5dad6a89.gif)
-</details>
 
 <h3> Add a New Item:</h3>
-<details>
-  <summary>Demo</summary>
 
 ![addItem](https://user-images.githubusercontent.com/40577932/168585582-c23a5d9d-8e3b-4e75-b49d-ace8b6c97ad5.gif)
-</details>
+
 <h3>Add a New Location:</h3>
-<details>
-  <summary>Demo</summary>
 
 ![addLoc](https://user-images.githubusercontent.com/40577932/168585983-96722c86-f7e6-438d-a148-9c55951833e2.gif)
-</details>
 
 <h3>Add a New Category or Update Your Business Profile:</h3>
-<details>
-  <summary>Demo</summary>
 
 ![UpdateBuis_viewCats](https://user-images.githubusercontent.com/40577932/168586565-6d4fedaf-df29-4729-b6dc-88d6ec88b0a3.gif)
-</details>
 </div>
